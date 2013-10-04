@@ -63,7 +63,7 @@ class REG_PatientViewTopList extends ViewList {
 		
 		$testquery = $testselect . $testfrom . $testwhere . ' ORDER BY refill DESC, provname  ASC';
 		
-        var_dump($testquery);
+        //var_dump($testquery);
 		
 		$myquery = 'SELECT tab4.first_name fname, tab4.last_name lname, tab1.date_modified, DATE_FORMAT(tab3.next_rx_refill_due_c,"%m/%d/%Y") refill, tab2.pat patid, tab5.mrn_c mrn, p1b.name provname FROM reg_patient_reg_encounter_c tab1, ( SELECT max( date_modified ) dat, reg_patient_reg_encounterreg_patient_ida pat FROM reg_patient_reg_encounter_c GROUP BY reg_patient_reg_encounterreg_patient_ida) tab2, reg_encounter_cstm tab3, reg_patient tab4, reg_patient_cstm tab5, reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE tab1.date_modified = tab2.dat AND tab1.reg_patient_reg_encounterreg_patient_ida = tab2.pat AND tab3.id_c = tab1.reg_patient_reg_encounterreg_encounter_idb AND tab4.id = tab2.pat AND tab5.id_c = tab4.id  AND p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = tab4.id ';   
  		
