@@ -46,10 +46,19 @@ $db = DBManagerFactory::getInstance();
 {php}
 
 //var_dump($_POST);
-if ($_POST['mysort'] == 'week')  $this->assign("mytitle", "List of Refills in next 7 days") ; 
-else 							 $this->assign("mytitle", "List of All Refills");
+if ($_POST['mysort'] == 'week')  $mytitle = "List of Refills in Next 7 Days" ; 
+else 							 $mytitle = "List of All Refills";
+if (!empty($_POST['provsort']) AND $_POST['provsort'] != "none" ) 
+ $mytitle .= " For " . $_POST['provsort'];
+else
+ $mytitle .= " For ALL Providers" ;
+ 
+ $this->assign("mytitle", $mytitle);
+
 if ($_POST['mysort'] == 'week')  $this->assign("datsel", "week") ; 
 else 							 $this->assign("datsel", "all");
+if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ; 
+
 {/php}
 
 <form method="POST" action="index.php?module=REG_Patient&action=topcare">
@@ -71,9 +80,10 @@ else 							 $this->assign("datsel", "all");
 				</select>
 				</div> </th>
 		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Provider 
-			<select name = "provsort">
+			<select name = "provsort" onchange="this.form.submit()">
+			    <option value="none" {if (empty($provsel))} selected {/if}></option>
 				{foreach name=provrowIteration from=$provdata  item=provrowData}
-					<option value="{$provrowData.provname}">{$provrowData.provname}</option>
+					<option value="{$provrowData.provname}" {if ($provsel == $provrowData.provname)} selected {/if} >{$provrowData.provname}</option>
 				{/foreach}
 			</select>		
 		</th>
