@@ -27,6 +27,16 @@ class REG_PatientViewTopList extends ViewList {
 			$mydata[]=$row;
 		};	
 		$smarty->assign("mydata", $mydata);
+		//query for all providers
+		$db1 = DBManagerFactory::getInstance(); 
+		$provquery = 'SELECT p1b.name provname  from reg_provider p1b';
+		$resultprov = $db1->query($provquery);
+		while($provrow = $db1->fetchRow($resultprov))
+		{
+			$provdata[]=$provrow;
+		};
+		$smarty->assign("provdata", $provdata);
+		
         $smarty->display($this->lv->tpl);
 		
     }

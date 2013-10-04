@@ -30,6 +30,27 @@ Choose an option to filter:
 
 </select>
 
+<!--
+{php}
+echo 'DATA';
+var_dump($provdata);
+$db = DBManagerFactory::getInstance();  
+	$result = $db->query('SELECT p1b.name provname  from reg_provider p1b');        
+	while($row = $db->fetchRow($result))
+	{
+		echo $row['provname'];
+		echo '+++++';
+		
+	};
+	print_r(get_defined_vars());
+{/php}
+-->
+
+<select name = "provsort">
+	{foreach name=provrowIteration from=$provdata  item=provrowData}
+		<option value="{$provrowData.provname}">{$provrowData.provname}</option>
+	{/foreach}
+</select>
 </form>
 
 
@@ -54,7 +75,13 @@ else 							 $this->assign("mytitle", "List of All Refills");
 		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  First Name </div> </th>
 		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  MRN </div> </th>
 		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Refill Date </div> </th>
-		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Action </div> </th>
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Action 
+			<select name = "provsort">
+				{foreach name=provrowIteration from=$provdata  item=provrowData}
+					<option value="{$provrowData.provname}">{$provrowData.provname}</option>
+				{/foreach}
+			</select>		
+		</th>
     </tr>
 	
 	
