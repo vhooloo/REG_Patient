@@ -8,11 +8,15 @@ class REG_PatientController extends SugarController {
 *
 * @param
 */
-	function action_topcare() {
+	function action_listview() {
 		$this->view = 'toplist';
 		//$GLOBALS['log']->fatal('in controller');
 		$this->bean = new REG_PatientListView();
 	}
-	
+	function action_topcare() {
+		$this->view = 'list';
+		//$GLOBALS['log']->fatal('in controller');
+		$this->bean = new REG_PatientListView();
+	}
 }
 ?>
