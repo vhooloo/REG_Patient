@@ -1,0 +1,56 @@
+<?php 
+ //WARNING: The contents of this file are auto-generated
+
+
+ // created: 2012-11-25 18:27:05
+$layout_defs["REG_Patient"]["subpanel_setup"]['reg_patient_reg_sf12'] = array (
+  'order' => 100,
+  'module' => 'REG_SF12',
+  'subpanel_name' => 'default',
+  'sort_order' => 'asc',
+  'sort_by' => 'id',
+  'title_key' => 'LBL_REG_PATIENT_REG_SF12_FROM_REG_SF12_TITLE',
+  'get_subpanel_data' => 'reg_patient_reg_sf12',
+  'top_buttons' => 
+  array (
+    0 => 
+    array (
+      'widget_class' => 'SubPanelTopCreateButton',
+    ),
+    1 => 
+    array (
+      'widget_class' => 'SubPanelTopSelectButton',
+      'mode' => 'MultiSelect',
+    ),
+  ),
+);
+
+
+ // created: 2012-11-25 18:27:06
+$layout_defs["REG_Patient"]["subpanel_setup"]['reg_treatment_plan_reg_patient'] = array (
+  'order' => 100,
+  'module' => 'REG_Treatment_Plan',
+  'subpanel_name' => 'default',
+  'sort_order' => 'asc',
+  'sort_by' => 'id',
+  'title_key' => 'LBL_REG_TREATMENT_PLAN_REG_PATIENT_FROM_REG_TREATMENT_PLAN_TITLE',
+  'get_subpanel_data' => 'reg_treatment_plan_reg_patient',
+  'top_buttons' => 
+  array (
+    0 => 
+    array (
+      'widget_class' => 'SubPanelTopCreateButton',
+    ),
+    1 => 
+    array (
+      'widget_class' => 'SubPanelTopSelectButton',
+      'mode' => 'MultiSelect',
+    ),
+  ),
+);
+
+
+//auto-generated file DO NOT EDIT
+$layout_defs['REG_Patient']['subpanel_setup']['reg_treatment_plan_reg_patient']['override_subpanel_name'] = 'REG_Patient_subpanel_reg_treatment_plan_reg_patient';
+
+?>

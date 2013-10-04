@@ -1,0 +1,12 @@
+<?php 
+ //WARNING: The contents of this file are auto-generated
+
+
+//THIS FILE IS AUTO GENERATED, DO NOT MODIFY
+$mod_strings['LBL_REG_PATIENT_REG_SF12_FROM_REG_SF12_TITLE'] = 'SF12';
+$mod_strings['LBL_REG_PATIENT_REG_ENCOUNTER_FROM_REG_ENCOUNTER_TITLE'] = 'Encounter';
+$mod_strings['LBL_REG_PROVIDER_REG_PATIENT_FROM_REG_PROVIDER_TITLE'] = 'Provider';
+$mod_strings['LBL_REG_TREATMENT_PLAN_REG_PATIENT_FROM_REG_TREATMENT_PLAN_TITLE'] = 'Treatment Plan';
+$mod_strings['LBL_REG_LABRESULTS_REG_PATIENT_FROM_REG_LABRESULTS_TITLE'] = 'Lab Results';
+
+?>

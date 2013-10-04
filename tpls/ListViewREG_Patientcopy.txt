@@ -1,0 +1,180 @@
+{literal}
+<style type="text/css">
+
+    .ItemActionButtons{}
+    .ItemActionButtons .SaveExtraOptions
+    {
+        display: none; list-style-type: none; padding: 5px; margin: 0; border: 1px solid #DCDCDC; background-color: #fff; z-index: 999; position: absolute;
+    }
+    .ItemActionButtons .SaveExtraOptions li
+    {
+        padding: 5px 3px 5px 3px; margin: 0; width: 150px; border: 1px solid #fff;
+    }
+    .ItemActionButtons .SaveExtraOptions li:hover
+    {
+        cursor: pointer;
+        background-color: #DCDCDC;
+    }
+    .ItemActionButtons .SaveExtraOptions li a
+    {
+        text-transform: none;
+    }
+	 .ui-menu { position: absolute; width: 100px; z-index: 999;}
+</style>
+{/literal}
+
+<p>test7</p>
+
+
+<!-- -->
+{foreach name=myrowIteration from=$mydata key=id item=myrowData}
+	 
+	    
+	     
+	  <p>   {$myrowData.fname}  {$myrowData.lname} {$myrowData.refill}  <a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DPrescriptionRefill%26record%3D{$myrowData.patid}">Open...</a>done</p>
+		
+ 
+   
+	
+{/foreach}
+
+{foreach name=rowIteration from=$data key=id item=rowData}
+	 
+	     <div>
+
+	  <div>
+	     
+	     {$rowData.ID}   {$rowData.NAME} {$rowData.NEXT_RF_DATE}  {$rowData.RISK_LEVEL} <a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DPatientEncounter%26record%3D{$rowData.ID}">Open...</a>
+		<boom>Run last action</boom>
+		<boom2>Select an action</boom2>
+	  </div>
+	          <ul>
+    <li><a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DPatientEncounter%26record%3D{$rowData.ID}">Open...</a></li>
+    <li><a href="#">Save</a></li>
+    <li><a href="#">Delete</a></li>
+  </ul>
+  </div>
+ 
+   
+	
+{/foreach}
+
+<!-- -->
+
+</script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+  <script>
+{literal}  
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+{/literal} 
+    </script>
+
+{literal} 
+ <script>
+$( "boom" ) 
+      .button()
+      .click(function() {
+        alert( "Running the last action" );
+      })
+      .next()
+        .button({
+          text: false,
+          icons: {
+            primary: "ui-icon-triangle-1-s"
+          }
+        })
+        .click(function() {
+          var menu = $( this ).parent().next().show().position({
+            my: "left top",
+            at: "left bottom",
+            of: this
+          });
+           
+    
+        })
+	  .parent()
+          .buttonset()
+          .next()
+            .hide()
+            .menu();	
+
+			
+  $("rerun").button();
+  
+  $(function() {
+   $( "#rerun" ) 
+      .button()
+      .click(function() {
+        alert( "Running the last action" );
+      })
+      .next()
+        .button({
+          text: false,
+          icons: {
+            primary: "ui-icon-triangle-1-s"
+          }
+        })
+        .click(function() {
+          var menu = $( this ).parent().next().show().position({
+            my: "left top",
+            at: "left bottom",
+            of: this
+          });
+          $( document ).one( "click", function() {
+            menu.hide();
+          });
+          return false;
+        })
+        .parent()
+          .buttonset()
+          .next()
+            .hide()
+            .menu();
+  });
+  </script>
+{/literal} 
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Nunc tincidunt</a></li>
+    <li><a href="#tabs-2">Proin dolor</a></li>
+    <li><a href="#tabs-3">Aenean lacinia</a></li>
+  </ul>
+  <div id="tabs-1">
+    {php}
+    $vhpatient = BeanFactory::getBean('VHT_VHPATIENT')->retrieve_by_string_fields(array('name'=>'PAT1'));	
+	var_dump($vhpatient->name);
+	{/php}
+  </div>
+  <div id="tabs-2">
+    {php}
+    $vhpatient = BeanFactory::getBean('VHT_VHPATIENT')->retrieve_by_string_fields(array('name'=>'PAT2'));	
+	var_dump($vhpatient->name);
+	while($row = $db->fetchRow($result))
+	{
+		echo $row['name'];
+		echo '<<<<>>>>>>';
+	};	
+	{/php}
+    {foreach name=rowIteration from=$data key=id item=rowData}
+	<p> {$rowData.NAME} {$sugar_info.sugar_version}  {$rowData.ASSIGNED_USER_NAME}  
+	     <a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DVHT_VHPATIENT%26action%3DDetailView%26record%3D{$rowData.ID}">&nbsp; Patient &nbsp;</a>
+	</p>
+	{/foreach}
+  </div>
+  <div id="tabs-3">
+        {foreach name=rowIteration from=$data key=id item=rowData}
+	<p> {$rowData.NAME} {$sugar_info.sugar_version}  {$rowData.ASSIGNED_USER_NAME}  
+	     <a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DVHT_VHPATIENT%26action%3DDetailView%26record%3D{$rowData.ID}">&nbsp; Patient &nbsp;</a>
+	</p>
+	{/foreach}
+  </div>
+</div>
+
+
+

@@ -1,0 +1,26 @@
+<p>List Of Patient with Refills</p>
+
+ 
+
+<table class="list view" width="100%" cellspacing="0" cellpadding="0" border="0">
+   <tbody>
+    <tr height = "20">
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Last Name </div> </th>
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  First Name </div> </th>
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Refill Date </div> </th>
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Action </div> </th>
+    </tr>
+	{foreach name=myrowIteration from=$mydata key=id item=myrowData}
+	 
+	     <tr class="oddListRowS1" height="20">
+		    <td class="" valign="top" align="left" scope="row"> {$myrowData.lname} </td>
+            <td class="" valign="top" align="left"> {$myrowData.fname}  </td>
+            <td class="" valign="top" align="left"> {$myrowData.refill} </td>
+            <td class=" phone" valign="top" align="left"> <a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DPrescriptionRefill%26record%3D{$myrowData.patid}">Open...</a></td>
+         </tr>
+
+	{/foreach}
+
+  </tbody>
+
+</table>
