@@ -21,14 +21,7 @@ document.getElementById("demo").innerHTML="Hello World";
 </div>
 -->
 
-<form method="POST" action="index.php?module=REG_Patient&action=topcare">
-Choose an option to filter:	
-<select name="mysort" onchange="this.form.submit()">
-<option value="none"></option>
-<option value="all">All Refills</option>
-<option value="week">Next Seven Days</option>
 
-</select>
 
 <!--
 {php}
@@ -46,12 +39,8 @@ $db = DBManagerFactory::getInstance();
 {/php}
 -->
 
-<select name = "provsort">
-	{foreach name=provrowIteration from=$provdata  item=provrowData}
-		<option value="{$provrowData.provname}">{$provrowData.provname}</option>
-	{/foreach}
-</select>
-</form>
+
+
 
 
 {php}
@@ -59,10 +48,11 @@ $db = DBManagerFactory::getInstance();
 //var_dump($_POST);
 if ($_POST['mysort'] == 'week')  $this->assign("mytitle", "List of Refills in next 7 days") ; 
 else 							 $this->assign("mytitle", "List of All Refills");
-
+if ($_POST['mysort'] == 'week')  $this->assign("datsel", "week") ; 
+else 							 $this->assign("datsel", "all");
 {/php}
 
-
+<form method="POST" action="index.php?module=REG_Patient&action=topcare">
 
 <div id="demo">
 <h1>{$mytitle}</h1>
@@ -71,17 +61,23 @@ else 							 $this->assign("mytitle", "List of All Refills");
 <table class="list view" width="100%" cellspacing="0" cellpadding="0" border="0">
    <tbody>
     <tr height = "20">
-		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Last Name </div> </th>
-		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  First Name </div> </th>
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Name </div> </th>
 		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  MRN </div> </th>
-		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Refill Date </div> </th>
-		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Action 
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Refill Date 
+			<select name="mysort" onchange="this.form.submit()">
+				<option value="none" {if (empty($datsel))} selected {/if}></option>
+				<option value="all" {if ($datsel == "all")} selected {/if}>All Refills</option>
+				<option value="week" {if ($datsel == "week")} selected {/if}>Next Seven Days</option>
+				</select>
+				</div> </th>
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Provider 
 			<select name = "provsort">
 				{foreach name=provrowIteration from=$provdata  item=provrowData}
 					<option value="{$provrowData.provname}">{$provrowData.provname}</option>
 				{/foreach}
 			</select>		
 		</th>
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Action </div> </th>
     </tr>
 	
 	
@@ -91,11 +87,11 @@ else 							 $this->assign("mytitle", "List of All Refills");
 
 	 
 	     <tr class="oddListRowS1" height="20">
-		    <td class="" valign="top" align="left" scope="row"> <a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DDetailView%26record%3D{$myrowData.patid}"> {$myrowData.lname} </a> </td>
-            <td class="" valign="top" align="left"> {$myrowData.fname}  </td>
+		    <td class="" valign="top" align="left" scope="row"> <a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DDetailView%26record%3D{$myrowData.patid}"> 
+			{$myrowData.lname}, {$myrowData.fname} </a> </td>
 			<td class="" valign="top" align="left"> {$myrowData.mrn}  </td>
             <td class="" valign="top" align="left"> {$myrowData.refill} </td>
-            <!--td class=" phone" valign="top" align="left"> <a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record={$myrowData.patid}">Open...</a></td-->
+            <td class="" valign="top" align="left"> {$myrowData.provname} </td>
 			<td class="" valign="top" align="left">
 				<div id="{$myrowData.patid}" class="dropdown dropdown-tip"> <ul class="dropdown-menu">  
 				  <li><a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record={$myrowData.patid}">Refill</a></li>  
