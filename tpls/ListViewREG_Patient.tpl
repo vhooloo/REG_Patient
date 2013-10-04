@@ -22,7 +22,7 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
     document.getElementById("last_pcp_visit_c2").value = 2;				
 {/literal}
 	document.getElementById("last_pcp_visit_c1").value = "{$smarty.post.last_pcp_visit_c1}";
-	document.getElementById("last_pcp_visit_c2").value = "{$smarty.post.last_pcp_visit_c2}";;
+	document.getElementById("last_pcp_visit_c2").value = "{$smarty.post.last_pcp_visit_c2}";
 }
 </script>
 
@@ -117,7 +117,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 //if (document.forms["mylist"]["last_pcp_visit_c1"].value == null)
 {/php}
 
-<form name="mylist" method="POST" action="index.php?module=REG_Patient&action=listview" onsubmit="alert('dang')">
+<form name="mylist" method="POST" action="index.php?module=REG_Patient&action=listview" onsubmit="">
 
 
 <div id="demo">

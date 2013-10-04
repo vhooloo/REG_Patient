@@ -26,7 +26,7 @@ class REG_PatientViewTopList extends ViewList {
         $select_refill = ' , DATE_FORMAT(tab3.next_rx_refill_due_c,"%m/%d/%Y") refill,  DATE_FORMAT(tab3.next_uts_due_c,"%m/%d/%Y") uts ';
         $from_refill =   ' , reg_patient_reg_encounter_c tab1, ( SELECT max( date_modified ) dat, reg_patient_reg_encounterreg_patient_ida pat FROM reg_patient_reg_encounter_c GROUP BY reg_patient_reg_encounterreg_patient_ida) tab2, reg_encounter_cstm tab3 ';
         $where_refill = ' AND tab1.date_modified = tab2.dat AND tab1.reg_patient_reg_encounterreg_patient_ida = tab2.pat AND tab3.id_c = tab1.reg_patient_reg_encounterreg_encounter_idb  AND tab4.id = tab2.pat ';	
-
+        
         $select_norefill = ', ( SELECT tab1.reg_patient_reg_encounterreg_encounter_idb enclink  FROM reg_patient_reg_encounter_c tab1 WHERE  tab1.reg_patient_reg_encounterreg_patient_ida = patid AND tab1.date_modified = (SELECT max( date_modified ) dat FROM reg_patient_reg_encounter_c enc1 WHERE  enc1.reg_patient_reg_encounterreg_patient_ida = patid) )  enclink, ( SELECT DATE_FORMAT(tab3.next_rx_refill_due_c,"%m/%d/%Y") ref1 FROM reg_encounter_cstm tab3 where tab3.id_c = enclink )  refill,  ( SELECT DATE_FORMAT(tab3.next_uts_due_c,"%m/%d/%Y") uts11 FROM reg_encounter_cstm tab3 where tab3.id_c = enclink )  uts ';
 
         $select_noprovider = ', (SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = patid) provname ';
@@ -46,9 +46,10 @@ class REG_PatientViewTopList extends ViewList {
 		{
 			$testselect .= $select_refill;
 			$testfrom   .= $from_refill;
-			$testwhere  .= $where_refill . ' AND tab3.next_rx_refill_due_c BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL '. $_POST['mysort'] . ' DAY) '; 
-			
-
+			if ($_POST['mysort'] != 'cust')
+				$testwhere  .= $where_refill . ' AND tab3.next_rx_refill_due_c BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL '. $_POST['mysort'] . ' DAY) '; 
+		    else
+				$testwhere  .= $where_refill . ' AND tab3.next_rx_refill_due_c BETWEEN str_to_date("' . $_POST['last_pcp_visit_c1'] . '", "%m/%d/%Y") AND str_to_date("' . $_POST['last_pcp_visit_c2'] . '", "%m/%d/%Y") ';
 		}
 		
 		else $testselect .= $select_norefill;
