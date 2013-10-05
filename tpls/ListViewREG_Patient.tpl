@@ -1,8 +1,27 @@
+
+
 {literal}
+<script type="text/javascript">
+	if (typeof jQuery == "undefined") document.write("<script src='custom/include/jquery/jquery.min.js'></" + "script>");
+</script>
+
 <script>
 function myFunction()
 {
-document.getElementById("dynamic").innerHTML='<span class="dateTime"><input class="date_input" tabindex="36" autocomplete="off" type="text" name="last_pcp_visit_c1" id="last_pcp_visit_c1" value="" title=""  size="11" maxlength="10" onchange="check_date(this);" required>&thinsp;<img src="themes/Sugar5/images/jscalendar.gif?v=GogGz9QEok1-e0Ft6rexxQ" alt="Enter Date" style="position:relative; top:6px" border="0" id="last_pcp_visit_c_trigger1"><input class="date_input" tabindex="36" autocomplete="off" type="text" name="last_pcp_visit_c2" id="last_pcp_visit_c2" value="" title=""  size="11" maxlength="10" onchange="check_date(this);" required>&thinsp;<img src="themes/Sugar5/images/jscalendar.gif?v=GogGz9QEok1-e0Ft6rexxQ" alt="Enter Date" style="position:relative; top:6px" border="0" id="last_pcp_visit_c_trigger2"></span><input type="submit" value="Go">';
+
+
+//document.getElementById("dyn").innerHTML = '<input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c1" id="last_pcp_visit_c1" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger1"><input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c2" id="last_pcp_visit_c2" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger2"><input type="submit" value="Go">';
+
+var newcontent = document.createElement('div');
+newcontent.innerHTML = '<input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c1" id="last_pcp_visit_c1" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger1"><input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c2" id="last_pcp_visit_c2" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger2"><input type="submit" value="Go">';
+
+while (newcontent.firstChild) {
+        document.getElementById("dyn1").appendChild(newcontent.firstChild);
+    }
+
+
+alert ( document.getElementById("dyn1").outerHTML);
+
 Calendar.setup ({inputField : "last_pcp_visit_c1",ifFormat : "%m/%d/%Y %I:%M%P",daFormat : "%m/%d/%Y %I:%M%P", button : "last_pcp_visit_c_trigger1",
 				singleClick : true,
 				dateStr : "",
@@ -19,7 +38,7 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
 				weekNumbers:false
 				}
 				);			
-    document.getElementById("last_pcp_visit_c2").value = 2;				
+    		
 {/literal}
 	document.getElementById("last_pcp_visit_c1").value = "{$smarty.post.last_pcp_visit_c1}";
 	document.getElementById("last_pcp_visit_c2").value = "{$smarty.post.last_pcp_visit_c2}";
@@ -27,38 +46,9 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
 </script>
 
 
-
 <link type="text/css" rel="stylesheet" href="custom/topcarejs/jquery.dropdown.css" />
 <script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script>
 
-<!--
-<form id="EditView" name="EditView" method="POST" action="index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DVHT_VHPATIENT%26action%3Dindex%26parentTab%3DAll">
-<div class="sumbitButtons">
-
-    <input id="search_form_submit" class="button" type="submit" value="Search" name="button" onclick="var _form = document.getElementById('EditView'); _form.action.value='Save';SUGAR.ajaxUI.submitForm(_form);" title="Search" tabindex="2"></input>
-    <input id="search_form_clear" class="button" type="button" value="Clear" name="clear" onclick="SUGAR.searchForm.clear_form(this.form); return false;" title="Clear" tabindex="2"></input>
-    <a id="advanced_search_link" accesskey="8" href="javascript:void(0);" onclick="SUGAR.searchForm.searchFormSelect('Accounts|advanced_search','Accounts|basic_search')"> … </a>
-
-</div>
--->
-
-
-
-<!--
-{php}
-echo 'DATA';
-var_dump($provdata);
-$db = DBManagerFactory::getInstance();  
-	$result = $db->query('SELECT p1b.name provname  from reg_provider p1b');        
-	while($row = $db->fetchRow($result))
-	{
-		echo $row['provname'];
-		echo '+++++';
-		
-	};
-	print_r(get_defined_vars());
-{/php}
--->
 
 
 {literal}
@@ -101,7 +91,8 @@ function check_date(element){
 {php}
 
 //var_dump($_POST);
-if (!empty($_POST['mysort']) AND $_POST['mysort'] != 'all' AND $_POST['mysort'] != 'none' )  $mytitle = "List of Refills in Next " .$_POST['mysort']. " Days" ; 
+if (!empty($_POST['mysort']) AND $_POST['mysort'] != 'all' AND $_POST['mysort'] != 'none' AND $_POST['mysort'] != 'cust')  $mytitle = "List of Refills in Next " .$_POST['mysort']. " Days" ; 
+elseif ( $_POST['mysort'] == 'cust')  $mytitle = "List of Refills from " . $_POST[last_pcp_visit_c1] .  " TO " . $_POST[last_pcp_visit_c2];
 else 							 $mytitle = "List of All Refills";
 if (!empty($_POST['provsort']) AND $_POST['provsort'] != "none" ) 
  $mytitle .= " For " . $_POST['provsort'];
@@ -129,20 +120,17 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
     <tr height = "20">
 		<th width="10%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Name</div> </th>
 		<th width="5%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  MRN </div>  </th>
-		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Refill Date 
+		<th width="25%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Refill Date 
 					<select id="mysort" name="mysort" onchange="if (document.getElementById('mysort').selectedIndex !=4 ) this.form.submit();">
 						<option value="all" {if (empty($datsel) or $datsel == "all")} selected {/if}>All Refills</option>
 						<option value="7" {if ($datsel == "7")} selected {/if}>Next 7 Days</option>
 						<option value="14" {if ($datsel == "14")} selected {/if}>Next 14 Days</option>
 						<option value="21" {if ($datsel == "21")} selected {/if}>Next 21 Days</option>
-						<option value="cust" {if ($datsel == "cust")} selected {/if} onclick="myFunction();";>Custom</option>
+						<option value="cust" {if ($datsel == "cust")} selected {/if}  onfocus ="alert('focus');" onclick="myFunction();">Custom</option>
 					</select>
-					<div id="dynamic">
-					<!--span class="dateTime">
-					<input class="date_input" tabindex="36" autocomplete="off" type="text" name="last_pcp_visit_c" id="last_pcp_visit_c" value="" title=""  size="11" maxlength="10" onchange='check_date(this);'>&thinsp;<img src="themes/Sugar5/images/jscalendar.gif?v=GogGz9QEok1-e0Ft6rexxQ" alt="Enter Date" style="position:relative; top:6px" border="0" id="last_pcp_visit_c_trigger"> 
-					</span--> </div>
-
+                    
 			    </div>
+				
 				</th>
 			<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  UTS Date 
 			<select name="utssort" onchange="this.form.submit()">
@@ -192,13 +180,20 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 
 </table>
 
+
+
+
+
+
 </form>
+
 
 {literal}
 <script>
 
     // this should be added last so it gets all the ready event
     $(document).ready(function() {
+	    //alert(document.getElementById('mysort').selectedIndex == 4)
         if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
     });
 
