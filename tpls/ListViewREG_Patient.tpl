@@ -13,14 +13,14 @@ function myFunction()
 //document.getElementById("dyn").innerHTML = '<input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c1" id="last_pcp_visit_c1" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger1"><input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c2" id="last_pcp_visit_c2" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger2"><input type="submit" value="Go">';
 
 var newcontent = document.createElement('div');
-newcontent.innerHTML = '<input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c1" id="last_pcp_visit_c1" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger1"><input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c2" id="last_pcp_visit_c2" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger2"><input type="submit" value="Go">';
+newcontent.innerHTML = '<div><input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c1" id="last_pcp_visit_c1" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger1"><input class="date_input"  autocomplete="off" type="text" name="last_pcp_visit_c2" id="last_pcp_visit_c2" value="" title=""  size="8" maxlength="10" onchange="check_date(this);"><img src="themes/Sugar5/images/jscalendar.gif" alt="Enter Date" style="position:relative; top:3px" border="0" id="last_pcp_visit_c_trigger2"><input type="submit" value="Go"></div>';
 
 while (newcontent.firstChild) {
         document.getElementById("dyn1").appendChild(newcontent.firstChild);
     }
 
 
-alert ( document.getElementById("dyn1").outerHTML);
+//alert ( document.getElementById("dyn1").outerHTML);
 
 Calendar.setup ({inputField : "last_pcp_visit_c1",ifFormat : "%m/%d/%Y %I:%M%P",daFormat : "%m/%d/%Y %I:%M%P", button : "last_pcp_visit_c_trigger1",
 				singleClick : true,
@@ -120,13 +120,13 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
     <tr height = "20">
 		<th width="10%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Name</div> </th>
 		<th width="5%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  MRN </div>  </th>
-		<th width="25%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Refill Date 
-					<select id="mysort" name="mysort" onchange="if (document.getElementById('mysort').selectedIndex !=4 ) this.form.submit();">
+		<th width="18%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Refill Date 
+					<select id="mysort" name="mysort" onchange="if (document.getElementById('mysort').selectedIndex !=4 ) this.form.submit(); else myFunction();">
 						<option value="all" {if (empty($datsel) or $datsel == "all")} selected {/if}>All Refills</option>
 						<option value="7" {if ($datsel == "7")} selected {/if}>Next 7 Days</option>
 						<option value="14" {if ($datsel == "14")} selected {/if}>Next 14 Days</option>
 						<option value="21" {if ($datsel == "21")} selected {/if}>Next 21 Days</option>
-						<option value="cust" {if ($datsel == "cust")} selected {/if}  onfocus ="alert('focus');" onclick="myFunction();">Custom</option>
+						<option value="cust" {if ($datsel == "cust")} selected {/if}>Custom</option>
 					</select>
                     
 			    </div>
@@ -168,9 +168,9 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 				{$myrowData.uts} {if empty($myrowData.uts)} NO UTS! {/if} </td>	
             <td class="" valign="top" align="left"> {$myrowData.provname}  {if empty($myrowData.provname)} NO PCP {/if}</td>
 			<td class="" valign="top" align="left">
-				<div id="{$myrowData.patid}" class="dropdown dropdown-tip"> <ul class="dropdown-menu">  
-				  <li><a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record={$myrowData.patid}">Refill</a></li>  
-				  <li><a href="./index.php?module=REG_Patient&action=PatientEncounter&record={$myrowData.patid}">Encounter</a></li> </ul> </div><input type="button" value="Action" data-dropdown="#{$myrowData.patid}" class="">	
+				<!--div id="{$myrowData.patid}" class="dropdown dropdown-tip"> <ul class="dropdown-menu"-->  
+				  <li><a href="./index.php?action=PrescriptionRefill&module=REG_Patient&record={$myrowData.patid}">Refill</a></li>  
+				  <li><a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DPatientEncounter%26record%3D{$myrowData.patid}">Encounter</a></li> </ul> <!--/div><input type="button" value="Action" data-dropdown="#{$myrowData.patid}" class=""-->	
 			</td>	  
          </tr>
 
@@ -192,10 +192,14 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 <script>
 
     // this should be added last so it gets all the ready event
-    $(document).ready(function() {
+    //$(document).ready(function() {
 	    //alert(document.getElementById('mysort').selectedIndex == 4)
-        if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
-    });
+    //    if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
+    //});
 
+	$(window).load(function() {
+	   if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
+    });
+	
 </script>
 {/literal}
