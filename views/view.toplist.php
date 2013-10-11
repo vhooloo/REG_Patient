@@ -75,7 +75,7 @@ class REG_PatientViewTopList extends ViewList {
 		//var_dump($myquery);
          
 		$result = $db->query($testquery);
-		$mydata[] = "";
+		$mydata = null;
 		while($row = $db->fetchRow($result))
 		{
 			$mydata[]=$row;

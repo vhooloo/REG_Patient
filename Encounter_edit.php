@@ -130,7 +130,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$summary = $this->bean3->summary;
 		$enc_detail=explode(":",$summary);
 		$type= $enc_detail[0];
-		$typevalue="Prescription Refill";
+		$typevalue="Prescription Refillxx";
 		
 		if(!strcmp($type,"PEnc")){
 		$typevalue="Patient Encounter";

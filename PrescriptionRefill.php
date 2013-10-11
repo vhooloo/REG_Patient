@@ -283,6 +283,34 @@ $metadataFile = $this->getMetaDataFile();
 				echo "<script>document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'</script>";
 			}
 			
+			/*** my changes ****/
+		 	if($row['last_uts_c']!=null){
+				$date1=strtotime($row['last_uts_c']);
+				echo "<'last_uts_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_pcp_visit_c']!=null){
+				$date1=strtotime($row['last_pcp_visit_c']);
+				echo "<'last_pcp_visit_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_pain_nurse_visit_c']!=null){
+				$date1=strtotime($row['last_pain_nurse_visit_c']);
+				echo "<'last_pain_nurse_visit_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_nurse_phone_contact_c']!=null){
+				$date1=strtotime($row['last_nurse_phone_contact_c']);
+				echo "<'last_nurse_phone_contact_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_pmp_review_done_c']!=null){
+				$date1=strtotime($row['last_pmp_review_done_c']);
+				echo "<'last_pmp_review_done_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['narcotic_contract_in_chart_c']==1){
+				
+				echo "<'narcotic_contract_in_chart_c').checked=true</script>";
+			}
+			
+		 /***/
+		 
 			
 			if($row['pt_confirms_taking_c']==1){
 				echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
@@ -646,7 +674,7 @@ $metadataFile = $this->getMetaDataFile();
 	<div style="margin: 0 auto;display: table-footer-group;" id="tabs-1">';
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div><font style='font-size: 15px; font-weight: bold'>Prescription Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript:document.getElementById(\"pt_active_c\").checked=this.checked' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value=''></input></div>";
+        echo "<div><font style='font-size: 15px; font-weight: bold'>Prescription Refillxx : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript:document.getElementById(\"pt_active_c\").checked=this.checked' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value=''></input></div>";
 
 	
 		echo $this->dv3->display("Encounter View");
