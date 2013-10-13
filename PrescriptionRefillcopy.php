@@ -211,7 +211,7 @@ $metadataFile = $this->getMetaDataFile();
 		}
 		//var_dump($this->ss);
 		//$this->bean3->retrieve('e7370d19-2754-77fa-10ee-519530915b6f');
-	//	var_dump($this->bean3);
+		//var_dump($this->bean3);
 		//-----------------
 		//include/EditView/EditView.tpl 
 		//custom/modules/REG_Encounter/tpls/PR_EditView.tpl
@@ -227,11 +227,10 @@ $metadataFile = $this->getMetaDataFile();
 		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc" ;
 
 		$result = $this->bean->db->query($query2a, true); 
-		
+		echo "custom prescription refill";
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
 		{
-			//assign to smarty
-			$this->dv3->ss->assign("datarow", $row);
+		    $this->dv3->ss->assign("datarow", $row);
 			if($row['pcp_name_c']!=null){
 				
 				echo "<script>document.getElementById('pcp_dummy').value='".$row['pcp_name_c']."'; document.getElementById('pcp_name_c').value='".$row['pcp_name_c']."'</script>";
@@ -243,7 +242,7 @@ $metadataFile = $this->getMetaDataFile();
 				$date1=strtotime($row['date_entered']);
 				echo "<script>document.getElementById('last_rx_generated_c').value='".date('m/d/Y',$date1)."'</script>";
 			}
-		 */
+		 *?
 		/*	if($this->bean3->history_c!=null){
 				echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
 				}
@@ -276,8 +275,8 @@ $metadataFile = $this->getMetaDataFile();
 				echo "<script>document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'</script>";
 			}
 			if($row['narcotic_contract_in_chart_c']==1){
-				echo "<script> $('#narcotic_contract_in_chart_c').prop('checked', true); </script>";
-				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
+				
+				echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
 			if($row['narcotic_contract_sign_c']!=null){
@@ -285,38 +284,58 @@ $metadataFile = $this->getMetaDataFile();
 				echo "<script>document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'</script>";
 			}
 			
+			/*** my changes ****/
+		 	if($row['last_uts_c']!=null){
+				$date1=strtotime($row['last_uts_c']);
+				echo "<'last_uts_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_pcp_visit_c']!=null){
+				$date1=strtotime($row['last_pcp_visit_c']);
+				echo "<'last_pcp_visit_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_pain_nurse_visit_c']!=null){
+				$date1=strtotime($row['last_pain_nurse_visit_c']);
+				echo "<'last_pain_nurse_visit_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_nurse_phone_contact_c']!=null){
+				$date1=strtotime($row['last_nurse_phone_contact_c']);
+				echo "<'last_nurse_phone_contact_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['last_pmp_review_done_c']!=null){
+				$date1=strtotime($row['last_pmp_review_done_c']);
+				echo "<'last_pmp_review_done_c').value='".date('m/d/Y',$date1);
+			}
+			if($row['narcotic_contract_in_chart_c']==1){
+				
+				echo "<'narcotic_contract_in_chart_c').checked=true</script>";
+			}
+			
+		 /***/
+		 
 			
 			if($row['pt_confirms_taking_c']==1){
-				echo "<script> $('#pt_confirms_taking_c').prop('checked', true); </script>";
-				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
+				echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
 			}				
 			if($row['pt_confirms_storing_c']==1){
-				echo "<script> $('#pt_confirms_storing_c').prop('checked', true); </script>";
-				//echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
+				echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
 			}
 			if($row['aberrant_behavior_noted_c']==1){
-				echo "<script> $('#aberrant_behavior_noted_c').prop('checked', true); </script>";
-				//echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
+				echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
 			}
 			if($row['med_safety_pulm_prob_c']==1){
-				echo "<script> $('#med_safety_pulm_prob_c').prop('checked', true); </script>";
-				//echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
+				echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
 			}
 			if($row['med_safety_sedatives_c']==1){
-				echo "<script> $('#med_safety_sedatives_c').prop('checked', true); </script>";
-				//echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
+				echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
 			}
 			
 			if($row['med_safety_high_medd_c']==1){
-				echo "<script> $('#med_safety_high_medd_c').prop('checked', true); </script>";
-				//echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
+				echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
 			}
 			
 			if($row['pt_active_c']==0)
 			{	
-				echo "<script> $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);</script>";
-				
-				//echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
+				echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
 			}
 			
 			
@@ -382,13 +401,13 @@ $metadataFile = $this->getMetaDataFile();
 				echo "<script>document.getElementById('pcp_dummy').value='".$this->bean3->pcp_name_c."'; document.getElementById('pcp_name_c').value='".$this->bean3->pcp_name_c."'</script>";
 			}
 		if($this->bean3->presc_refill_early_c==0){
-				echo "<script> $('#presc_refill_early_c').prop('checked', false);</script>";
-				//echo "<script>document.getElementById('presc_refill_early_c').checked=false;</script>";
+				
+				echo "<script>document.getElementById('presc_refill_early_c').checked=false;</script>";
 			}	
 			
 		if($this->bean3->pt_active_c==0){
-				echo "<script> $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);</script>";
-				//echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
+				
+				echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
 			}	
 	
 	/*	if($this->bean3->last_rx_generated_c!=null){
@@ -419,8 +438,8 @@ $metadataFile = $this->getMetaDataFile();
 				echo "<script>document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'</script>";
 			}
 			if($this->bean3->narcotic_contract_in_chart_c==1){
-				echo "<script> $('#narcotic_contract_in_chart_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
+				
+				echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
 			if($this->bean3->narcotic_contract_sign_c!=null){
@@ -491,36 +510,29 @@ $metadataFile = $this->getMetaDataFile();
 				}
 						
 			if($this->bean3->pt_confirms_taking_c==1){
-				echo "<script> $('#pt_confirms_taking_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
+				echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
 			}				
 			if($this->bean3->pt_confirms_storing_c==1){
-				echo "<script> $('#pt_confirms_storing_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
+				echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
 			}
 			if($this->bean3->aberrant_behavior_noted_c==1){
-				echo "<script> $('#aberrant_behavior_noted_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
+				echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
 			}
 			if($this->bean3->med_safety_pulm_prob_c==1){
-				echo "<script> $('#med_safety_pulm_prob_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
+				echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
 			}
 			if($this->bean3->med_safety_sedatives_c==1){
-				echo "<script> $('#med_safety_sedatives_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
+				echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
 			}
 			
 			if($this->bean3->med_safety_high_medd_c==1){
-				echo "<script> $('#med_safety_high_medd_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
+				echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
 			}
 			if($this->bean3->patient_present_c==1){
-				echo "<script> $('#patient_present_c').prop('checked', true);</script>";
-				//echo "<script>document.getElementById('patient_present_c').checked='true';</script>";
+				echo "<script>document.getElementById('patient_present_c').checked='true';</script>";
 			}else{
-				echo "<script> $('#patient_present_c').prop('checked', false);</script>";
-				//echo "<script>document.getElementById('patient_present_c').checked=false;</script>";
+				
+				echo "<script>document.getElementById('patient_present_c').checked=false;</script>";
 			}
 			
 			if($this->bean3->date_modified!=null){
@@ -663,7 +675,7 @@ $metadataFile = $this->getMetaDataFile();
 	<div style="margin: 0 auto;display: table-footer-group;" id="tabs-1">';
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div><font style='font-size: 15px; font-weight: bold'>Prescription Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript: $(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value=''></input></div>";
+        echo "<div><font style='font-size: 15px; font-weight: bold'>Prescription Refillxx : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript:document.getElementById(\"pt_active_c\").checked=this.checked' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value=''></input></div>";
 
 	
 		echo $this->dv3->display("Encounter View");
