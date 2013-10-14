@@ -49,7 +49,42 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
 <link type="text/css" rel="stylesheet" href="custom/topcarejs/jquery.dropdown.css" />
 <script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script>
 
+ 
+{literal} 
+ <script>
 
+function sortTable(sort_dir){
+  var rows = $('#mytable tbody  tr').get();
+  
+  if (sort_dir == 'asc') { $('#asc').css( "color", "green" ); $('#desc').css( "color", "black" );}
+  if (sort_dir == 'desc') { $('#desc').css( "color", "green" ); $('#asc').css( "color", "black" );}
+  
+  rows.sort(function(a, b) {
+
+  var A = $(a).children('td').eq(0).text().toUpperCase();
+  var B = $(b).children('td').eq(0).text().toUpperCase();
+  
+  if(A < B) {
+     return (sort_dir == 'asc') ? -1 : 1 ;
+  }
+
+  if(A > B) {
+    return (sort_dir == 'asc') ? 1 : -1 ; 
+  }
+
+  return 0;
+
+  });
+
+  $.each(rows, function(index, row) {
+    $('#mytable').children('tbody').append(row);
+  });
+}
+
+  
+  
+  </script>
+{/literal}  
 
 {literal}
 <script type="text/javascript">
@@ -105,8 +140,13 @@ if (!empty($_POST['mysort']) )  $this->assign("datsel",  $_POST['mysort'] ) ;
 if (!empty($_POST['utssort']) )  $this->assign("utssel",  $_POST['utssort'] ) ; 
 
 if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ; 
+
+
+
 //if (document.forms["mylist"]["last_pcp_visit_c1"].value == null)
 {/php}
+
+
 
 <form name="mylist" method="POST" action="index.php?module=REG_Patient&action=listview" onsubmit="">
 
@@ -115,10 +155,13 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 <h1>{$mytitle}</h1>
 </div>
 
-<table class="list view" width="100%" cellspacing="0" cellpadding="0" border="0">
-   <tbody>
+
+
+<table class="list view" width="100%" cellspacing="0" cellpadding="0" border="0" name="mytable" id="mytable">
+    <thead>
     <tr height = "20">
-		<th width="10%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Name</div> </th>
+		<th width="10%" scope="col" data-sort="string">    <div align="left" width="100%" style="white-space: normal;">  
+			Name <a href="#" onclick="sortTable('asc');" style="font-size:150%;" id = "asc" name = "asc"> &uarr; </a> <a href="#" onclick="sortTable('desc');" style="font-size:150%;" id = "desc" name = "desc"> &darr; </a></div> </th>
 		<th width="5%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  MRN </div>  </th>
 		<th width="18%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Refill Date 
 					<select id="mysort" name="mysort" onchange="if (document.getElementById('mysort').selectedIndex !=4 ) this.form.submit(); else myFunction();">
@@ -151,7 +194,8 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 		</th>
 		<th width="10%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Action </div> </th>
     </tr>
-	
+	</thead>
+	<tbody>
 	
     {if (empty($mydata))}  <tr class="oddListRowS1" height="20">  <td class="" valign="top" align="left" scope="row"> <h1>NO REFILLS FOUND</h1> </td>    </tr>   {/if}
 	 
