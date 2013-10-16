@@ -56,25 +56,6 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
 function sortTable(sort_dir){
   var rows = $('#mytable tbody  tr').get();
   
-
-
-  if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-
-	xmlhttp.onreadystatechange=function()
-	  {
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-		//alert(xmlhttp.responseText);
-		
-		}
-	  }
-  
-xmlhttp.open("GET","../../test/tstfile.php?regnamesort="+sort_dir,true);
-xmlhttp.send();
-  
   if (sort_dir == 'asc') { $('#asc').css( "color", "green" ); $('#desc').css( "color", "black" );}
   if (sort_dir == 'desc') { $('#desc').css( "color", "green" ); $('#asc').css( "color", "black" );}
   
@@ -103,31 +84,6 @@ xmlhttp.send();
   
   
   </script>
-  
-  <script>
-function myajax()
-{
-
-
-
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    //alert(xmlhttp.responseText);
-	
-    }
-  }
-xmlhttp.open("GET","../../test/tstfile.php?regnamesort="+document.getElementById('patregnamesort').value,true);
-xmlhttp.send();
-}
-</script>
-
 {/literal}  
 
 {literal}
@@ -169,11 +125,7 @@ function check_date(element){
 
 {php}
 
-//session_start();
-// store session data
-if (!empty($_POST['regnamesort'])) $_SESSION['regnamesort']=$_POST['regnamesort'];
-
-//var_dump($_SESSION);
+//var_dump($_POST);
 if (!empty($_POST['mysort']) AND $_POST['mysort'] != 'all' AND $_POST['mysort'] != 'none' AND $_POST['mysort'] != 'cust')  $mytitle = "List of Refills in Next " .$_POST['mysort']. " Days" ; 
 elseif ( $_POST['mysort'] == 'cust')  $mytitle = "List of Refills from " . $_POST[last_pcp_visit_c1] .  " TO " . $_POST[last_pcp_visit_c2];
 else 							 $mytitle = "List of All Refills";
@@ -196,7 +148,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 
 
 
-<form name="mylist" method="POST" action="index.php?module=REG_Patient&action=listview" onsubmit="">
+<form name="riskview" method="POST" action="index.php?module=REG_Patient&action=riskview" onsubmit="">
 
 
 <div id="demo">
@@ -209,9 +161,9 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
     <thead>
     <tr height = "20">
 		<th width="10%" scope="col" data-sort="string">    <div align="left" width="100%" style="white-space: normal;">  
-			Name <a href="#" onclick="sortTable('asc');" style="font-size:150%;" id = "asc" name = "asc"> &uarr; </a> <a href="#" onclick="sortTable('desc');" style="font-size:150%;" id = "desc" name = "desc"> &darr; </a></div> </th>
-		<th width="5%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  MRN </div>  </th>
-		<th width="18%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Refill Date 
+			Scale <a href="#" onclick="sortTable('asc');" style="font-size:150%;" id = "asc" name = "asc"> &uarr; </a> <a href="#" onclick="sortTable('desc');" style="font-size:150%;" id = "desc" name = "desc"> &darr; </a></div> </th>
+		<th width="5%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Domain </div>  </th>
+		<th width="18%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Scoring 
 					<select id="mysort" name="mysort" onchange="if (document.getElementById('mysort').selectedIndex !=4 ) this.form.submit(); else myFunction();">
 						<option value="all" {if (empty($datsel) or $datsel == "all")} selected {/if}>All Refills</option>
 						<option value="7" {if ($datsel == "7")} selected {/if}>Next 7 Days</option>
@@ -223,7 +175,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 			    </div>
 				
 				</th>
-			<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  UTS Date 
+			<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Source 
 			<select name="utssort" onchange="this.form.submit()">
 				<!--option value="none" {if (empty($datsel))} selected {/if}></option-->
 				<option value="all" {if (empty($utssel) or $utssel == "all")} selected {/if}>All UTS</option>
@@ -232,7 +184,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 				<option value="21" {if ($utssel == "21")} selected {/if}>Next 21 Days</option>
 				</select>
 				</div> </th>				
-		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Provider 
+		<th width="18%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Green/Yellow/Red 
 			<select name = "provsort" onchange="this.form.submit()">
 			    <option value="none" {if (empty($provsel) or $provsel=="none")} selected {/if}>All Providers</option>
 				{foreach name=provrowIteration from=$provdata  item=provrowData}
@@ -292,7 +244,6 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 
 	$(window).load(function() {
 	   if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
-	   if ( {/literal} {$smarty.session.regnamesort} != "" ) sortTable('{$smarty.session.regnamesort}'); {literal}
     });
 	
 </script>

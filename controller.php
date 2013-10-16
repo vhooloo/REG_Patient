@@ -18,5 +18,10 @@ class REG_PatientController extends SugarController {
 		//$GLOBALS['log']->fatal('in controller');
 		$this->bean = new REG_PatientListView();
 	}
+	function action_risk() {
+		$this->view = 'riskview';
+		//$GLOBALS['log']->fatal('in controller');
+		$this->bean = new REG_PatientRiskView();
+	}
 }
 ?>

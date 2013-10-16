@@ -7,6 +7,7 @@ $image_path=$theme_path."images/";
 //require_once ($theme_path."layout_utils.php");
 echo "<link rel='stylesheet' type='text/css' href='../themes/" . $theme . "/style.css' />";
 $session_pid = "P".$_REQUEST['record'];
+ 
 //echo $session_pid;
 //SESSION VARIABLES
 /*<script src="custom/jquery/jquery.ui.core.js"></script>
@@ -1024,6 +1025,7 @@ echo "</div>";
 		 
 
 	$ida = $this->bean->id;
+	
 	echo "<script type='text/javascript'>
  
    

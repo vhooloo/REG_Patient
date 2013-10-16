@@ -155,9 +155,16 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc" ;
 
 		$result = $this->bean->db->query($query2a, true); 
+		$queryprov = "SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = '" . $this->bean->id . "'";
+		$db = DBManagerFactory::getInstance();  
+		$provider = $db->query($queryprov); 
+		$provrow = $db->fetchRow($provider);
+		
+		$this->dv3->ss->assign("provrow", $provrow);
 		
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
 		{
+		    $this->dv3->ss->assign("datarow", $row);
 			if($row['pcp_name_c']!=null){
 				
 				echo "<script>document.getElementById('pcp_dummy').value='".$row['pcp_name_c']."'; document.getElementById('pcp_name_c').value='".$row['pcp_name_c']."'</script>";

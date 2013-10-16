@@ -13,7 +13,12 @@ class REG_PatientViewTopList extends ViewList {
 	}
 	
 	function display(){
-	    
+	    /* get sort order from session */
+		//session_start(); // Make a reference to the current session object,set order 
+		
+		//$_SESSION['regnamesort']= 'test' ; Set a value in a session variable  
+		//var_dump($_SESSION);
+		
         $smarty = new Sugar_Smarty();
         parent::display();
  		$db = DBManagerFactory::getInstance();  
@@ -47,7 +52,7 @@ class REG_PatientViewTopList extends ViewList {
 			$testselect .= $select_refill;
 			$testfrom   .= $from_refill;
 			if ($_POST['mysort'] != 'cust')
-				$testwhere  .= $where_refill . ' AND tab3.next_rx_refill_due_c BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL '. $_POST['mysort'] . ' DAY) '; 
+				$testwhere  .= $where_refill . ' AND tab3.next_rx_refill_due_c BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY)  AND DATE_ADD(NOW(), INTERVAL '. $_POST['mysort'] . ' DAY) '; 
 		    else
 				$testwhere  .= $where_refill . ' AND tab3.next_rx_refill_due_c BETWEEN str_to_date("' . $_POST['last_pcp_visit_c1'] . '", "%m/%d/%Y") AND str_to_date("' . $_POST['last_pcp_visit_c2'] . '", "%m/%d/%Y") ';
 		}
