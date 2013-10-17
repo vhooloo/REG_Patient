@@ -54,13 +54,25 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
  <script>
 
 function sortTable(sort_dir){
+
+// clear it if being hit twice
+  if ( document.getElementById('sortmemory').value == sort_dir ) 
+  {
+    sort_dir = ""; $('#desc').css( "color", "black" ); $('#asc').css( "color", "black" );
+	
+  }
+  else document.getElementById('sortmemory').value = sort_dir;
+
   var rows = $('#mytable tbody  tr').get();
   
 
 
   if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
+	xmlhttp=new XMLHttpRequest();
+  }
+  else {
+    xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
   }
 
 	xmlhttp.onreadystatechange=function()
@@ -72,7 +84,8 @@ function sortTable(sort_dir){
 		}
 	  }
   
-xmlhttp.open("GET","../../test/tstfile.php?regnamesort="+sort_dir,true);
+//xmlhttp.open("GET","custom/modules/REG_Patient/tstfile.php?regnamesort="+sort_dir,true);
+xmlhttp.open('GET','index.php?entryPoint=session_setting_variable&id=regnamesort&value='+ sort_dir,true);
 xmlhttp.send();
   
   if (sort_dir == 'asc') { $('#asc').css( "color", "green" ); $('#desc').css( "color", "black" );}
@@ -119,11 +132,11 @@ xmlhttp.onreadystatechange=function()
   {
   if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    //alert(xmlhttp.responseText);
+    alert(xmlhttp.responseText);
 	
     }
   }
-xmlhttp.open("GET","../../test/tstfile.php?regnamesort="+document.getElementById('patregnamesort').value,true);
+xmlhttp.open("GET","custom/modules/REG_Patient/tstfile.php?regnamesort="+document.getElementById('patregnamesort').value,true);
 xmlhttp.send();
 }
 </script>
@@ -203,7 +216,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 <h1>{$mytitle}</h1>
 </div>
 
-
+<input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
 
 <table class="list view" width="100%" cellspacing="0" cellpadding="0" border="0" name="mytable" id="mytable">
     <thead>

@@ -7,23 +7,43 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Store Risk Evaluation
  */
-class RiskEvaluation {
+class RiskEvaluation  extends SugarBean {
 
 	// public attributes
 	var $id;
 	var $name;
-	var $parent_folder;
-	var $has_child = 0; // flag node has child
-	var $is_group = 0;
-	var $is_dynamic = 0;
-	var $dynamic_query = '';
+
 	var $assign_to_id;
 	var $created_by;
 	var $modified_by;
 	var $date_created;
 	var $date_modified;
 	var $deleted;
-	var $folder_type;
+
+	 var	$id_c; 					//char(36) NOT NULL,
+	 var	$pid;					//char(36) NOT NULL,
+	 var	$ort; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort1a; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort1b; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort1c; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort2a; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort2b; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort2c; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort3 ;	               //varchar(12) DEFAULT NULL,
+	 var	$ort4; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort5a; 	               //varchar(12) DEFAULT NULL,
+	 var	$ort5b; 	               //varchar(12) DEFAULT NULL,
+	 var	$ortsum; 	               //varchar(12) DEFAULT NULL,
+	 var	$medd;	               //varchar(12) DEFAULT NULL,
+	 var	$pulmonary; 	               //varchar(12) DEFAULT NULL,
+	 var	$currentrx;	               //varchar(12) DEFAULT NULL,
+	 var	$histopioid;	               //varchar(12) DEFAULT NULL,
+	 var	$preocc;	               //varchar(12) DEFAULT NULL,
+	 var	$unstable;	               //varchar(12) DEFAULT NULL,
+	 var	$insecure;	               //varchar(12) DEFAULT NULL,
+	 var	$prioraberrant;	               //varchar(12) DEFAULT NULL,
+	 var	$ncmscore;	               //varchar(12) DEFAULT NULL,
+	 var	$finalscore;	               //varchar(12) DEFAULT NULL,
 
 	var $db;
 	var $new_with_id = false;
@@ -53,11 +73,12 @@ class RiskEvaluation {
 	/**
 	 * Sole constructor
 	 */
-	function RiskEvalaution() {
+	function RiskEvaluation() {
 		$this->db = DBManagerFactory::getInstance();
+		parent::SugarBean();
 	}
 
-	
+/*	
 
 	function getCountItems ( $folderId ) {
 		global $current_user ;
@@ -91,7 +112,7 @@ class RiskEvaluation {
 	/**
 	 * Convenience method, pass a SugarBean and User to this to add anything to a given folder
 	 */
-	function addBean($bean, $user=null) {
+/*	function addBean($bean, $user=null) {
 		if(empty($bean->id) || empty($bean->module_dir)) {
 			$GLOBALS['log']->fatal("*** FOLDERS: addBean() got empty bean - not saving");
 			return false;
@@ -118,7 +139,7 @@ class RiskEvaluation {
 	 * @param object User object, defaults to $current_user
 	 * @return array Array of abstract folder objects
 	 */
-	function retrieveREForProcessing($user, $subscribed=true) {
+/*	function retrieveREForProcessing($user, $subscribed=true) {
 		global $sugar_config;
 		global $current_language, $current_user;
 
@@ -165,19 +186,15 @@ class RiskEvaluation {
   
 
 	/**
-	 * Flags a folder as deleted
+	 * Flags a record as deleted
 	 * @return bool True on success
 	 */
 	function delete() {
-		global $current_user;
+
 
 		if(!empty($this->id)) {
-			if($this->has_child) {
-				$this->deleteChildrenCascade($this->id);
-			}
-
-			$ownerCheck = ($current_user->is_admin == 0) ? " AND created_by = '{$current_user->id}'" : "";
-			$q = "UPDATE folders SET deleted = 1 WHERE id = '{$this->id}'{$ownerCheck}";
+	
+    		$q = "UPDATE REG_PatientRisk SET deleted = 1 WHERE id = '{$this->id}'";
 			$r = $this->db->query($q);
 			return true;
 		}
@@ -187,13 +204,10 @@ class RiskEvaluation {
 	
 
 	/**
-	 * Saves folder
+	 * Saves risk
 	 * @return bool
 	 */
-	function save($addSubscriptions = TRUE) {
-		global $current_user;
-
-	
+	function save() {
 
 		if((empty($this->id) && $this->new_with_id == false) || (!empty($this->id) && $this->new_with_id == true))
 		{
@@ -225,9 +239,9 @@ class RiskEvaluation {
 	}
 
 	
-	}
+	
 
-
+/*
 	function updateFolder($fields) {
 		global $current_user;
 
@@ -260,7 +274,7 @@ class RiskEvaluation {
 	 * @param string $id ID of folder
 	 * @return bool True on success
 	 */
-	function retrieve($id) {
+/*	function retrieve($id) {
 		$q = "SELECT * FROM REGPatient_Risk WHERE id = '{$id}' AND deleted = 0";
 		$r = $this->db->query($q);
 		$a = $this->db->fetchByAssoc($r);
@@ -277,4 +291,5 @@ class RiskEvaluation {
 
 		return false;
 	}
+*/	
 } // end class def
