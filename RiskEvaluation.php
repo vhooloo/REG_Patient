@@ -134,54 +134,44 @@ class RiskEvaluation  extends SugarBean {
 		return true;
 	}
 
-	/**
-	 * Builds up a metacollection of user/group folders to be passed to processor methods
-	 * @param object User object, defaults to $current_user
-	 * @return array Array of abstract folder objects
+
 	 */
-/*	function retrieveREForProcessing($user, $subscribed=true) {
-		global $sugar_config;
-		global $current_language, $current_user;
+	 
+	function getRisk($patid) {
+		
+    	$sql = "SELECT * FROM reg_patient_risk where pid = '"  . $patid . "'";
 
-		$emails_mod_strings = return_module_language($current_language, "Emails");
-		$myEmailTypeString = 'inbound';
-		$myDraftsTypeString = 'draft';
-		$mySentEmailTypeString = 'sent';
-
-		if(empty($user)) {
-			global $current_user;
-			$user = $current_user;
+		
+		$sql = $this->db->query($sql);
+	
+		if ( ($a = $this->db->fetchByAssoc($sql)) != null) {
+				 $this->id_c =  	$a['id_c']; 	
+				 $this->pid = 	 $a['pid'];	
+				 $this->ort =  	 $a['ort']; 	
+				 $this->ort1a =  	 $a['ort1a']; 	
+				 $this->ort1b =  	 $a['ort1b']; 	
+				 $this->ort1c =  	 $a['ort1c']; 	
+				 $this->ort2a =  	 $a['ort2a']; 	
+				 $this->ort2b =  	 $a['ort2b']; 	
+				 $this->ort2c =  	 $a['ort2c']; 	
+				 $this->ort3  = 	 $a['ort3 '];	
+				 $this->ort4 =  	 $a['ort4']; 	
+				 $this->ort5a =  	 $a['ort5a']; 	
+				 $this->ort5b =  	 $a['ort5b']; 	
+				 $this->ortsum =  	 $a['ortsum']; 	
+				 $this->medd = 	 $a['medd'];	
+				 $this->pulmonary =  	 $a['pulmonary']; 	
+				 $this->currentrx = 	 $a['currentrx'];	
+				 $this->histopioid = 	 $a['histopioid'];	
+				 $this->preocc = 	 $a['preocc'];	
+				 $this->unstable = 	 $a['unstable'];	
+				 $this->insecure = 	 $a['insecure'];	
+				 $this->prioraberrant = 	 $a['prioraberrant'];	
+				 $this->ncmscore = 	 $a['ncmscore'];	
+				 $this->finalscore = 	 $a['finalscore'];	 
 		}
-		$rootWhere = '';
-        $teamSecurityClause = '';
-
-
-
-    	$rootWhere .= "AND (f.parent_folder IS NULL OR f.parent_folder = '')";
-
-		if($subscribed) {
-			$q = $this->coreSubscribed.$teamSecurityClause.$this->coreWhereSubscribed."'{$user->id}' ".$rootWhere.$this->coreOrderBy;
-		} else {
-			$q = $this->core.$teamSecurityClause.$this->coreWhere.$rootWhere.$this->coreOrderBy;
-		}
-		$r = $this->db->query($q);
-		$return = array();
-
-		$found = array();
-		while($a = $this->db->fetchByAssoc($r)) {
-			if ((($a['folder_type'] == $myEmailTypeString) ||
-				($a['folder_type'] == $myDraftsTypeString) ||
-				($a['folder_type'] == $mySentEmailTypeString)) &&
-				($a['created_by'] != $current_user->id)) {
-
-				continue;
-			} // if
-			if (!isset($found[$a['id']])) {
-                $found[$a['id']] = true;
-			    $return[] = $a;
-			}
-		}
-		return $return;
+		else return false;
+		return true;
 	}
   
 

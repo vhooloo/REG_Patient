@@ -1,13 +1,30 @@
 {literal}
 <style type="text/css">
-table.myTable { border-collapse:collapse; }
-table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
+table.view { border-collapse:collapse; }
+table.view td, table.view th { border:1px solid  rgb(171, 195, 215);padding:5px; } 
+table.view tr:nth-of-type(odd) {
+ 
+  background-color: #def;
+}
 </style>
 {/literal}
 
 {literal}
 <script type="text/javascript">
 	if (typeof jQuery == "undefined") document.write("<script src='custom/include/jquery/jquery.min.js'></" + "script>");
+</script>
+
+<script type="text/javascript"> <!-- hide unneeded artifacts -->
+var a = document.getElementById( "shortcuts" );
+a.style.display = "none";
+a = document.getElementById( "lastView" );
+a.style.display = "none";
+a = document.getElementById( "globalLinks" );
+a.style.display = "none";
+a = document.getElementById( "sitemapLink" );
+a.style.display = "none";
+a = document.getElementById( "search" );
+a.style.display = "none";
 </script>
 
 <script>
@@ -184,11 +201,18 @@ function check_date(element){
 {/literal}
 
 
-
+<script> <!-- PHP ONLY -->
 {php}
 
 //session_start();
 // store session data
+// get all assigned template vars
+//echo 'here';
+//$all_tpl_vars = $this->get_template_vars('myuser');
+
+// take a look at them
+//print_r($all_tpl_vars);
+
 if (!empty($_POST['regnamesort'])) $_SESSION['regnamesort']=$_POST['regnamesort'];
 
 //var_dump($_SESSION);
@@ -208,28 +232,41 @@ if (!empty($_POST['utssort']) )  $this->assign("utssel",  $_POST['utssort'] ) ;
 if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ; 
 
 
+//set up the matrix of ort terms
+$ort_terms[] = array( 'TAG' => 'ORT-1A', 'DOM' => 'Family History of Substance Abuse (Alcohol)', 'FEM' => '1', 'MALE' => '3');
+$ort_terms[] = array( 'TAG' => 'ORT-1B', 'DOM' => 'Family History of Substance Abuse (Illegal Drugs)', 'FEM' => '2', 'MALE' => '3');
+$ort_terms[] = array( 'TAG' => 'ORT-1C', 'DOM' => 'Family History of Substance Abuse (Prescription Drugs) ', 'FEM' => '4', 'MALE' => '4');
+$ort_terms[] = array( 'TAG' => 'ORT-2A', 'DOM' => 'Personal History of Substance Abuse (Alcohol) ', 'FEM' => '3', 'MALE' => '3');
+$ort_terms[] = array( 'TAG' => 'ORT-2B', 'DOM' => 'Personal History of Substance Abuse (Illegal Drugs', 'FEM' => '4', 'MALE' => '4');
+$ort_terms[] = array( 'TAG' => 'ORT-2C', 'DOM' => 'Personal History of Substance Abuse (Prescription Drugs) ', 'FEM' => '5', 'MALE' => '5');
+$ort_terms[] = array( 'TAG' => 'ORT-3', 'DOM' => 'Age (Age 1-45) ', 'FEM' => '1', 'MALE' => '1');
+$ort_terms[] = array( 'TAG' => 'ORT-4', 'DOM' => 'History of Preadolescent Sexual Abuse', 'FEM' => '3', 'MALE' => '0');
+$ort_terms[] = array( 'TAG' => 'ORT-5A', 'DOM' => 'Psychological Disease (Attention Deficit Disorder, (Obsessive Compulsive Disorder, Bipolar, Schizophrenia) ', 'FEM' => '2', 'MALE' => '2');
+$ort_terms[] = array( 'TAG' => 'ORT-5B', 'DOM' => 'Psychological Disease (Depression) ', 'FEM' => '1', 'MALE' => '1');
 
+$this->assign("ort_terms",  $ort_terms );
 //if (document.forms["mylist"]["last_pcp_visit_c1"].value == null)
 {/php}
-
+</script>
 
 
 <form name="mylist" method="POST" action="index.php?module=REG_Patient&action=listview" onsubmit="">
 
 
-<div id="demo">
-<h1>TOPCARE – Individualized Opioid Risk Profile</h1>
-</div>
 
-<h2> Patient Name <input name = "ptname" id = "ptname" value = "" >
-MRN <input name = "mrn" id = "mrn" value = "" >
-Clinical Site<input name = "clinsite" id = "clinsite" value = "" > 
-Based on Intake Assessment by NCM <input name = "ncm" id = "ncm" value = "" >
-On <input name = "assdate" id = "assdate" value = "" > </h2>
+<div id="demo" style="text-align:center;line-height: 400%;" >
+<h1>TOPCARE – Individualized Opioid Risk Profile </h1>
+</div>
+<div id="demo1" style="text-align:center;line-height: 400%;" >
+<h2> Patient Name <input name = "ptname" id = "ptname" value = "{$patdata.lname},{$patdata.fname}" >
+MRN <input name = "mrn" id = "mrn" value = "{$patdata.mrn}" >
+Clinical Site <input name = "clinsite" id = "clinsite" value = "{$myrisk->pid}" > 
+Based on Intake Assessment by NCM <input name = "ncm" id = "ncm" value = "{$myuser->full_name}" >
+On <input name = "assdate" id = "assdate" value = "" > </h2> </div>
 
 <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
 
-<table  width="100%" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="myTable">
+<table  width="100%" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
     <thead>
     <tr height = "20">
 		<th width="10%" scope="col" data-sort="string">    <div align="left" width="100%" style="white-space: normal;">  
@@ -244,119 +281,50 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 	<tbody>
 	
 
-
-	 
-	     <tr  height="20">
-		    <td  style="border:1px solid black;" valign="top" align="left" scope="row"> ORT </a> </td>
+	     <tr class="oddListRowS1" height="20">
+		    <td  valign="top" align="left" scope="row"> ORT </a> </td>
 			<td  valign="top" align="left"> Addiction and Diversion Risk  </td>
             <td class="" valign="top" align="left"> Scoring</td>
 			<td class="" valign="top" align="left"> Questionnaire </td>	
             <td class="" valign="top" align="left"> </td>
 			<td class="" valign="top" align="left">	</td>	  
          </tr>
-
-		<tr  height="20">
-		    <td class="" valign="top" align="left" scope="row"> ORT-1A </a> </td>
-			<td class="" valign="top" align="left"> Family History of Substance Abuse (Alcohol)  </td>
-            <td class="" valign="top" align="left"> If F = 1, else if M = 3</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
-         </tr>
-
-		 <tr  height="20">
-		    <td class="" valign="top" align="left" scope="row">ORT-1B. </a> </td>
-			<td class="" valign="top" align="left"> Family History of Substance Abuse (Illegal Drugs)	  </td>
-            <td class="" valign="top" align="left"> If F = 2, else if M = 3</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
-         </tr>
 		 
-	<tr  height="20">
-		    <td class="" valign="top" align="left" scope="row">ORT-1C. </a> </td>
-			<td class="" valign="top" align="left">  Family History of Substance Abuse (Prescription Drugs)	  </td>
-            <td class="" valign="top" align="left"> If F = 4, else if M = 4</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
+		 {foreach name=myrowIteration from=$ort_terms key=id item=myrowData}
+
+	 
+	     <tr class="oddListRowS1" height="20">
+		    <td  valign="top" align="left" scope="row"> {$myrowData.TAG} </a> </td>
+			<td  valign="top" align="left"> {$myrowData.DOM}  </td>
+            <td class="" valign="top" align="left"> {$myrowData.FEM}, {$myrowData.MALE}</td>
+			<td class="" valign="top" align="left"> 
+				<input type="checkbox" id="{$myrowData.TAG}_check" name ="{$myrowData.TAG}_check" 
+					onclick="if(this.checked) document.getElementById('{$myrowData.TAG}_val').value = ('{$patdata.gender}' == 'female' ? '{$myrowData.FEM}' : '{$myrowData.MALE}' ); else document.getElementById('{$myrowData.TAG}_val').value = 0;document.getElementById('ORT_SUM').value = parseInt(document.getElementById('ORT-1A_val').value) + parseInt(document.getElementById('ORT-1B_val').value) +parseInt(document.getElementById('ORT-1C_val').value) +parseInt(document.getElementById('ORT-2A_val').value) +parseInt(document.getElementById('ORT-2B_val').value) +parseInt(document.getElementById('ORT-2C_val').value) +parseInt(document.getElementById('ORT-3_val').value) +parseInt(document.getElementById('ORT-4_val').value)+parseInt(document.getElementById('ORT-5A_val').value)+parseInt(document.getElementById('ORT-5B_val').value); if (parseInt(document.getElementById('ORT_SUM').value) <= 7) document.getElementById('ORT_SUM').style.backgroundColor = 'yellow';   else  document.getElementById('ORT_SUM').style.backgroundColor = 'red';  if (parseInt(document.getElementById('ORT_SUM').value) <= 3) document.getElementById('ORT_SUM').style.backgroundColor = 'green';    "> </td>	
+            <td class="" valign="top" align="left"> 
+				<input type="input" id="{$myrowData.TAG}_val" name ="{$myrowData.TAG}_val" value = '0' onchange=""> </td>
+			<td class="" valign="top" align="left">	</td>		  
          </tr>
-	<tr  height="20">
-		    <td class="" valign="top" align="left" scope="row">ORT-2A. </a> </td>
-			<td class="" valign="top" align="left">  Personal History of Substance Abuse (Alcohol)	  </td>
-            <td class="" valign="top" align="left"> If F = 3, else if M = 3</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
-         </tr>
-	<tr  height="20">
-		    <td class="" valign="top" align="left" scope="row">ORT-2B. </a> </td>
-			<td class="" valign="top" align="left"> Personal History of Substance Abuse (Illegal Drugs)	  </td>
-            <td class="" valign="top" align="left"> If F = 4, else if M = 4</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
-         </tr>
-	<tr  height="20">
-		    <td class="" valign="top" align="left" scope="row">ORT-2C. </a> </td>
-			<td class="" valign="top" align="left"> Personal History of Substance Abuse (Prescription Drugs)  </td>
-            <td class="" valign="top" align="left">	If F = 5, else if M = 5</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
-         </tr>
-	<tr  height="20">
-		    <td class="" valign="top" align="left" scope="row">ORT-3. </a> </td>
-			<td class="" valign="top" align="left">  Age (Age 1-45)	  </td>
-            <td class="" valign="top" align="left"> If F = 1, else if M = 1</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
-         </tr>
-	<tr  height="20">
-		    <td class="" valign="top" align="left" scope="row">ORT-4. </a> </td>
-			<td class="" valign="top" align="left"> History of Preadolescent Sexual Abuse  </td>
-            <td class="" valign="top" align="left">	If F = 3, else if M = 0</td>
-			<td class="" valign="top" align="left">  </td>	
-            <td class="" valign="top" align="left"> </td>
-			<td class="" valign="top" align="left">	</td>	  
-         </tr>
-	<tr  height="20">
-				<td class="" valign="top" align="left" scope="row">ORT-5A. </a> </td>
-				<td class="" valign="top" align="left"> Psychological Disease (Attention Deficit Disorder, (Obsessive Compulsive Disorder, Bipolar, Schizophrenia)	  </td>
-				<td class="" valign="top" align="left"> If F = 2, else if M = 2</td>
-				<td class="" valign="top" align="left">  </td>	
-				<td class="" valign="top" align="left"> </td>
-				<td class="" valign="top" align="left">	</td>	  
-			 </tr>
-		<tr  height="20">
-				<td class="" valign="top" align="left" scope="row">ORT-5B. </a> </td>
-				<td class="" valign="top" align="left">  Psychological Disease  (Depression)  </td>
-				<td class="" valign="top" align="left">	If F = 1, else if M = 1</td>
-				<td class="" valign="top" align="left">  </td>	
-				<td class="" valign="top" align="left"> </td>
-				<td class="" valign="top" align="left">	</td>	  
-			 </tr>
-		<tr  height="20">
+
+		{/foreach}
+
+		
+		<tr class="oddListRowS1" height="20">
 				<td class="" valign="top" align="left" scope="row">ORT-SUM	</a> </td>
 				<td class="" valign="top" align="left"> </td>
 				<td class="" valign="top" align="left"> Sum of Above </td>
 				<td class="" valign="top" align="left"> Questionnaire </td>
-				<td class="" valign="top" align="left"  >  <select style="background-color:green" 
+				<td class="" valign="top" align="left"  >  <input style="background-color:green; width:100px;" name="ORT_SUM" id="ORT_SUM" value = "0"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
-					<option value="0-3" style="background-color:green">0-3</option>
-					<option value="4-7" style="background-color:#fc0">4-7</option>
-					<option value="gt7" style="background-color:red">>7</option>
-					</select> </td>	
+					
 				<td class="" valign="top" align="left">	</td>	  
 			 </tr>
 
-		<tr  height="20">
+		<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">MEDD</a></td>
 	  <td class="" valign="top" align="left">Safety</td>
 	  <td class="" valign="top" align="left">See Calculator</td>
 	  <td class="" valign="top" align="left">Medication List</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">&lt 50</option>
 					<option value="4-7" style="background-color:#fc0">51-100</option>
@@ -364,7 +332,7 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select> </td>	
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Pulmonary Disease</a></td>
 	  <td class="" valign="top" align="left">Safety	•</td>
 	  <td class="" valign="top" align="left">•	OSA = 1
@@ -372,20 +340,20 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 		•	COPD = 1
 		Sum of above</td>
 	  <td class="" valign="top" align="left">Chart, Interview</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;" 
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
-					<option value="0-3" style="background-color:green">1</option>
-					<option value="4-7" style="background-color:#fc0">2</option>
-					<option value="gt7" style="background-color:red"> 3</option>
+					<option value="0-3" style="background-color:green">1   &nbsp     </option>
+					<option value="4-7" style="background-color:#fc0">2   &nbsp      </option>
+					<option value="gt7" style="background-color:red"> 3 &nbsp     </option>
 					</select></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Current Rx’d Other Sedating Medications</a></td>
 	  <td class="" valign="top" align="left">Safety</td>
 	  <td class="" valign="top" align="left">Sum of Medications e.g. Benzos, etc.</td>
 	  <td class="" valign="top" align="left">Medication List</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;" 
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">None</option>
 					<option value="4-7" style="background-color:#fc0">1</option>
@@ -393,12 +361,12 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">H/o of having Opioids stopped by another provider involuntarily</a></td>
 	  <td class="" valign="top" align="left">Addiction & Diversion Risk</td>
 	  <td class="" valign="top" align="left">Yes vs. No</td>
 	  <td class="" valign="top" align="left">Chart, Interview</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">No</option>
 					<option value="4-7" style="background-color:#fc0">Yes</option>
@@ -406,13 +374,13 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Preoccupation with Medications</a></td>
 	  <td class="" valign="top" align="left">Addiction
 		& Diversion Risk</td>
 	  <td class="" valign="top" align="left">Yes vs. No</td>
 	  <td class="" valign="top" align="left">Chart, Interview</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">No</option>
 					<option value="4-7" style="background-color:#fc0">Yes</option>
@@ -420,12 +388,12 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Unstable Social Environment</a></td>
 	  <td class="" valign="top" align="left">Addiction & Diversion Risk</td>
 	  <td class="" valign="top" align="left">Yes vs. No</td>
 	  <td class="" valign="top" align="left">Chart, Interview</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">No</option>
 					
@@ -433,12 +401,12 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Insecure Medication Storage</a></td>
 	  <td class="" valign="top" align="left">Safety</td>
 	  <td class="" valign="top" align="left">Yes vs. No</td>
 	  <td class="" valign="top" align="left">Chart, Interview</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">No</option>
 					
@@ -446,13 +414,13 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select></td></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Evidence of Prior aberrant behaviors via chart review</a></td>
 	  <td class="" valign="top" align="left">Addiction
 		& Diversion Risk</td>
 	  <td class="" valign="top" align="left">Yes vs. No</td>
 	  <td class="" valign="top" align="left">Chart, Interview</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">No</option>
 					
@@ -460,12 +428,12 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select></td></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">NCM Clinical Risk Assessment  Score</a></td>
 	  <td class="" valign="top" align="left">Overall risk</td>
 	  <td class="" valign="top" align="left">0 (Lowest) -10 (Highest)</td>
 	  <td class="" valign="top" align="left">NCM</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green; width:100px;"
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">0-3</option>
 					<option value="4-7" style="background-color:#fc0">4-7</option>
@@ -473,12 +441,12 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 					</select></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
-	<tr  height="20">
+	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Final Clinical Risk Assessment Score</a></td>
 	  <td class="" valign="top" align="left">Overall risk</td>
 	  <td class="" valign="top" align="left">0 (Lowest) -10 (Highest)</td>
 	  <td class="" valign="top" align="left">Provider / Team</td>
-	  <td class="" valign="top" align="left"><select style="background-color:green" 
+	  <td class="" valign="top" align="left"><select style="background-color:green;width:100px;" 
 				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
 					<option value="0-3" style="background-color:green">0-3</option>
 					<option value="4-7" style="background-color:#fc0">4-7</option>
@@ -513,6 +481,16 @@ On <input name = "assdate" id = "assdate" value = "" > </h2>
 	$(window).load(function() {
 	   if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
 	   if ( {/literal} {$smarty.session.regnamesort} != "" ) sortTable('{$smarty.session.regnamesort}'); {literal}
+	   var a = document.getElementById( "shortcuts" );
+a.style.display = "none";
+a = document.getElementById( "lastView" );
+a.style.display = "none";
+a = document.getElementById( "globalLinks" );
+a.style.display = "none";
+a = document.getElementById( "sitemapLink" );
+a.style.display = "none";
+a = document.getElementById( "search" );
+a.style.display = "none";
     });
 	
 </script>

@@ -1,6 +1,6 @@
 <?PHP
 
-require_once('custom/modules/REG_Patient/REG_PatientRiskView.php');
+require_once('custom/modules/REG_Patient/REG_PatientListView.php');
 require_once('include/MVC/View/views/view.list.php');
 require_once('custom/modules/REG_Patient/RiskEvaluation.php');
 

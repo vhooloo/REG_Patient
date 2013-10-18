@@ -4,6 +4,19 @@
 <script type="text/javascript">
 	if (typeof jQuery == "undefined") document.write("<script src='custom/include/jquery/jquery.min.js'></" + "script>");
 </script>
+<script type="text/javascript">
+var a = document.getElementById( "shortcuts" );
+a.style.display = "none";
+a = document.getElementById( "lastView" );
+a.style.display = "none";
+a = document.getElementById( "globalLinks" );
+a.style.display = "none";
+a = document.getElementById( "sitemapLink" );
+a.style.display = "none";
+a = document.getElementById( "search" );
+a.style.display = "none";
+</script>
+
 
 <script>
 function myFunction()
@@ -42,9 +55,11 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
 {/literal}
 	document.getElementById("last_pcp_visit_c1").value = "{$smarty.post.last_pcp_visit_c1}";
 	document.getElementById("last_pcp_visit_c2").value = "{$smarty.post.last_pcp_visit_c2}";
+{literal}
 }
-</script>
 
+</script>
+{/literal}
 
 <link type="text/css" rel="stylesheet" href="custom/topcarejs/jquery.dropdown.css" />
 <script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script>
@@ -276,7 +291,8 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 				<div id="{$myrowData.patid}" class="dropdown dropdown-tip"> <ul class="dropdown-menu">  
 				  <li><a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record={$myrowData.patid}">Refill</a></li>  
 				  <li><a href="./index.php?module=REG_Patient&action=PatientEncounter&record={$myrowData.patid}">Encounter</a></li>
-				  <li><a href="./index.php?module=REG_Patient&action=TreatmentPlan&record={$myrowData.patid}">Treatment Plan</a></li> </ul> </div><input type="button" value="Action" data-dropdown="#{$myrowData.patid}" class="">	
+				  <li><a href="./index.php?module=REG_Patient&action=TreatmentPlan&record={$myrowData.patid}">Treatment Plan</a></li> 
+				  <li><a href="./index.php?module=REG_Patient&action=riskevaluation&patid={$myrowData.patid}">Risk Evaluation</a></li></ul> </div><input type="button" value="Action" data-dropdown="#{$myrowData.patid}" class="">	
 			</td>	  
          </tr>
 
