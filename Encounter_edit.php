@@ -78,7 +78,7 @@ global $app_list_strings;
 global $app_strings;
 require_once('include/DetailView/DetailView2.php');
 require_once('include/EditView/EditView2.php');
-echo "Test":
+echo "Test";
 TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------> to prevent reg_encounter edit view from caching
 		$this->ss = new Sugar_Smarty();
 		$this->dv3 = new EditView();
@@ -94,6 +94,13 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$this->bean3->retrieve($enc_id);
 		$flag3=1;
 		
+		}
+		
+		if(isset($_REQUEST['record'])){     //added - we also need to get the bean for patient - missing in original version
+			$rec_id = $_REQUEST['record'];
+			$this->bean = new REG_Patient();
+			$this->bean->retrieve($rec_id);
+			//var_dump($this->bean);
 		}
 		//var_dump($this->bean3);
 		//$this->bean3->retrieve('e7370d19-2754-77fa-10ee-519530915b6f');

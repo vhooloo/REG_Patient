@@ -14,18 +14,7 @@ table.view tr:nth-of-type(odd) {
 	if (typeof jQuery == "undefined") document.write("<script src='custom/include/jquery/jquery.min.js'></" + "script>");
 </script>
 
-<script type="text/javascript"> <!-- hide unneeded artifacts -->
-var a = document.getElementById( "shortcuts" );
-a.style.display = "none";
-a = document.getElementById( "lastView" );
-a.style.display = "none";
-a = document.getElementById( "globalLinks" );
-a.style.display = "none";
-a = document.getElementById( "sitemapLink" );
-a.style.display = "none";
-a = document.getElementById( "search" );
-a.style.display = "none";
-</script>
+
 
 <script>
 function myFunction()
@@ -201,17 +190,18 @@ function check_date(element){
 {/literal}
 
 
-<script> <!-- PHP ONLY -->
+<script> <!-- PHP -->
 {php}
 
 //session_start();
 // store session data
 // get all assigned template vars
-//echo 'here';
-//$all_tpl_vars = $this->get_template_vars('myuser');
+
+//$myvars = $this->get_template_vars('myrisk');
+//print_r( $myvars->ort1a);
 
 // take a look at them
-//print_r($all_tpl_vars);
+//print_r($this->myrisk->ort1a);
 
 if (!empty($_POST['regnamesort'])) $_SESSION['regnamesort']=$_POST['regnamesort'];
 
@@ -233,22 +223,43 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 
 
 //set up the matrix of ort terms
-$ort_terms[] = array( 'TAG' => 'ORT-1A', 'DOM' => 'Family History of Substance Abuse (Alcohol)', 'FEM' => '1', 'MALE' => '3');
-$ort_terms[] = array( 'TAG' => 'ORT-1B', 'DOM' => 'Family History of Substance Abuse (Illegal Drugs)', 'FEM' => '2', 'MALE' => '3');
-$ort_terms[] = array( 'TAG' => 'ORT-1C', 'DOM' => 'Family History of Substance Abuse (Prescription Drugs) ', 'FEM' => '4', 'MALE' => '4');
-$ort_terms[] = array( 'TAG' => 'ORT-2A', 'DOM' => 'Personal History of Substance Abuse (Alcohol) ', 'FEM' => '3', 'MALE' => '3');
-$ort_terms[] = array( 'TAG' => 'ORT-2B', 'DOM' => 'Personal History of Substance Abuse (Illegal Drugs', 'FEM' => '4', 'MALE' => '4');
-$ort_terms[] = array( 'TAG' => 'ORT-2C', 'DOM' => 'Personal History of Substance Abuse (Prescription Drugs) ', 'FEM' => '5', 'MALE' => '5');
-$ort_terms[] = array( 'TAG' => 'ORT-3', 'DOM' => 'Age (Age 1-45) ', 'FEM' => '1', 'MALE' => '1');
-$ort_terms[] = array( 'TAG' => 'ORT-4', 'DOM' => 'History of Preadolescent Sexual Abuse', 'FEM' => '3', 'MALE' => '0');
-$ort_terms[] = array( 'TAG' => 'ORT-5A', 'DOM' => 'Psychological Disease (Attention Deficit Disorder, (Obsessive Compulsive Disorder, Bipolar, Schizophrenia) ', 'FEM' => '2', 'MALE' => '2');
-$ort_terms[] = array( 'TAG' => 'ORT-5B', 'DOM' => 'Psychological Disease (Depression) ', 'FEM' => '1', 'MALE' => '1');
+$ort_terms[] = array( 'TAG' => 'ORT-1A', 'DOM' => 'Family History of Substance Abuse (Alcohol)', 'FEM' => '1', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort1a);
+$ort_terms[] = array( 'TAG' => 'ORT-1B', 'DOM' => 'Family History of Substance Abuse (Illegal Drugs)', 'FEM' => '2', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort1b);
+$ort_terms[] = array( 'TAG' => 'ORT-1C', 'DOM' => 'Family History of Substance Abuse (Prescription Drugs) ', 'FEM' => '4', 'MALE' => '4', 'VAL'=>$this->get_template_vars('myrisk')->ort1c);
+$ort_terms[] = array( 'TAG' => 'ORT-2A', 'DOM' => 'Personal History of Substance Abuse (Alcohol) ', 'FEM' => '3', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort2a);
+$ort_terms[] = array( 'TAG' => 'ORT-2B', 'DOM' => 'Personal History of Substance Abuse (Illegal Drugs', 'FEM' => '4', 'MALE' => '4', 'VAL' => $this->get_template_vars('myrisk')->ort2b);
+$ort_terms[] = array( 'TAG' => 'ORT-2C', 'DOM' => 'Personal History of Substance Abuse (Prescription Drugs) ', 'FEM' => '5', 'MALE' => '5', 'VAL' => $this->get_template_vars('myrisk')->ort2c);
+$ort_terms[] = array( 'TAG' => 'ORT-3', 'DOM' => 'Age (Age 1-45) ', 'FEM' => '1', 'MALE' => '1', 'VAL' => $this->get_template_vars('myrisk')->ort3);
+$ort_terms[] = array( 'TAG' => 'ORT-4', 'DOM' => 'History of Preadolescent Sexual Abuse', 'FEM' => '3', 'MALE' => '0', 'VAL' => $this->get_template_vars('myrisk')->ort4);
+$ort_terms[] = array( 'TAG' => 'ORT-5A', 'DOM' => 'Psychological Disease (Attention Deficit Disorder, (Obsessive Compulsive Disorder, Bipolar, Schizophrenia) ', 'FEM' => '2', 'MALE' => '2', 'VAL' => $this->get_template_vars('myrisk')->ort5a);
+$ort_terms[] = array( 'TAG' => 'ORT-5B', 'DOM' => 'Psychological Disease (Depression) ', 'FEM' => '1', 'MALE' => '1', 'VAL' => $this->get_template_vars('myrisk')->ort5b);
 
 $this->assign("ort_terms",  $ort_terms );
+$this->assign("pt1",  "myrisk->" );
+$this->assign("pt2",  "id_c" );
+$myvars = $this->get_template_vars('');
+print_r( $myvars . "test");
 //if (document.forms["mylist"]["last_pcp_visit_c1"].value == null)
 {/php}
 </script>
 
+
+	<script type="text/javascript"> 
+	var a = document.getElementById( "shortcuts" );
+a.style.display = "none";
+a = document.getElementById( "lastView" );
+a.style.display = "none";
+a = document.getElementById( "globalLinks" );
+a.style.display = "none";
+a = document.getElementById( "sitemapLink" );
+a.style.display = "none";
+a = document.getElementById( "search" );
+a.style.display = "none"; 
+	
+
+	</script>
+	
+	
 
 <form name="mylist" method="POST" action="index.php?module=REG_Patient&action=listview" onsubmit="">
 
@@ -301,7 +312,7 @@ On <input name = "assdate" id = "assdate" value = "" > </h2> </div>
 				<input type="checkbox" id="{$myrowData.TAG}_check" name ="{$myrowData.TAG}_check" 
 					onclick="if(this.checked) document.getElementById('{$myrowData.TAG}_val').value = ('{$patdata.gender}' == 'female' ? '{$myrowData.FEM}' : '{$myrowData.MALE}' ); else document.getElementById('{$myrowData.TAG}_val').value = 0;document.getElementById('ORT_SUM').value = parseInt(document.getElementById('ORT-1A_val').value) + parseInt(document.getElementById('ORT-1B_val').value) +parseInt(document.getElementById('ORT-1C_val').value) +parseInt(document.getElementById('ORT-2A_val').value) +parseInt(document.getElementById('ORT-2B_val').value) +parseInt(document.getElementById('ORT-2C_val').value) +parseInt(document.getElementById('ORT-3_val').value) +parseInt(document.getElementById('ORT-4_val').value)+parseInt(document.getElementById('ORT-5A_val').value)+parseInt(document.getElementById('ORT-5B_val').value); if (parseInt(document.getElementById('ORT_SUM').value) <= 7) document.getElementById('ORT_SUM').style.backgroundColor = 'yellow';   else  document.getElementById('ORT_SUM').style.backgroundColor = 'red';  if (parseInt(document.getElementById('ORT_SUM').value) <= 3) document.getElementById('ORT_SUM').style.backgroundColor = 'green';    "> </td>	
             <td class="" valign="top" align="left"> 
-				<input type="input" id="{$myrowData.TAG}_val" name ="{$myrowData.TAG}_val" value = '0' onchange=""> </td>
+				<input type="input" id="{$myrowData.TAG}_val" name ="{$myrowData.TAG}_val" value = '0' onchange="" style="width:100px;"> </td>
 			<td class="" valign="top" align="left">	</td>		  
          </tr>
 
@@ -468,6 +479,18 @@ On <input name = "assdate" id = "assdate" value = "" > </h2> </div>
 
 </form>
 
+<script type="text/javascript"> <!-- FOR UPDATES, prefill existing values ----->
+
+	{foreach name=myrowIteration from=$ort_terms key=id item=myrowData}
+	  if('{$myrowData.VAL}' != '') {ldelim} 
+		document.getElementById('{$myrowData.TAG}_val').value = ('{$patdata.gender}' == 'female' ? '{$myrowData.FEM}' : '{$myrowData.MALE}' ); 
+		document.getElementById('{$myrowData.TAG}_check').checked = true;
+	  {rdelim} 
+	  else document.getElementById('{$myrowData.TAG}_val').value = '0';
+	  
+    {/foreach} 
+
+</script>
 
 {literal}
 <script>
@@ -479,18 +502,10 @@ On <input name = "assdate" id = "assdate" value = "" > </h2> </div>
     //});
 
 	$(window).load(function() {
-	   if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
-	   if ( {/literal} {$smarty.session.regnamesort} != "" ) sortTable('{$smarty.session.regnamesort}'); {literal}
-	   var a = document.getElementById( "shortcuts" );
-a.style.display = "none";
-a = document.getElementById( "lastView" );
-a.style.display = "none";
-a = document.getElementById( "globalLinks" );
-a.style.display = "none";
-a = document.getElementById( "sitemapLink" );
-a.style.display = "none";
-a = document.getElementById( "search" );
-a.style.display = "none";
+	   
+
+	 
+   
     });
 	
 </script>

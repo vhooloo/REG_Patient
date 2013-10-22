@@ -1,11 +1,4 @@
 <?php
-session_start();
-$_SESSION['regnamesort'] = $_GET['regnamesort'];
-?>
-
-<input name="regnamesort"   value="yeehah" id="regnamesort">
-
-<?php
 global $theme;
 $theme_path="themes/".$theme."/";
 $image_path=$theme_path."images/";
@@ -34,14 +27,10 @@ var sugar_cache_dir = \'cache/\';
 var module_sugar_grp1 = \'REG_Patient\';
 var action_sugar_grp1 = \'ajaxui\';
 </script>
-<script src="cache/themes/Sugar5/js/style.js?v=GogGz9QEok1-e0Ft6rexxQ" type="text/javascript"></script>
-
-
-
+<script src="cache/themes/Sugar5/js/style.js?v=GogGz9QEok1-e0Ft6rexxQ" type="text/javascript"></script>	
 <script src="cache/include/javascript/sugar_field_grp.js?v=GogGz9QEok1-e0Ft6rexxQ" type="text/javascript"></script>
-<link href="themes/Sugar5/images/sugar_icon.ico?v=GogGz9QEok1-e0Ft6rexxQ" type="image/x-icon" rel="icon"><script id="yui_3_3_0_1_13788423908072" type="text/javascript" charset="utf-8" src="http://yui.yahooapis.com/combo?3.3.0/build/oop/oop-min.js&amp;3.3.0/build/event-custom/event-custom-base-min.js&amp;3.3.0/build/io/io-base-min.js"></script>';
-
-
+<link href="themes/Sugar5/images/sugar_icon.ico?v=GogGz9QEok1-e0Ft6rexxQ" type="image/x-icon" rel="icon"><script id="yui_3_3_0_1_13788423908072" type="text/javascript" charset="utf-8" src="http://yui.yahooapis.com/combo?3.3.0/build/oop/oop-min.js&amp;3.3.0/build/event-custom/event-custom-base-min.js&amp;3.3.0/build/io/io-base-min.js"></script>';	
+	
 echo "<script type='text/javascript'>
 
 		
@@ -69,28 +58,21 @@ echo "<script type='text/javascript'>
 			
 	
 	</script>
-	</head>";
+	</head>";	
 	
-
-
-
-
-
 echo '<script src="custom/jquery/jquery-1.9.1.js"></script>
 	<script src="custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js"></script>
 	<script src="custom/jquery/accordion/js/jquery-migrate-1.2.1.min.js"></script>';
 
 echo "<link rel='stylesheet' type='text/css' href='../themes/" . $theme . "/style.css' />";
 
-
 global $mod_strings;
 global $app_list_strings;
 global $app_strings;
 require_once('include/DetailView/DetailView2.php');
 require_once('include/EditView/EditView2.php');
-echo "Test";
 
-
+	
 TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------> to prevent reg_encounter edit view from caching
 		$this->ss = new Sugar_Smarty();
 		$this->dv3 = new EditView();
@@ -105,18 +87,26 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$enc_id = $_REQUEST['enc_id'];
 		$this->bean3->retrieve($enc_id);
 		$flag3=1;
+
 		
 		}
-		echo 'not here' + $this->bean->name + $this->bean->id + 'stuff';
-		print_r(get_defined_vars());
-		//var_dump($this->bean3);
+		if(isset($_REQUEST['record'])){
+			$rec_id = $_REQUEST['record'];
+			$this->bean = new REG_Patient();
+			$this->bean->retrieve($rec_id);
+			//var_dump($this->bean);
+		}
 		//$this->bean3->retrieve('e7370d19-2754-77fa-10ee-519530915b6f');
 		//var_dump($this->bean3);
 		//-----------------
 		//include/EditView/EditView.tpl 
 		//custom/modules/REG_Encounter/tpls/PR_EditView.tpl
+
 		$query2a = "SELECT assistant FROM reg_patient where id = '".$this->bean->id."' AND deleted!=1" ;
+
 		$result = $this->bean->db->query($query2a, true);
+		
+ 
 
 		$value = null;
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
@@ -124,7 +114,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			$value = $row['assistant'];
 			echo "<script> set_session('indication','".$value."');</script>";		
 		}
-		echo 'query2b';
+		
 		$query2b = "SELECT mrn_c FROM reg_patient_cstm where id_c = '".$this->bean->id."'" ;
 		$resultb = $this->bean->db->query($query2b, true);		
 		if(($rowb = $this->bean->db->fetchByAssoc($resultb) ) != null )
@@ -136,7 +126,6 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		}
 		echo "<script> set_session('mrn','".$mrn."');</script>";
 		
-		echo 'query';
 		
 		$this->dv3->setup('REG_Encounter', $this->bean3, $encounterMetadataFile, get_custom_file_if_exists('custom/modules/REG_Encounter/tpls/PR_EditView.tpl'));
 		
@@ -150,7 +139,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		if(!strcmp($type,"PEnc")){
 		$typevalue="Patient Encounter";
 		
+		
+		
 		}
+		
+		
 		
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
@@ -159,8 +152,8 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		
 		echo $this->dv3->display("Encounter View");
 		
-		echo 'here';
-/***		
+		
+		
 
 		//logic for showing last values of fields having Last
 	if($flag3!=1 || ($flag3==1&&$this->bean3->id==null)){
@@ -195,7 +188,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		/*	if($this->bean3->history_c!=null){
 				echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
 				}
-			if($row['pills_bottle_disp_c']!=null){
+		*/	if($row['pills_bottle_disp_c']!=null){
 				echo "<script>document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'</script>";
 				}
 			if($row['risklvl_c']!=null){
@@ -343,7 +336,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 				$date1=strtotime($this->bean3->last_rx_generated_c);
 				echo "<script>document.getElementById('last_rx_generated_c').value='".date('m/d/Y',$date1)."'</script>";
 			}
-		 
+		*/ 
 			
 		 
 			if($this->bean3->last_uts_c!=null){
@@ -514,8 +507,5 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 	  
 	</script>";
 		
-	
-	*/
-	
 
 ?>	

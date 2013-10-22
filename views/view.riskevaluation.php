@@ -50,6 +50,7 @@ class REG_PatientViewRiskEvaluation extends ViewEdit {
 		$smarty->assign("myrisk", $risk);
         global $current_user;
 		$smarty->assign("myuser", $current_user);
+		$smarty->assign("test", "test");
 		
         $smarty->display('custom/modules/REG_Patient/tpls/RiskEvaluationREG_Patient.tpl');
 		
