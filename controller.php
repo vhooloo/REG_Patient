@@ -25,7 +25,7 @@ class REG_PatientController extends SugarController {
 		//$this->bean = new REG_PatientRiskView();
 		
 		$this->bean = new RiskEvaluation();
-		$GLOBALS['log']->fatal('finished risk');
+		
 	}
 }
 ?>

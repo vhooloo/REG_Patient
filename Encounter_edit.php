@@ -78,7 +78,7 @@ global $app_list_strings;
 global $app_strings;
 require_once('include/DetailView/DetailView2.php');
 require_once('include/EditView/EditView2.php');
-echo "Test";
+
 TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------> to prevent reg_encounter edit view from caching
 		$this->ss = new Sugar_Smarty();
 		$this->dv3 = new EditView();
@@ -151,7 +151,12 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		
 		echo $this->dv3->display("Encounter View");
 		
+		$queryprov = "SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = '" . $this->bean->id . "'";
+		$db = DBManagerFactory::getInstance();  
+		$provider = $db->query($queryprov); 
+		$provrow = $db->fetchRow($provider);
 		
+		$this->dv3->ss->assign("provrow", $provrow);
 		
 
 		//logic for showing last values of fields having Last
@@ -162,12 +167,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc" ;
 
 		$result = $this->bean->db->query($query2a, true); 
-		$queryprov = "SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = '" . $this->bean->id . "'";
-		$db = DBManagerFactory::getInstance();  
-		$provider = $db->query($queryprov); 
-		$provrow = $db->fetchRow($provider);
 		
-		$this->dv3->ss->assign("provrow", $provrow);
 		
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
 		{

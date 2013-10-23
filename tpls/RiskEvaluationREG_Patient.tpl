@@ -261,9 +261,11 @@ a.style.display = "none";
 	
 	
 
-<form name="mylist" method="POST" action="index.php?module=REG_Patient&action=listview" onsubmit="">
+<form name="mylist" method="POST" action="index.php?module=REG_Patient&action=SaveRisk" onsubmit="">
 
-
+<button> Save </button>
+<input name = "riskid" id = "riskid" value = "{$myrisk->id_c}" type="hidden" > 
+<input name = "pid" id = "pid" value = "{$pid}" type="hidden" > 
 
 <div id="demo" style="text-align:center;line-height: 400%;" >
 <h1>TOPCARE – Individualized Opioid Risk Profile </h1>

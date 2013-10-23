@@ -42,6 +42,7 @@ class REG_PatientViewRiskEvaluation extends ViewEdit {
 		if (!empty($_REQUEST['patid']) )	
 		{
 			$risk->getRisk($_REQUEST['patid']);
+			$smarty->assign("pid", $_REQUEST['patid']);
 		}
 		//echo 'request'.$_REQUEST['patid'];
 		//else return false; //param not found 
