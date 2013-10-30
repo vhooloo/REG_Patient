@@ -291,7 +291,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 				<div id="{$myrowData.patid}" class="dropdown dropdown-tip"> <ul class="dropdown-menu">  
 				  <li><a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record={$myrowData.patid}">Refill</a></li>  
 				  <li><a href="./index.php?module=REG_Patient&action=PatientEncounter&record={$myrowData.patid}">Encounter</a></li>
-				  <li><a href="./index.php?module=REG_Patient&action=TreatmentPlan&record={$myrowData.patid}">Treatment Plan</a></li> 
+				  <li><a href="./index.php?module=REG_Patient&action=treatmentplan&record={$myrowData.patid}">Treatment Plan</a></li> 
 				  <li><a href="./index.php?module=REG_Patient&action=riskevaluation&patid={$myrowData.patid}">Risk Evaluation</a></li></ul> </div><input type="button" value="Action" data-dropdown="#{$myrowData.patid}" class="">	
 			</td>	  
          </tr>
@@ -321,7 +321,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 
 	$(window).load(function() {
 	   if (document.getElementById('mysort').selectedIndex == 4 ) myFunction();
-	   if ( {/literal} {$smarty.session.regnamesort} != "" ) sortTable('{$smarty.session.regnamesort}'); {literal}
+	   if ( {/literal} "{$smarty.session.regnamesort}" != "" ) sortTable('{$smarty.session.regnamesort}'); {literal}
     });
 	
 </script>

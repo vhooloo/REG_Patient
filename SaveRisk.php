@@ -8,7 +8,8 @@ require_once('custom/modules/REG_Patient/RiskEvaluation.php');
 $focus = new RiskEvaluation();
 
 // if the id is set, then this is update, else generate new id
-var_dump($_POST);
+//var_dump($_POST);
+
 if(isset($_POST['ORT-1A_check'])  ) {
 	
 	if  (!empty($_POST['ORT-1A_check'])) $focus->ort1a = 1; 
@@ -77,43 +78,11 @@ else
 }
 
 $focus->save();
-echo "saved";
+
 
 ///////////////////////////////////////////////////////////////////////////////
-////	PAGE REDIRECTION;
+////	PAGE REDIRECTION; BAck to patient list
 ///////////////////////////////////////////////////////////////////////////////
-/*
-$return_id = $focus->id;
 
-if(empty($_POST['return_module'])) {
-	$return_module = "Emails";
-} else {
-	$return_module = $_POST['return_module'];
-}
-if(empty($_POST['return_action'])) {
-	$return_action = "DetailView";
-} else {
-	$return_action = $_POST['return_action'];
-}
-$GLOBALS['log']->debug("Saved record with id of ".$return_id);
-
-if($focus->type == 'draft') {
-	if($return_module == 'Emails') {
-		header("Location: index.php?module=$return_module&action=ListViewDrafts");
-	} else {
-        handleRedirect($return_id, 'Emails');
-	}
-} elseif($focus->type == 'out') {
-	if($return_module == 'Home') {
-		header('Location: index.php?module='.$return_module.'&action=index');
-	}
-	if(!empty($_REQUEST['return_id'])) {
-		$return_id = $_REQUEST['return_id'];
-	}
-	header('Location: index.php?action='.$return_action.'&module='.$return_module.'&record='.$return_id.'&assigned_user_id='.$current_user->id.'&type=inbound');
-} elseif(isset($_POST['return_id']) && $_POST['return_id'] != "") {
-	$return_id = $_POST['return_id'];
-}
-	header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
-*/
-	?>
+	header("Location: index.php?action=index&module=REG_Patient");
+?>

@@ -171,7 +171,7 @@ if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ;
 				<div id="{$myrowData.patid}" class="dropdown dropdown-tip"> <ul class="dropdown-menu">  
 				  <li><a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record={$myrowData.patid}">Refill</a></li>  
 				  <li><a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DPatientEncounter%26record%3D{$myrowData.patid}">Encounter</a></li>
-				  <li><a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3DTreatmentPlan%26record%3D{$myrowData.patid}">Treatment Plan</a></li> </ul> </div><input type="button" value="Action" data-dropdown="#{$myrowData.patid}" class="">	
+				  <li><a href="./index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3Dtreatmentplan%26record%3D{$myrowData.patid}">Treatment Plan</a></li> </ul> </div><input type="button" value="Action" data-dropdown="#{$myrowData.patid}" class="">	
 			</td>	  
          </tr>
 

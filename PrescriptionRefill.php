@@ -233,7 +233,7 @@ $metadataFile = $this->getMetaDataFile();
 		$provrow = $db->fetchRow($provider);
 		
 		$this->dv3->ss->assign("provrow", $provrow);
-
+		$this->dv3->ss->assign("notes_flag", "false");   //do not default notes
 		$result = $this->bean->db->query($query2a, true); 
 		
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )

@@ -90,10 +90,10 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$this->bean3->reg_patient_reg_encounterreg_patient_ida=$this->bean->id;
 		$flag3=0;
 		if(isset($_REQUEST['enc_id'])){
-		$enc_id = $_REQUEST['enc_id'];
-		$this->bean3->retrieve($enc_id);
-		$flag3=1;
-		
+			$enc_id = $_REQUEST['enc_id'];
+			$this->bean3->retrieve($enc_id);
+			$flag3=1;
+			
 		}
 		
 		if(isset($_REQUEST['record'])){     //added - we also need to get the bean for patient - missing in original version
@@ -149,7 +149,8 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
         echo "<div><font style='font-size: 15px; font-weight: bold'>".$typevalue." : " .$this->bean3->date_entered . " ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript:$(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value=''></input></div>";
 
 		
-		echo $this->dv3->display("Encounter View");
+		//echo $this->dv3->display("Encounter View");
+		
 		
 		$queryprov = "SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = '" . $this->bean->id . "'";
 		$db = DBManagerFactory::getInstance();  
@@ -157,6 +158,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$provrow = $db->fetchRow($provider);
 		
 		$this->dv3->ss->assign("provrow", $provrow);
+		$this->dv3->ss->assign("notes_flag", "true");   //show notes on view of previous 
 		
 
 		//logic for showing last values of fields having Last
@@ -164,6 +166,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		if($flag3==1){
 			echo "<script type='text/javascript'>alert('The RxRf does not exist. It will be saved as a new RxRf'); </script>";
 		}	
+		echo "in flag";
 		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc" ;
 
 		$result = $this->bean->db->query($query2a, true); 
@@ -171,6 +174,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
 		{
+		    echo "got row";
 		    $this->dv3->ss->assign("datarow", $row);
 			if($row['pcp_name_c']!=null){
 				
@@ -317,6 +321,18 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 	}	
 	else if($flag3==1){
 	
+	    
+		$query2b = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id = '{$enc_id}'";
+       
+		$result1 = $this->bean->db->query($query2b, true); 
+		
+		
+		if(($row1 = $this->bean->db->fetchRow($result1) ) != null )
+		{
+		    
+		    $this->dv3->ss->assign("datarow", $row1);
+	    }
+		
 		if($this->bean3->pcp_name_c!=null){
 				
 				echo "<script>document.getElementById('pcp_dummy').value='".$this->bean3->pcp_name_c."'; document.getElementById('pcp_name_c').value='".$this->bean3->pcp_name_c."'</script>";
@@ -416,7 +432,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			}	
 			
 			if($this->bean3->history_c!=null){
-				echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
+				//echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
 				}
 			if($this->bean3->pills_bottle_disp_c!=null){
 				echo "<script>document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."'</script>";
@@ -470,7 +486,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 	
 	
 	}
+	
+	echo $this->dv3->display("Encounter View");
+	
 	$ida = $this->bean->id;
+	
 	echo "<script type='text/javascript'>
  
 	var FormName= document.getElementById('EditView');

@@ -5,9 +5,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 /**
- * Store Risk Evaluation
+ * Store Treatment Plan
  */
-class RiskEvaluation  extends SugarBean {
+class TreatmentPlan  extends SugarBean {
 
 	// public attributes
 	var $id;
@@ -20,7 +20,7 @@ class RiskEvaluation  extends SugarBean {
 	var $date_modified;
 	var $deleted;
 
-	 var	$id_c; 					//char(36) NOT NULL,
+	/* var	$id_c; 					//char(36) NOT NULL,
 	 var	$pid;					//char(36) NOT NULL,
 	 var	$ort; 	               //varchar(12) DEFAULT NULL,
 	 var	$ort1a; 	               //varchar(12) DEFAULT NULL,
@@ -70,11 +70,11 @@ class RiskEvaluation  extends SugarBean {
 
 	// private attributes
 	var $_depth;
-
+*/
 	/**
 	 * Sole constructor
 	 */
-	function RiskEvaluation() {
+	function TreatmentPlan() {
 		$this->db = DBManagerFactory::getInstance();
 		parent::SugarBean();
 	}
@@ -138,7 +138,7 @@ class RiskEvaluation  extends SugarBean {
 
 	 */
 	 
-	function getRisk($patid) {
+	function getTreatmentPlan($patid) {
 		
     	$sql = "SELECT * FROM reg_patient_risk where pid = '"  . $patid . "'";
 

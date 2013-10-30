@@ -97,4 +97,8 @@ $layout_defs["REG_Patient"]["subpanel_setup"]['reg_treatment_plan_reg_patient'] 
   ),
 );
 
+
+//auto-generated file DO NOT EDIT
+$layout_defs['REG_Patient']['subpanel_setup']['reg_patient_reg_encounter']['override_subpanel_name'] = 'REG_Patient_subpanel_reg_patient_reg_encounter';
+
 ?>
