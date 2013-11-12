@@ -440,11 +440,13 @@ function datedropdown(name,label, data, id, prev)
 	var dataAdapter = new $.jqx.dataAdapter(source);
 	
 	
+	
+	
 	$("#jqxgrid").jqxGrid(
 	{
 		columnsheight: 35,
 		theme: 'office',
-		width: 1200,
+		width: 1210,
 		height: 600,
 		source: dataAdapter,
 		showfilterrow: true,
@@ -456,7 +458,7 @@ function datedropdown(name,label, data, id, prev)
 		columns: [
 		    { text: 'Active', filtertype: 'textbox', hidden: true, filtercondition: 'starts_with', datafield: 'active', width: 20, renderer:columnsrenderer, sortable: true },
 			{ text: 'Location', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'location', width: 80, renderer:columnsrenderer, sortable: true },
-			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 120, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer },
+			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 140, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer },
 			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110},
 			{ text: 'Refill', filtertype: 'date',  filterable:true, datafield: 'refill', width: 140, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true },
 			{ text: 'UTS', filtertype: 'date', filterable:true, datafield: 'uts',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
@@ -466,8 +468,12 @@ function datedropdown(name,label, data, id, prev)
 			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH'], renderer:columnsrenderer, width: 100},
 			{ text: 'Action', datafield: 'action',  width: 100,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false }
 		]//,			groups: ['PCP']
-	})
-
+	});
+	
+	var localizationobj = {};
+	localizationobj.filterchoosestring = 'ALL RISK';
+	$("#jqxgrid").jqxGrid('localizestrings', localizationobj);
+	
 	var myprevstate = document.getElementById("testjson").value;
     var setinactive = false;	 //default is false
 	
