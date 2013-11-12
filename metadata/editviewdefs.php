@@ -37,20 +37,20 @@ array (
       array (
         0 => 
         array (
-          0 => 
+          0 => 'last_name',
+          1 => 
           array (
             'name' => 'first_name',
             'customCode' => '{html_options name="salutation" id="salutation" options=$fields.salutation.options selected=$fields.salutation.value}&nbsp;<input name="first_name"  id="first_name" size="25" maxlength="25" type="text" value="{$fields.first_name.value}">',
           ),
-          1 => 
+        ),
+        1 => 
+        array (
+          0 => 
           array (
             'name' => 'mrn_c',
             'label' => 'LBL_MRN',
           ),
-        ),
-        1 => 
-        array (
-          0 => 'last_name',
           1 => 
           array (
             'name' => 'dob',
@@ -118,6 +118,20 @@ array (
           1 => 
           array (
             'name' => 'reg_provider_reg_patient_name',
+          ),
+        ),
+        8 => 
+        array (
+          0 => 
+          array (
+            'name' => 'location_c',
+            'studio' => 'visible',
+            'label' => 'LBL_LOCATION',
+          ),
+          1 => 
+          array (
+            'name' => 'active_c',
+            'label' => 'LBL_ACTIVE',
           ),
         ),
       ),

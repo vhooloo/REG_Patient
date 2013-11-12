@@ -1,8 +1,12 @@
 <?php
 
-$_SESSION[$_REQUEST['id']]=$_REQUEST['value'];
-
-
+foreach ( $_POST as $key => $value ) {
+   $_SESSION[$key]=$value;
+}
+		 
+foreach ( $_REQUEST as $key => $value ) {
+  $_SESSION[$key]=$value;
+}
 
 	
 ?>

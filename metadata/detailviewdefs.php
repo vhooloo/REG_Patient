@@ -49,23 +49,23 @@ array (
         array (
           0 => 
           array (
-            'name' => 'first_name',
-            'comment' => 'First name of the contact',
-            'label' => 'LBL_FIRST_NAME',
+            'name' => 'last_name',
+            'comment' => 'Last name of the contact',
+            'label' => 'LBL_LAST_NAME',
           ),
           1 => 
           array (
-            'name' => 'mrn_c',
-            'label' => 'LBL_MRN',
+            'name' => 'first_name',
+            'comment' => 'First name of the contact',
+            'label' => 'LBL_FIRST_NAME',
           ),
         ),
         1 => 
         array (
           0 => 
           array (
-            'name' => 'last_name',
-            'comment' => 'Last name of the contact',
-            'label' => 'LBL_LAST_NAME',
+            'name' => 'mrn_c',
+            'label' => 'LBL_MRN',
           ),
           1 => 
           array (
@@ -138,6 +138,20 @@ array (
           1 => 
           array (
             'name' => 'reg_provider_reg_patient_name',
+          ),
+        ),
+        8 => 
+        array (
+          0 => 
+          array (
+            'name' => 'location_c',
+            'studio' => 'visible',
+            'label' => 'LBL_LOCATION',
+          ),
+          1 => 
+          array (
+            'name' => 'active_c',
+            'label' => 'LBL_ACTIVE',
           ),
         ),
       ),
