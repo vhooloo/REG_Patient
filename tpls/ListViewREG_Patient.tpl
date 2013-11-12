@@ -50,6 +50,40 @@ xmlhttp.send(params);
   this.document.location.href = location;
 }
 
+function clearsession()
+{
+
+	
+	var params = "&jqxgridstate=clear";
+
+	for (var l = 0; l < ddarray.length; l++) {
+
+		params = params + "&" +  ddarray[l].data + "=clear";
+	};
+	
+
+//Send the proper header information along with the request
+
+
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+
+xmlhttp.onreadystatechange=function()
+  {
+  
+  }
+
+xmlhttp.open("POST","index.php?entryPoint=session_setting_variable",false);
+xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp.setRequestHeader("Content-length", params.length);
+xmlhttp.setRequestHeader("Connection", "close");
+xmlhttp.send(params);
+
+
+}
+
 function datedropdown(name,label, data, id, prev)
 {
 	 this.name 		= name;
@@ -59,11 +93,32 @@ function datedropdown(name,label, data, id, prev)
 	 this.params   = 'bar';
 	 this.selectval = 'ALL';
 	 this.previous  = prev;
-	 this.render 	= '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;z-index:99999;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); $(\'#jqxgrid\').jqxGrid(\'render\');break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL"  selected>ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
+	 this.render1   = renderfunc;
+	 this.render 	= '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;z-index:99999;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL"  selected>ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
      this.refillfilter = refillfilter;
 	 this.sessionparam = sessionparam;
 	 this.renderprevious = renderprevious;
 	 this.setrange = setrange;
+	 
+	 
+	 function renderfunc()
+	 {
+	   //alert('selectval'+ this.selectval);
+	   if (this.selectval == 'ALL')
+			return '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\');$(\'#jqxgrid\').jqxGrid(\'render\'); $(\'#jqxgrid\').jqxGrid(\'render\');break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL"  selected>ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
+		
+		if (this.selectval == 'Refill7')
+			return '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL">ALL</option><option value="Refill7"   selected>7 Days</option><option value="Refill14" >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
+		
+		if (this.selectval == 'Refill14')
+			return '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL" >ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" selected >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
+		
+		if (this.selectval == 'range')
+			return '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL" >ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" >14 Days</option><option value="range" selected >range</option></select> </div>&nbsp &nbsp';  //function to render html
+			
+		return '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL"  selected>ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
+		
+	 }
 	 
 	 function setrange() {
 	   document.getElementById(data).value = "range";
@@ -184,8 +239,12 @@ function datedropdown(name,label, data, id, prev)
 		.jqx-widget-content {
 			font-family: Verdana;
 			font-size:80%;
+			color: blue;
 		}
+		
+		
     </style> {/literal}
+
 
 <input id="inactivecheck" type="checkbox" value="inactive" onclick="inactivefilter(this.checked);"> Include Inactive patients </input>
 <input name="testjson" id = "testjson" type = "hidden"  value="{$smarty.session.jqxgridstate nofilter}"/>
@@ -262,9 +321,36 @@ function datedropdown(name,label, data, id, prev)
 	 }
 		
    
-	
-	
-		$(window).load(function() {
+	$("#jqxgrid").on("filter", function (event) 
+	{   
+	   
+		var filterinfo1 = $("#jqxgrid").jqxGrid('getfilterinformation');
+		var filterfound = false;
+		//alert('click'+clickname);  
+		//if (clickname != "") { clickname = ""; return;} //no need to process further
+		for (var zz=0;zz<ddarray.length;zz++) {
+		
+			filterfound = false;
+			for (var y=0;y <filterinfo1.length;y++)
+			{ 
+			    //alert(filterinfo1[y].filtercolumn);
+				
+				if ( (filterinfo1[y].filtercolumn == ddarray[zz].data) && (ddarray[zz].data != clickname) && (document.getElementById(ddarray[zz].data).value == 'ALL') ) { ddarray[zz].setrange();} 		 //document.getElementById("refill").value = "range";
+				if ( filterinfo1[y].filtercolumn == ddarray[zz].data) {filterfound = true;break;}                                                 //go to next filter
+			}
+			if (!filterfound) {  //alert('click'+clickname+'notfound'+ddarray[zz].data);
+			document.getElementById(ddarray[zz].data).value = 'ALL';}
+		
+		}
+	    $('#jqxgrid').jqxGrid('refreshfilterrow');
+			
+	});  
+	/*
+	$(document).ready(function() {
+	alert('ready');
+	}); */
+	/////////////////////////////// INIT CODE
+	$(window).load(function() {
         //$(document).load(function () {
 
 				
@@ -338,7 +424,7 @@ function datedropdown(name,label, data, id, prev)
 	//if (value == 'Patient Name') return '<p>Patient</p> <p> Name </p>';
 	for (var k = 0; k < ddarray.length; k++) {
 		if (value == ddarray[k].name) {
-			return ddarray[k].render;
+			return ddarray[k].render1();
 			break;
 		};
 	};
@@ -365,17 +451,17 @@ function datedropdown(name,label, data, id, prev)
 		groupable: true,
 		sortable: true,
 		filterable: true,
-
+		autoshowcolumnsmenubutton: false,
 		
 		columns: [
 		    { text: 'Active', filtertype: 'textbox', hidden: true, filtercondition: 'starts_with', datafield: 'active', width: 20, renderer:columnsrenderer, sortable: true },
 			{ text: 'Location', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'location', width: 80, renderer:columnsrenderer, sortable: true },
 			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 120, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer },
 			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110},
-			{ text: 'Refill', filtertype: 'date', datafield: 'refill', width: 120, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true },
-			{ text: 'UTS', filtertype: 'date', datafield: 'uts',  width: 120,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:false },
-			{ text: 'Last UTS', filtertype: 'date', datafield: 'last_uts',  width: 120,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
-			{ text: 'Next PCP', filtertype: 'date', datafield: 'next_pcp',  width: 120,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:false },
+			{ text: 'Refill', filtertype: 'date',  filterable:true, datafield: 'refill', width: 140, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true },
+			{ text: 'UTS', filtertype: 'date', filterable:true, datafield: 'uts',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			{ text: 'Last UTS', filtertype: 'date', filterable:true, datafield: 'last_uts',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 120,  renderer:columnsrenderer },
 			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH'], renderer:columnsrenderer, width: 100},
 			{ text: 'Action', datafield: 'action',  width: 100,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false }
@@ -396,6 +482,10 @@ function datedropdown(name,label, data, id, prev)
 			
 			if (filtersinfo[j].filtercolumn == 'active') setinactive = false; // previous state also contained only active records
 		}
+		//now clear the session
+		document.getElementById("testjson").value = "";
+		clearsession();
+		
 	 }	
 	 else inactivefilter(false);
 	document.getElementById("inactivecheck").checked = setinactive;
@@ -405,96 +495,7 @@ function datedropdown(name,label, data, id, prev)
 	$('#jqxgrid').jqxGrid('applyfilters');
 	
 	
-	//$("#row00jqxgrid").click( function (event) { alert('filters');$('#jqxgrid').jqxGrid('render');}); 
-	$("#jqxgrid").on("filter", function (event) 
-	{   
-	   
-		var filterinfo1 = $("#jqxgrid").jqxGrid('getfilterinformation');
-		//alert('click'+clickname);  
-		//if (clickname != "") { clickname = ""; return;} //no need to process further
-		for (var zz=0;zz<ddarray.length;zz++) {
-		    var filterfound = false;
-			for (var y=0;y <filterinfo1.length;y++)
-			{ 
-			    //alert(filterinfo1[y].filtercolumn);
-				if ( filterinfo1[y].filtercolumn == ddarray[zz].data) filterfound = true;
-				if ( (filterinfo1[y].filtercolumn == ddarray[zz].data) && (ddarray[zz].data != clickname)  ) { ddarray[zz].setrange();} 		 //document.getElementById("refill").value = "range";
-		    }
-			if (!filterfound) { document.getElementById(ddarray[zz].data).value = 'ALL';}
-		
-		}
-	    
-			
-	});  
-	//data.sort(function(a,b) {
-	 /*if (a.productname < b.productname)
-	   return -1;
-	 if (a.productname > b.productname)
-	   return 1;
-	 if (a.firstname < b.firstname)
-	   return -1;
-	 if (a.firstname > b.firstname)
-	   return 1;  
-	 */  
-	 //return 0;
-	//})
-    
-/*	
-	$("#refresh").click(function () {
-	    data.sort();
-		source.localdata = data.slice(1);
-		// passing "cells" to the 'updatebounddata' method will refresh only the cells values when the new rows count is equal to the previous rows count.
-		$("#jqxgrid").jqxGrid('updatebounddata');
-	});
-	
-	
-	$("#getrows").click(function () {
-	    var myrows = $("#jqxgrid").jqxGrid('getrows');
-		alert(myrows[0].firstname);
-		var filtergroup = new $.jqx.filter();
-		var filtervalue = 10; // Each cell value is compared with the filter's value.
-		// filtertype - numericfilter, stringfilter, datefilter or customfilter. 
-		// condition
-		// possible conditions for string filter: 'EMPTY', 'NOT_EMPTY', 'CONTAINS', 'CONTAINS_CASE_SENSITIVE',
-		// 'DOES_NOT_CONTAIN', 'DOES_NOT_CONTAIN_CASE_SENSITIVE', 'STARTS_WITH', 'STARTS_WITH_CASE_SENSITIVE',
-		// 'ENDS_WITH', 'ENDS_WITH_CASE_SENSITIVE', 'EQUAL', 'EQUAL_CASE_SENSITIVE', 'NULL', 'NOT_NULL'
-		// possible conditions for numeric filter: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'
-		// possible conditions for date filter: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'                         
-		var filter = filtergroup.createfilter('stringfilter', 'A', 'STARTS_WITH');
-		//var filter2 = filtergroup.createfilter(filtertype, filtervalue2, condition2);
-		// To create a custom filter, you need to call the createfilter function and pass a custom callback function as a fourth parameter.
-		// If the callback's name is 'customfilter', the Grid will pass 3 params to this function - filter's value, current cell value to evaluate and the condition.                        
-		// operator - 0 for "and" and 1 for "or"
-		filtergroup.addfilter(0, filter);
-		//filtergroup.addfilter(0, filter2);
-		// datafield is the bound field.
-		// adds a filter to the grid.
-		//$('#grid').jqxGrid('addfilter', datafield, filtergroup);
-		// to add and apply the filter, use this:
-		$('#jqxgrid').jqxGrid('addfilter', 'firstname', filtergroup, true);
-	});
-	
-	var state = null;
-	 $("#saveState").click(function () {
-                // save the current state of jqxGrid.
 
-                state = $("#jqxgrid").jqxGrid('savestate');
-      });            
-	$("#loadState").click(function () {
-		// load the Grid's state.
-		
-		if (state) {
-		  
-			$("#jqxgrid").jqxGrid('loadstate', state);
-		}
-		else {
-		 
-			$("#jqxgrid").jqxGrid('loadstate');
-		}
-		
-        if (refilldaysselect == 7) $("#mysortrx").val("Refill7");
-	});
-*/
 	
 	}); //window load function
 
