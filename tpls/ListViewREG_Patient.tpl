@@ -32,7 +32,12 @@ function loadUrl(location)
 if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
   xmlhttp=new XMLHttpRequest();
+
   }
+  else {
+       xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+
+}
 
 xmlhttp.onreadystatechange=function()
   {
@@ -69,7 +74,9 @@ if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
   xmlhttp=new XMLHttpRequest();
   }
-
+else {
+       xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+}
 xmlhttp.onreadystatechange=function()
   {
   
@@ -215,7 +222,10 @@ function datedropdown(name,label, data, id, prev)
 
 
 <!-- END GRID -->
-
+<head>
+  <!-- Use Internet Explorer 9 Standards mode -->
+  <meta http-equiv="x-ua-compatible" content="IE=7">
+</head>
 
 
 <!-- -->
@@ -294,13 +304,13 @@ function datedropdown(name,label, data, id, prev)
 	
 	var ddarray = new Array();
 	
-	var dd0 = new datedropdown('Next PCP', 'Next PCP', 'next_pcp', '0', {/literal}'{$smarty.session.next_pcp}'{literal});
+	var dd0 = new datedropdown('Next PCP', 'Next PCP', 'next_pcp', '0', {/literal}{if ($smarty.session.next_pcp == "")}'ALL'{else}'{$smarty.session.next_pcp}' {/if }{literal});
 	ddarray.push(dd0);
-	var dd1 = new datedropdown('Last UTS', 'Last UTS', 'last_uts', '1', {/literal}'{$smarty.session.last_uts}'{literal});
+	var dd1 = new datedropdown('Last UTS', 'Last UTS', 'last_uts', '1', {/literal}{if ($smarty.session.last_uts == "")}'ALL'{else}'{$smarty.session.last_uts}' {/if }{literal});
 	ddarray.push(dd1);
-	var dd2 = new datedropdown('UTS', 'UTS', 'uts', '2', {/literal}'{$smarty.session.uts}'{literal});
+	var dd2 = new datedropdown('UTS', 'UTS', 'uts', '2', {/literal}{if ($smarty.session.uts == "")}'ALL'{else}'{$smarty.session.uts}' {/if }{literal});
 	ddarray.push(dd2);
-	var dd3 = new datedropdown('Refill', 'Refill', 'refill', '3', {/literal}'{$smarty.session.refill}'{literal});
+	var dd3 = new datedropdown('Refill', 'Refill', 'refill', '3', {/literal}{if ($smarty.session.refill == "")}'ALL'{else}'{$smarty.session.refill}' {/if }{literal});
 	ddarray.push(dd3);
 	
 	function inactivefilter(inactiveflag) {
@@ -378,7 +388,7 @@ function datedropdown(name,label, data, id, prev)
 		row["next_pcp"] 	= "{$myrowData.next_pcp}";
 		row["pcp"] 			= "{$myrowData.provname}";
 		row["action"] 		= "{$myrowData.patid}";
-		row["risk"] 		= {if ( $myrowData.risk  >= 0 AND  $myrowData.risk  < 4  )} "LOW" {/if} {if ( $myrowData.risk  >= 4 AND  $myrowData.risk  < 7  )} "MODERATE" {/if}  {if ( $myrowData.risk  >= 7   )} "HIGH" {/if} ;
+		row["risk"] 		= {if ( $myrowData.risk  >= 0 AND  $myrowData.risk  < 4  )} "LOW" {/if} {if ( $myrowData.risk  >= 4 AND  $myrowData.risk  < 7  )} "MODERATE" {/if}  {if ( $myrowData.risk  >= 7   )} "HIGH" {/if} {if ( $myrowData.risk    < 0  )} "NA" {/if};
 		data[i] = row;
 	    i = i + 1;
 	{/foreach}
@@ -411,7 +421,7 @@ function datedropdown(name,label, data, id, prev)
 	var linkrenderer = function (row, column, value) {
                 
                 //return '<div id="patid'+row+'"class="dropdown dropdown-tip"> <ul class="dropdown-menu"> <li><a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record=1">Refill</a></li>  <li><a href="./index.php?module=REG_Patient&action=PatientEncounter&record=2">Encounter</a></li></ul> </div><input type="button" value="Action" data-dropdown="#patid'+row+'" class="">	';
-				return '<select id="mysort'+row+'" name="mysort'+row+'" onchange="if (document.getElementById(\'mysort'+row+'\').selectedIndex ==1 ) loadUrl(\'./index.php?module=REG_Patient&action=PrescriptionRefill&record='+value+'\'); else loadUrl(\'./index.php?module=REG_Patient&action=PatientEncounter&record='+value+'\');"> <option value="Action"  selected>Action</option><option value="Refill" >Refill</option><option value="Enc" >Encounter</option>	</select>';
+				return '<select id="mysort'+row+'" name="mysort'+row+'" onchange="switch (document.getElementById(\'mysort'+row+'\').selectedIndex) { case 1: loadUrl(\'./index.php?module=REG_Patient&action=PrescriptionRefill&record='+value+'\'); break; case 2:  loadUrl(\'./index.php?module=REG_Patient&action=PatientEncounter&record='+value+'\'); break; case 3: loadUrl(\'./index.php?module=REG_Patient&action=PatientEncounter&record='+value+'\');break;case 4: loadUrl(\'./index.php?module=REG_Patient&action=riskevaluation&patid='+value+'\');break;}"> <option value="Action"  selected>Action</option><option value="Refill" >Refill</option><option value="Enc" >Encounter</option><option value="Tp" >Treatment Plan</option><option value="risk" >Risk Evaluation</option>	</select>';
     }
 	
 	var columnsrenderer = function (value) {
@@ -467,7 +477,7 @@ function datedropdown(name,label, data, id, prev)
 			{ text: 'Last UTS', filtertype: 'date', filterable:true, datafield: 'last_uts',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 120,  renderer:columnsrenderer },
-			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH'], renderer:columnsrenderer, width: 100},
+			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH', 'NA'], renderer:columnsrenderer, width: 100},
 			{ text: 'Action', datafield: 'action',  width: 100,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false }
 		]//,			groups: ['PCP']
 	});

@@ -217,7 +217,7 @@ $metadataFile = $this->getMetaDataFile();
 		//custom/modules/REG_Encounter/tpls/PR_EditView.tpl
 		
 		$this->dv3->setup('REG_Encounter', $this->bean3, $encounterMetadataFile, get_custom_file_if_exists('custom/modules/REG_Encounter/tpls/PR_EditView.tpl'));
-		
+		$this->dv3->ss->assign("encountype", "encounter"); //this is an encounter
 		
 		//logic for showing last values of fields having Last
 	if($flag3!=1 || ($flag3==1&&$this->bean3->id==null)){

@@ -133,16 +133,18 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		$this->dv3->setup('REG_Encounter', $this->bean3, $encounterMetadataFile, get_custom_file_if_exists('custom/modules/REG_Encounter/tpls/PR_EditView.tpl'));
 		
 
-		$this->dv3->process();
+		//$this->dv3->process();
 		$summary = $this->bean3->summary;
 		$enc_detail=explode(":",$summary);
 		$type= $enc_detail[0];
 		$typevalue="Prescription Refill";
+		$this->dv3->ss->assign("encountype", "refill"); //this is a refill
 		
 		if(!strcmp($type,"PEnc")){
-		$typevalue="Patient Encounter";
-		
+			$typevalue="Patient Encounter";
+			$this->dv3->ss->assign("encountype", "encounter"); //this is an encounter
 		}
+		$this->dv3->process();
 		
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
@@ -166,7 +168,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		if($flag3==1){
 			echo "<script type='text/javascript'>alert('The RxRf does not exist. It will be saved as a new RxRf'); </script>";
 		}	
-		echo "in flag";
+		//echo "in flag";
 		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc" ;
 
 		$result = $this->bean->db->query($query2a, true); 
@@ -174,7 +176,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
 		{
-		    echo "got row";
+		    //echo "got row";
 		    $this->dv3->ss->assign("datarow", $row);
 			if($row['pcp_name_c']!=null){
 				
@@ -490,7 +492,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 	echo $this->dv3->display("Encounter View");
 	
 	$ida = $this->bean->id;
-	
+	//	\$('#history_c').removeAttr('disabled');
 	echo "<script type='text/javascript'>
  
 	var FormName= document.getElementById('EditView');
@@ -500,7 +502,9 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		FormName.elements[i].disabled=true;
 		}
 		
-	
+	var notesarea= document.getElementById('history_c');
+	notesarea.disabled=true;
+	notesarea.readOnly=true;
 	
 	
 	\$(function(){\$('.moduleTitle').remove();});		
@@ -508,7 +512,6 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 	\$('.action_buttons').append($('#copy_text_div'))});
 	
 	\$('#copy-button').removeAttr('disabled');
-	\$('#history_c').removeAttr('disabled');
 	\$('#indication').attr('disabled', 'true');
 	\$('#pcp_dummy').attr('disabled', 'true');
 	
