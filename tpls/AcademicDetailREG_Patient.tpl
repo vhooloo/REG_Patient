@@ -1,5 +1,9 @@
 {literal}
 <style type="text/css">
+table 
+{
+width:50%;
+}
 table.view { border-collapse:collapse; }
 table.view td, table.view th { border:1px solid  rgb(171, 195, 215);padding:5px; } 
 table.view tr:nth-of-type(odd) {
@@ -277,11 +281,12 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 
 <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
 
-<table  width="100%" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
+<table  width="400" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
+
     <thead>
     
-		<th width="70%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Category </div>  </th>
-		<th width="30%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Assessment    </div>	</th>
+		<th width="25%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Category </div>  </th>
+		<th width="25%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Assessment    </div>	</th>
 		
 
     </tr>
@@ -299,7 +304,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with treatment agreements</td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left"> {$patienttreatment.pattreatct}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
@@ -337,7 +342,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 		 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with a dosage &#062 50 mg morphine equivalence </td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{$patientmedd.patmeddct}</td>
 	</tr>	 
 		 
 			 
