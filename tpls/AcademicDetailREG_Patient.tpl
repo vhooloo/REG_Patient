@@ -264,9 +264,9 @@ a.style.display = "none";
 	
 	
 
-<form name="mylist" method="POST" action="index.php?module=REG_Patient&action=SaveRisk" onsubmit="">
+<form name="mylist" method="POST" action="index.php?module=REG_Provider&action=index" onsubmit="">
 
-<button type="submit"> Save </button>
+<button type="submit"> Back to Provider List </button>
 <input name = "riskid" id = "riskid" value = "{$myrisk->id_c}" type="hidden" > 
 <input name = "pid" id = "pid" value = "{$pid}" type="hidden" > 
 
@@ -274,10 +274,10 @@ a.style.display = "none";
 <h1>TOPCARE – Academic Detailing </h1>
 </div>
 <div id="demo1" style="text-align:center;line-height: 400%;" >
-<h2> Provider Name <input name = "ptname" id = "ptname" value = "{$patdata.lname},{$patdata.fname}" >
-Clinical Site <input name = "clinsite" id = "clinsite" value = "" > 
-Based on Intake Assessment by NCM <input name = "ncm" id = "ncm" value = "{$myuser->full_name}" >
-On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodified)} {$myrisk->lastmodified|date_format} {else} New Risk Profile{/if}" > </h2> </div>
+<h2> Provider Name <input name = "ptname" id = "ptname" value = "{$provider.provname}" >
+<!-- Clinical Site <input name = "clinsite" id = "clinsite" value = "" --> 
+Based on Report Run by NCM <input name = "ncm" id = "ncm" value = "{$myuser->full_name}" >
+On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" > </h2> </div>
 
 <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
 
@@ -304,7 +304,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with treatment agreements</td>
-	  <td class="" valign="top" align="left"> {$patienttreatment.pattreatct}</td>
+	  <td class="" valign="top" align="left"> {math equation="x/y*100" x=$patienttreatment.pattreatct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
@@ -315,17 +315,17 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year </td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$uts.utsct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year in moderate risk profile group</td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$utsmod.utsct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year in high risk profile group </td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$utshigh.utsct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
@@ -342,7 +342,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 		 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with a dosage &#062 50 mg morphine equivalence </td>
-	  <td class="" valign="top" align="left">{$patientmedd.patmeddct}</td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$patientmedd.patmeddct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>	 
 		 
 			 
@@ -354,13 +354,13 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 			 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with respiratory history </td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$patientresp.patrespct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>	 
 		 
 			 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with mental health diagnosis history </td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{$testperc|string_format:"%.2f"}</td>
 	</tr>	 
 		 
 		 
