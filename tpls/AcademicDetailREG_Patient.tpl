@@ -194,57 +194,6 @@ function check_date(element){
 {/literal}
 
 
-<script> <!-- PHP -->
-{php}
-
-//session_start();
-// store session data
-// get all assigned template vars
-
-//$myvars = $this->get_template_vars('myrisk');
-//print_r( $myvars->ort1a);
-
-// take a look at them
-//print_r($this->myrisk->ort1a);
-
-if (!empty($_POST['regnamesort'])) $_SESSION['regnamesort']=$_POST['regnamesort'];
-
-//var_dump($_SESSION);
-if (!empty($_POST['mysort']) AND $_POST['mysort'] != 'all' AND $_POST['mysort'] != 'none' AND $_POST['mysort'] != 'cust')  $mytitle = "List of Refills in Next " .$_POST['mysort']. " Days" ; 
-elseif ( $_POST['mysort'] == 'cust')  $mytitle = "List of Refills from " . $_POST[last_pcp_visit_c1] .  " TO " . $_POST[last_pcp_visit_c2];
-else 							 $mytitle = "List of All Refills";
-if (!empty($_POST['provsort']) AND $_POST['provsort'] != "none" ) 
- $mytitle .= " For " . $_POST['provsort'];
-else
- $mytitle .= " For ALL Providers" ;
- 
- $this->assign("mytitle", $mytitle);
-
-if (!empty($_POST['mysort']) )  $this->assign("datsel",  $_POST['mysort'] ) ; 
-if (!empty($_POST['utssort']) )  $this->assign("utssel",  $_POST['utssort'] ) ; 
-
-if (!empty($_POST['provsort']))  $this->assign("provsel", $_POST['provsort']) ; 
-
-
-//set up the matrix of ort terms
-$ort_terms[] = array( 'TAG' => 'ORT-1A', 'DOM' => 'Family History of Substance Abuse (Alcohol)', 'FEM' => '1', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort1a);
-$ort_terms[] = array( 'TAG' => 'ORT-1B', 'DOM' => 'Family History of Substance Abuse (Illegal Drugs)', 'FEM' => '2', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort1b);
-$ort_terms[] = array( 'TAG' => 'ORT-1C', 'DOM' => 'Family History of Substance Abuse (Prescription Drugs) ', 'FEM' => '4', 'MALE' => '4', 'VAL'=>$this->get_template_vars('myrisk')->ort1c);
-$ort_terms[] = array( 'TAG' => 'ORT-2A', 'DOM' => 'Personal History of Substance Abuse (Alcohol) ', 'FEM' => '3', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort2a);
-$ort_terms[] = array( 'TAG' => 'ORT-2B', 'DOM' => 'Personal History of Substance Abuse (Illegal Drugs', 'FEM' => '4', 'MALE' => '4', 'VAL' => $this->get_template_vars('myrisk')->ort2b);
-$ort_terms[] = array( 'TAG' => 'ORT-2C', 'DOM' => 'Personal History of Substance Abuse (Prescription Drugs) ', 'FEM' => '5', 'MALE' => '5', 'VAL' => $this->get_template_vars('myrisk')->ort2c);
-$ort_terms[] = array( 'TAG' => 'ORT-3', 'DOM' => 'Age (Age 1-45) ', 'FEM' => '1', 'MALE' => '1', 'VAL' => $this->get_template_vars('myrisk')->ort3);
-$ort_terms[] = array( 'TAG' => 'ORT-4', 'DOM' => 'History of Preadolescent Sexual Abuse', 'FEM' => '3', 'MALE' => '0', 'VAL' => $this->get_template_vars('myrisk')->ort4);
-$ort_terms[] = array( 'TAG' => 'ORT-5A', 'DOM' => 'Psychological Disease (Attention Deficit Disorder, (Obsessive Compulsive Disorder, Bipolar, Schizophrenia) ', 'FEM' => '2', 'MALE' => '2', 'VAL' => $this->get_template_vars('myrisk')->ort5a);
-$ort_terms[] = array( 'TAG' => 'ORT-5B', 'DOM' => 'Psychological Disease (Depression) ', 'FEM' => '1', 'MALE' => '1', 'VAL' => $this->get_template_vars('myrisk')->ort5b);
-
-$this->assign("ort_terms",  $ort_terms );
-$this->assign("pt1",  "myrisk->" );
-$this->assign("pt2",  "id_c" );
-
-//if (document.forms["mylist"]["last_pcp_visit_c1"].value == null)
-{/php}
-</script>
 
 
 	<script type="text/javascript"> 
@@ -330,13 +279,13 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients on multiple short-acting opioids </td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$shortacting.shortactingct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>
 	
  
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients on multiple long-acting opioids </td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$longacting.longactingct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>	 
 		 
 		 
@@ -348,7 +297,7 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
 			 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with substance abuse history</td>
-	  <td class="" valign="top" align="left"></td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$substancehx.substancect y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>	 
 		 
 			 
@@ -360,7 +309,7 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
 			 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with mental health diagnosis history </td>
-	  <td class="" valign="top" align="left">{$testperc|string_format:"%.2f"}</td>
+	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$mentalhx.mentalct y=$numpatient.numpatientct format="%.2f"}</td>
 	</tr>	 
 		 
 		 

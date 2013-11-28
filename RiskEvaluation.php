@@ -148,7 +148,7 @@ class RiskEvaluation  extends SugarBean {
 		if ( ($a = $this->db->fetchByAssoc($sql)) != null) {
 				 $this->id_c =  	$a['id_c']; 	
 				 $this->pid = 	 $a['pid'];	
-				 $this->ort =  	 $a['ort']; 	
+				 //$this->ort =  	 $a['ort']; 	
 				 $this->ort1a =  	 $a['ort1a']; 	
 				 $this->ort1b =  	 $a['ort1b']; 	
 				 $this->ort1c =  	 $a['ort1c']; 	

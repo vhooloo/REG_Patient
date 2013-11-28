@@ -375,9 +375,10 @@ function datedropdown(name,label, data, id, prev)
 	{/literal}
 	{foreach name=myrowIteration from=$mydata key=id item=myrowData}
 
- 
+        
 
 		var row = {literal} {} {/literal};
+
 		row["active"]		= "{$myrowData.active}";
 		row["location"] 	= "{$myrowData.location}";
 		row["patientname"] 	= "{$myrowData.lname}, {$myrowData.fname}//{$myrowData.patid}" ;
@@ -388,7 +389,7 @@ function datedropdown(name,label, data, id, prev)
 		row["next_pcp"] 	= "{$myrowData.next_pcp}";
 		row["pcp"] 			= "{$myrowData.provname}";
 		row["action"] 		= "{$myrowData.patid}";
-		row["risk"] 		= {if ( $myrowData.risk  >= 0 AND  $myrowData.risk  < 4  )} "LOW" {/if} {if ( $myrowData.risk  >= 4 AND  $myrowData.risk  < 7  )} "MODERATE" {/if}  {if ( $myrowData.risk  >= 7   )} "HIGH" {/if} {if ( $myrowData.risk    < 0  )} "NA" {/if};
+		row["risk"] 		=  {if ($myrowData.risk == "")} "NA" {elseif ( $myrowData.risk  >= 0 AND  $myrowData.risk  < 4  )} "LOW"  {elseif ( $myrowData.risk  >= 4 AND  $myrowData.risk  < 7  )} "MODERATE"   {elseif ( $myrowData.risk  >= 7   )} "HIGH"  {elseif ( $myrowData.risk    < 0  )} "NA" {else} "NA" {/if} ;
 		data[i] = row;
 	    i = i + 1;
 	{/foreach}
@@ -421,7 +422,7 @@ function datedropdown(name,label, data, id, prev)
 	var linkrenderer = function (row, column, value) {
                 
                 //return '<div id="patid'+row+'"class="dropdown dropdown-tip"> <ul class="dropdown-menu"> <li><a href="./index.php?module=REG_Patient&action=PrescriptionRefill&record=1">Refill</a></li>  <li><a href="./index.php?module=REG_Patient&action=PatientEncounter&record=2">Encounter</a></li></ul> </div><input type="button" value="Action" data-dropdown="#patid'+row+'" class="">	';
-				return '<select id="mysort'+row+'" name="mysort'+row+'" onchange="switch (document.getElementById(\'mysort'+row+'\').selectedIndex) { case 1: loadUrl(\'./index.php?module=REG_Patient&action=PrescriptionRefill&record='+value+'\'); break; case 2:  loadUrl(\'./index.php?module=REG_Patient&action=PatientEncounter&record='+value+'\'); break; case 3: loadUrl(\'./index.php?module=REG_Patient&action=PatientEncounter&record='+value+'\');break;case 4: loadUrl(\'./index.php?module=REG_Patient&action=riskevaluation&patid='+value+'\');break;}"> <option value="Action"  selected>Action</option><option value="Refill" >Refill</option><option value="Enc" >Encounter</option><option value="Tp" >Treatment Plan</option><option value="risk" >Risk Evaluation</option>	</select>';
+				return '<select id="mysort'+row+'" name="mysort'+row+'" onchange="switch (document.getElementById(\'mysort'+row+'\').selectedIndex) { case 1: loadUrl(\'./index.php?module=REG_Patient&action=PrescriptionRefill&record='+value+'\'); break; case 2:  loadUrl(\'./index.php?module=REG_Patient&action=PatientEncounter&record='+value+'\'); break; case 3: loadUrl(\'./index.php?module=REG_Patient&action=treatmentplan&record='+value+'\');break;case 4: loadUrl(\'./index.php?module=REG_Patient&action=riskevaluation&patid='+value+'\');break;}"> <option value="Action"  selected>Action</option><option value="Refill" >Refill</option><option value="Enc" >Encounter</option><option value="Tp" >Treatment Plan</option><option value="risk" >Risk Evaluation</option>	</select>';
     }
 	
 	var columnsrenderer = function (value) {
@@ -448,6 +449,23 @@ function datedropdown(name,label, data, id, prev)
              return   '<a href="./index.php?module=REG_Patient&action=DetailView&record='+ res[1] +'">' + res[0] + '</a>';
     }
 	
+	var datecellclass = function (row, columnfield, value) {
+	 if (value == "") return;
+	 var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+	 var today = new Date();
+	 var highdate = new Date(value);
+	 var utc1 = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+	 var utc2 = Date.UTC(highdate.getFullYear(), highdate.getMonth(), highdate.getDate());
+	 
+	 var diffdays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+	 
+	 
+                if (diffdays < 0) {
+                    return 'red';
+                }
+ 
+                //else return 'green';
+     }
 			 
 	var dataAdapter = new $.jqx.dataAdapter(source);
 	
@@ -472,7 +490,7 @@ function datedropdown(name,label, data, id, prev)
 			{ text: 'Location', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'location', width: 80, renderer:columnsrenderer, sortable: true },
 			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 140, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer },
 			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110},
-			{ text: 'Refill', filtertype: 'date',  filterable:true, datafield: 'refill', width: 140, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true },
+			{ text: 'Refill', filtertype: 'date',  filterable:true, datafield: 'refill', width: 140, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true, cellclassname:datecellclass },
 			{ text: 'UTS', filtertype: 'date', filterable:true, datafield: 'uts',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'Last UTS', filtertype: 'date', filterable:true, datafield: 'last_uts',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 140,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
