@@ -658,7 +658,23 @@ $metadataFile = $this->getMetaDataFile();
 		}
 		echo "<script> set_session('mrn','".$mrn."');</script>";
 		
-				
+		/***** UTS processing **/
+		$this->dv3->ss->assign("notes_flag", "false");
+		$myqueryuts = "SELECT DISTINCT DATE_FORMAT(test_date,'%m/%d/%Y') thisdate1, test_date thisdate, (SELECT DISTINCT test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OXYCODONE' AND test_results_code <> 'PEN') oxy,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OPIATE URINE' AND test_results_code <> 'PEN') opiate,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'METHADONE' AND test_results_code <> 'PEN') methadone,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'COCAIN METAB' AND test_results_code <> 'PEN') cocaine,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BUPRENO UR' AND test_results_code <> 'PEN') bupreno,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BENZODIAZ UR' AND test_results_code <> 'PEN') benzo,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BARBITURA UR'AND test_results_code <> 'PEN') barbi,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'AMPHETAMI UR' AND test_results_code <> 'PEN') amph FROM reg_patient_uts_import WHERE patient_mrn = '".$mrn."' order by 2 desc";
+        $dbuts = DBManagerFactory::getInstance(); 
+		$resultuts = $dbuts->query($myqueryuts);  
+		 $lastuts = "";
+		 $mydatauts = array();
+		 $ctr = 0;
+		while($rowuts = $dbuts->fetchRow($resultuts))
+		{
+			if ($ctr == 0) $lastuts = $rowuts['thisdate1'];   //grab date of last uts
+			$ctr = $ctr + 1;
+			$mydatauts[]=$rowuts;
+		};	
+		$this->dv3->ss->assign("mydatauts", $mydatauts); 
+		$this->dv3->ss->assign("lastuts", $lastuts); 
+		
         $this->dv->process();
        // echo $this->dv->display();
 	   
@@ -736,7 +752,7 @@ $metadataFile = $this->getMetaDataFile();
 	
 		
 		//display Lab results
-		
+		/*
 		$query2 = "SELECT * FROM reg_labresults where id in( SELECT  reg_labresults_reg_patientreg_labresults_idb from reg_labresults_reg_patient_c where reg_labresults_reg_patientreg_patient_ida = '".$this->bean->id."' AND deleted!=1) order by date_modified desc" ;
 		$result = $this->bean->db->query($query2, true); 
 		
@@ -845,7 +861,7 @@ $metadataFile = $this->getMetaDataFile();
 			//echo "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" class=\"list view\"><tbody><tr height=\"20\"><th scope=\"col\" width=\"45%\"><span sugar=\"slot0\" style=\"white-space:normal;\">Name &nbsp;</span></th><th scope=\"col\" width=\"45%\"><span sugar=\"slot1\" style=\"white-space:normal;\">Date Modified &nbsp;</span></th><th scope=\"col\" width=\"45%\"><span sugar=\"slot1\" style=\"white-space:normal;\">&nbsp;</span></th></tr><tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a href=\"?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Structured_Element%26action%3DDetailView%26record%3D2a7c04e6-512e-f69e-4f38-50d3470f645b\">Test2</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">12/20/2012 05:16pm</span></td><td scope=\"row\" valign=\"top\" class=\"inlineButtons\"></td></tr><tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot5b\"><a href=\"?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Structured_Element%26action%3DDetailView%26record%3D9615402c-b343-64d8-2c3c-50d33d6780a6\">Test1</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot6b\">12/20/2012 04:33pm</span></td><td scope=\"row\" valign=\"top\" class=\"inlineButtons\"></td></tr></tbody></table>";
 			
 		}
-		
+		*/
 		echo "</div>";
 		
 		echo "</td>";
