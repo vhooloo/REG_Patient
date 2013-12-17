@@ -10,7 +10,7 @@
 <script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script>
 
 <script type="text/javascript">
-var clickname = "";
+var clickname;
 var clickvalue;
 {literal}
 function loadUrl(location)
@@ -53,10 +53,6 @@ xmlhttp.send(params);
 //$.get("index.php?module=REG_Patient&action=session_setting_variable&id=jqxgridstate&value=orepiya123ajax");
 
   this.document.location.href = location;
-    //alert("loading");
-  	//$("#jqxgrid").jqxGrid('loadstate', state);
-	//alert("loaded");
-  
 }
 
 function clearsession()
@@ -105,7 +101,7 @@ function datedropdown(name,label, data, id, prev)
 	 this.selectval = 'ALL';
 	 this.previous  = prev;
 	 this.render1   = renderfunc;
-	 this.render 	= '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;z-index:99999;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL"  selected>ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
+	 this.render 	= '<div style="text-align: center; font-weight:bold;" ><p><b>'+this.label+'</b></p><select style="width:60px;font-size:80%;padding-left:0px;padding-right:0px;" id="'+this.data+'" name="'+this.data+'" onclick="if(event.stopPropagation)event.stopPropagation();else event.cancelBubble=true;" onchange="ddarray['+this.id+'].selectval = this.value;clickname=this.id;clickvalue=this.value;;switch(document.getElementById(\''+this.data+'\').selectedIndex) { case 0: $(\'#jqxgrid\').jqxGrid(\'removefilter\', \''+this.data+'\', \'true\'); $(\'#jqxgrid\').jqxGrid(\'refreshfilterrow\'); break;  case 1: ddarray['+this.id+'].refillfilter(7); break;  case 2: ddarray['+this.id+'].refillfilter(14);break;}"> <option value="ALL"  selected>ALL</option><option value="Refill7" >7 Days</option><option value="Refill14" >14 Days</option><option value="range" >range</option></select> </div>&nbsp &nbsp';  //function to render html
      this.refillfilter = refillfilter;
 	 this.sessionparam = sessionparam;
 	 this.renderprevious = renderprevious;
@@ -213,8 +209,6 @@ function datedropdown(name,label, data, id, prev)
 	<script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxcalendar.js"></script>
     <script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxdatetimeinput.js"></script>
 	<script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxgrid.grouping.js"></script>
-	<script type="text/javascript" src="custom/topcarejs/jqwidgets/globalization/globalize.js"></script>
-	
 	<!--[if IE 7]>
 		<script type="text/javascript" src="custom/topcarejs/json2.js"></script>
 	<![endif]--> 
@@ -230,7 +224,7 @@ function datedropdown(name,label, data, id, prev)
 <!-- END GRID -->
 <head>
   <!-- Use Internet Explorer 9 Standards mode -->
-  <!--meta http-equiv="x-ua-compatible" content="IE=7"-->
+  <meta http-equiv="x-ua-compatible" content="IE=7">
 </head>
 
 
@@ -263,11 +257,11 @@ function datedropdown(name,label, data, id, prev)
 
 
 <input id="inactivecheck" type="checkbox" value="inactive" onclick="inactivefilter(this.checked);"> Include Inactive patients </input>
-<input name="testjson" id = "testjson" type = "hidden"  value="{$smarty.session.jqxgridstate nofilter}" maxlength = "10000"/>
+<input name="testjson" id = "testjson" type = "hidden"  value="{$smarty.session.jqxgridstate nofilter}"/>
 
         <div id="jqxgrid"  ></div>
         
-
+<input id="calendar" type="button" value="calendar" onclick="mycalcreate();"/>
 
 <!--input value = "Sort" type="button" onclick="$('#jqxgrid').jqxGrid('sortby', 'patientname', 'asc');">  </input>
 <input id="refresh" type="button" value="Refresh Data" />
@@ -278,18 +272,30 @@ function datedropdown(name,label, data, id, prev)
 </body>
 
 
+
 	<script type="text/javascript">
 	var refilldaysselect;
 	
-	
-	
 	{literal}
 	
-	$(document).click(function(event) {
-		window.lastElementClicked = event.target;
-		//alert(event.target);
-	});
+		
+	function mycalcreate()
+	{
+	    var ihtml = "<script type="+"'" + "text/javascript"+"'"+">CAL.script_evaled = true; </" +"script>";
+		CAL.get("title-cal-edit").innerHTML=CAL.lbl_loading; CAL.open_edit_dialog();CAL.disable_buttons();
+		var params={'module_name':'Meetings','user_id':'1','user_name':'admin','date_start':'12/05/2013 05:00 am'};
+		//CAL.current_params=params;CAL.load_create_form(CAL.current_params);CAL.dialog_create();
+		CAL.disable_buttons();ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_LOADING'));CAL.repeat_tab_handle(CAL.current_params.module_name);var callback={success:function(o){try{res=eval("("+o.responseText+")");}catch(err){alert(CAL.lbl_error_loading);CAL.editDialog.cancel();ajaxStatus.hideStatus();return;}
+if(res.access=='yes'){var fc=document.getElementById("form_content");CAL.script_evaled=false;fc.innerHTML=ihtml+res.html;if(!CAL.script_evaled){SUGAR.util.evalScript(res.html);}
+CAL.get("record").value="";CAL.get("current_module").value=res.module_name;var mod_name=res.module_name;if(res.edit==1){CAL.record_editable=true;}else{CAL.record_editable=false;}
+CAL.get("title-cal-edit").innerHTML=CAL.lbl_create_new;if(typeof res.repeat!="undefined"){CAL.fill_repeat_tab(res.repeat);}
+CAL.enable_buttons();setTimeout(function(){SugarWidgetScheduler.update_time();enableQS(false);disableOnUnloadEditView();},500);ajaxStatus.hideStatus();}else{alert(CAL.lbl_error_loading);ajaxStatus.hideStatus();}},failure:function(){alert(CAL.lbl_error_loading);ajaxStatus.hideStatus();}};var url="index.php?module=Calendar&action=QuickEdit&sugar_body_only=true&parent_id=123";var data={"current_module":params.module_name,"assigned_user_id":params.user_id,"assigned_user_name":params.user_name,"date_start":params.date_start};YAHOO.util.Connect.asyncRequest('POST',url,callback,CAL.toURI(data));
+document.getElementById("cal-edit_c").style.zIndex = 9999;}
 
+
+	
+	
+	
 	function refillfilter(value, type) {
 	
       refilldaysselect = parseInt(value);
@@ -345,13 +351,13 @@ function datedropdown(name,label, data, id, prev)
 	 }
 		
    
-	/*$("#jqxgrid").on("filter", function (event) 
+	$("#jqxgrid").on("filter", function (event) 
 	{   
 	   
 		var filterinfo1 = $("#jqxgrid").jqxGrid('getfilterinformation');
 		var filterfound = false;
-		alert('click filter + ' + clickname);  
-		if (clickname != "") { clickname = ""; return;} //no need to process further
+		//alert('click'+clickname);  
+		//if (clickname != "") { clickname = ""; return;} //no need to process further
 		for (var zz=0;zz<ddarray.length;zz++) {
 		
 			filterfound = false;
@@ -368,7 +374,7 @@ function datedropdown(name,label, data, id, prev)
 		}
 	    //$('#jqxgrid').jqxGrid('refreshfilterrow');
 			
-	});  */
+	});  
 	/*
 	$(document).ready(function() {
 	alert('ready');
@@ -399,7 +405,7 @@ function datedropdown(name,label, data, id, prev)
 		row["mrn"] 			= "{$myrowData.mrn}";
 		row["refill"] 		= "{$myrowData.refill}";
 		row["uts"] 			= "{$myrowData.uts}";
-		row["last_uts"] 	= "{$myrowData.last_uts|date_format:"%m/%d/%Y"}";
+		row["last_uts"] 	= "{$myrowData.last_uts}";
 		row["next_pcp"] 	= "{$myrowData.next_pcp}";
 		row["pcp"] 			= "{$myrowData.provname}";
 		row["action"] 		= "{$myrowData.patid}";
@@ -463,25 +469,6 @@ function datedropdown(name,label, data, id, prev)
              return   '<a href="./index.php?module=REG_Patient&action=DetailView&record='+ res[1] +'">' + res[0] + '</a>';
     }
 	
-	var dateoverduerenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
-		if (value == "") return;
-
-		var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-		var today = new Date();
-		//var highdate = new Date(value);
-		var utc1 = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
-		var utc2 = Date.UTC(value.getFullYear(), value.getMonth(), value.getDate());
-	 
-		var diffdays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
-	 
-	 
-        if (diffdays < 0) {
-            return  '<div style="color:red;">' + (value.getMonth()+1) + '/'+ value.getDate() + '/'+  value.getFullYear(); + '</div>';;
-         }
-        return   '<div style="color:black;">' + (value.getMonth()+1) + '/'+ value.getDate() + '/'+  value.getFullYear(); + '</div>';
-    }
-	
-	
 	var datecellclass = function (row, columnfield, value) {
 	 if (value == "") return;
 	 var _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -509,7 +496,7 @@ function datedropdown(name,label, data, id, prev)
 	{
 		columnsheight: 35,
 		//theme: 'office',
-		width: 1210,
+		width: 1110,
 		height: 600,
 		source: dataAdapter,
 		showfilterrow: true,
@@ -518,19 +505,18 @@ function datedropdown(name,label, data, id, prev)
 		filterable: true,
 		autoshowcolumnsmenubutton: false,
 		
-		
 		columns: [
 		    { text: 'Active', filtertype: 'textbox', hidden: true, filtercondition: 'starts_with', datafield: 'active', width: 20, renderer:columnsrenderer, sortable: true },
-			{ text: 'Location', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'location', width: 80, renderer:columnsrenderer, sortable: true },
+			{ text: 'Location', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'location', width: 100, renderer:columnsrenderer, sortable: true },
 			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 140, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer },
 			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110},
-			{ text: 'Refill',   datafield: 'refill', filtertype: 'date', width: 140,  renderer:columnsrenderer,  sortable:true, cellsrenderer:dateoverduerenderer, cellsformat: 'd' },
-			{ text: 'UTS', filtertype: 'date',  datafield: 'uts',  width: 140,    renderer:columnsrenderer, sortable:true, cellsformat: 'd' },
-			{ text: 'Last UTS', filtertype: 'date',  datafield: 'last_uts',  width: 140,   renderer:columnsrenderer, sortable:true, cellsformat: 'd' },
-			{ text: 'Next PCP', filtertype: 'date',  datafield: 'next_pcp',  width: 140,    renderer:columnsrenderer, sortable:true, cellsformat: 'd' },
-			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 120,  renderer:columnsrenderer },
+			{ text: 'Refill', filtertype: 'date',  filterable:true, datafield: 'refill', width: 110, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true, cellclassname:datecellclass },
+			{ text: 'UTS', filtertype: 'date', filterable:true, datafield: 'uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			{ text: 'Last UTS', filtertype: 'date', filterable:true, datafield: 'last_uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 110,  renderer:columnsrenderer },
 			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH', 'NA'], renderer:columnsrenderer, width: 100},
-			{ text: 'Action', datafield: 'action',  width: 100,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false }
+			{ text: 'Action', datafield: 'action',  width: 110,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false }
 		]//,			groups: ['PCP']
 	});
 	
@@ -543,13 +529,10 @@ function datedropdown(name,label, data, id, prev)
 	var myprevstate = document.getElementById("testjson").value;
     var setinactive = false;	 //default is false
 	
-	//alert(myprevstate);
 	if (myprevstate != "") 
 	 {
-	   //alert("in my pev state"); alert(JSON.parse(myprevstate));
 	   $("#jqxgrid").jqxGrid('loadstate',JSON.parse(myprevstate));
-	    
-		//alert("what happened?");
+	
 		var filtersinfo = $('#jqxgrid').jqxGrid('getfilterinformation');
 		var setinactive = true;  //if previous state, need to check if previous state set inactive
 		for (var j=0;j<filtersinfo.length;j++)
@@ -563,7 +546,6 @@ function datedropdown(name,label, data, id, prev)
 		
 	 }	
 	 else inactivefilter(false);
-	 //alert("what happened?");
 	document.getElementById("inactivecheck").checked = setinactive;
 	for (var z = 0; z < ddarray.length; z++) {
 		ddarray[z].renderprevious();
