@@ -670,12 +670,27 @@ $metadataFile = $this->getMetaDataFile();
 		$resultuts = $dbuts->query($myqueryuts);  
 		 $lastuts = "";
 		 $mydatauts = array();
-		 $ctr = 0;
+		 $ctr = 0; $utsctr = 0;
+		 $prevdate = "";   // make changes for expanded opioid
 		while($rowuts = $dbuts->fetchRow($resultuts))
 		{
 			if ($ctr == 0) $lastuts = $rowuts['thisdate1'];   //grab date of last uts
+			if ( $rowuts['thisdate1'] == $prevdate )  //collapse this row into previous row
+			{	
+				if ($rowuts['oxy'] != null ) $mydatauts[$utsctr-1]['oxy'] = $rowuts['oxy']; 
+				if ($rowuts['opiate'] != null ) $mydatauts[$utsctr-1]['opiate'] = $rowuts['opiate'];
+				if ($rowuts['methadone'] != null ) $mydatauts[$utsctr-1]['methadone'] = $rowuts['methadone'];
+				if ($rowuts['cocaine'] != null ) $mydatauts[$utsctr-1]['cocaine'] = $rowuts['cocaine'];
+				if ($rowuts['bupreno'] != null ) $mydatauts[$utsctr-1]['bupreno'] = $rowuts['bupreno'];
+				if ($rowuts['benzo'] != null ) $mydatauts[$utsctr-1]['benzo'] = $rowuts['benzo'];
+				if ($rowuts['barbi'] != null ) $mydatauts[$utsctr-1]['barbi'] = $rowuts['barbi'];
+				if ($rowuts['amph'] != null ) $mydatauts[$utsctr-1]['amph'] = $rowuts['amph'];
+				
+			} 
+			else { $mydatauts[] =$rowuts; $utsctr = $utsctr + 1;} //generate new row
 			$ctr = $ctr + 1;
-			$mydatauts[]=$rowuts;
+			$prevdate = $rowuts['thisdate1'];
+			//$mydatauts[]=$rowuts;
 		};	
 		$this->dv3->ss->assign("mydatauts", $mydatauts); 
 		$this->dv3->ss->assign("lastuts", $lastuts); 

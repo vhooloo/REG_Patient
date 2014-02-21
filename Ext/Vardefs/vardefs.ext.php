@@ -1,6 +1,20 @@
 <?php 
  //WARNING: The contents of this file are auto-generated
 
+ 
+$dictionary['REG_Patient']['indices'][] = array(
+     'name' => 'idx_mrn_cstm',
+     'type' => 'index',
+     'fields' => array(
+         0 => 'NAME',
+		 1 => 'MRN',
+		 2 => 'mrn',
+     ),
+     'source' => 'non-db',
+
+    );
+
+
 
 // created: 2013-09-17 13:04:40
 $dictionary["REG_Patient"]["fields"]["reg_labresults_reg_patient"] = array (
@@ -82,11 +96,21 @@ $dictionary["REG_Patient"]["fields"]["reg_treatment_plan_reg_patient"] = array (
 
  
 
+ // created: 2014-01-13 14:40:35
+$dictionary['REG_Patient']['fields']['ethnicity']['default']='';
+
+ 
+
  // created: 2013-11-06 11:17:51
 
  
 
  // created: 2013-09-17 10:55:29
+
+ 
+
+ // created: 2014-01-13 14:40:06
+$dictionary['REG_Patient']['fields']['race']['default']='';
 
  
 ?>

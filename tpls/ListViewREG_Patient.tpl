@@ -526,6 +526,8 @@ document.getElementById("cal-edit_c").style.zIndex = 9999;}
 	localizationobj.emptydatastring = "No data to display. Please verify filters and clear unnecessary ones.",
 	$("#jqxgrid").jqxGrid('localizestrings', localizationobj);
 	
+	$("#jqxgrid").jqxGrid('selectionmode', 'singlecell');
+	
 	var myprevstate = document.getElementById("testjson").value;
     var setinactive = false;	 //default is false
 	

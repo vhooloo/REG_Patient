@@ -666,11 +666,21 @@ $metadataFile = $this->getMetaDataFile();
 		 $lastuts = "";
 		 $mydatauts = array();
 		 $ctr = 0;
+		 $prevdate = "";   // make changes for expanded opioid
 		while($rowuts = $dbuts->fetchRow($resultuts))
 		{
 			if ($ctr == 0) $lastuts = $rowuts['thisdate1'];   //grab date of last uts
+			if ( $rowuts['thisdate1'] == $prevdate )  //collapse this row into previous row
+			{	
+				//if ($rowuts['oxy'] != null ) $mydatauts[ctr][ = 
+				//$mydatauts[]['barbi'] = "check"; 
+				
+			} 
+			else { $mydatauts[]['thisdate1'] =$rowuts['thisdate1']; $mydatauts[$ctr]['opiate'] =$rowuts['opiate'].$prevdate.$rowuts['thisdate1'];} //generate new row
+			//$mydatauts[]['oxy'] = "check"; 
+			//$mydatauts[$ctr]['barbi'] = "check"; 
 			$ctr = $ctr + 1;
-			$mydatauts[]=$rowuts;
+			$prevdate = $rowuts['thisdate1'];
 		};	
 		$this->dv3->ss->assign("mydatauts", $mydatauts); 
 		$this->dv3->ss->assign("lastuts", $lastuts); 
