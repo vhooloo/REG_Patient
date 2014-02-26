@@ -12,7 +12,7 @@ class REG_PatientViewReports2 extends ViewList {
 	function display(){
 	
 		$db = DBManagerFactory::getInstance(); 
-		$sql = "SELECT p.id,p.first_name,p.last_name,p.dob,e.id_c, max(e.last_pmp_review_done_c) as last_pmp_review FROM reg_patient p,`reg_patient_reg_encounter_c` pe,reg_encounter_cstm e WHERE p.id=pe.reg_patient_reg_encounterreg_patient_ida AND pe.reg_patient_reg_encounterreg_encounter_idb=e.id_c AND e.last_pmp_review_done_c is not null group by p.id ORDER By p.first_name";
+		$sql = "SELECT p.id,p.first_name,p.last_name,p.dob,e.id_c, max(e.last_pmp_review_done_c) as last_pmp_review FROM reg_patient p,`reg_patient_reg_encounter_c` pe,reg_encounter_cstm e WHERE p.id=pe.reg_patient_reg_encounterreg_patient_ida AND pe.reg_patient_reg_encounterreg_encounter_idb=e.id_c AND e.last_pmp_review_done_c is not null group by p.id ORDER By p.last_name, p.first_name";
 		$resultb = $db->query($sql, true);
 		$final = array();
 		while($row = $db->fetchByAssoc($resultb))
