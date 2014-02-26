@@ -373,14 +373,6 @@ $metadataFile = $this->getMetaDataFile();
 				  echo "<script>document.getElementById('next_pmp_review_due_c').style.color='red'</script>";
 				}
 			}
-			
-			
-			
-			
-			
-			
-			
-			
 		}
 		
 	}	
