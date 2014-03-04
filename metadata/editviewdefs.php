@@ -134,6 +134,16 @@ array (
             'label' => 'LBL_ACTIVE',
           ),
         ),
+        9 => 
+        array (
+          0 => 
+          array (
+            'name' => 'reg_patient_status_c',
+            'studio' => 'visible',
+            'label' => 'LBL_REG_PATIENT_STATUS',
+          ),
+          1 => '',
+        ),
       ),
     ),
   ),

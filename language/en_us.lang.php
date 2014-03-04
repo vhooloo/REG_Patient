@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-13 14:40:35
+// created: 2014-02-28 12:51:53
 $mod_strings = array (
   'LBL_REG_TREATMENT_PLAN_REG_PATIENT_FROM_REG_TREATMENT_PLAN_TITLE' => 'Treatment Plan',
   'LBL_DETAILVIEW_PANEL1' => 'New Panel 1',
@@ -12,4 +12,5 @@ $mod_strings = array (
   'LBL_ACTIVE' => 'Active',
   'LBL_RACE' => 'Race',
   'LBL_ETHNICITY' => 'Ethnicity',
+  'LBL_REG_PATIENT_STATUS' => 'reg patient status',
 );

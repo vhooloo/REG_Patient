@@ -13,8 +13,13 @@
 var clickname;
 var clickvalue;
 {literal}
+
 function loadUrl(location)
 {
+
+var start = new Date().getTime();
+//var t0 = performance.now();
+//alert( window.performance.now());
 
 	var state = $("#jqxgrid").jqxGrid('savestate');
 	var viewcontent = JSON.stringify(state);
@@ -25,13 +30,12 @@ function loadUrl(location)
 		params = params +  ddarray[l].params;
 	};
 	
-
-//Send the proper header information along with the request
-
+    alert(params);
+//
 
 if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
+{// code for IE7+, Firefox, Chrome, Opera, Safari
+ xmlhttp=new XMLHttpRequest();
 
   }
   else {
@@ -40,11 +44,11 @@ if (window.XMLHttpRequest)
 }
 
 xmlhttp.onreadystatechange=function()
-  {
-  
-  }
+ {
+ 
+ }
 //xmlhttp.open("GET","index.php?module=REG_Patient&action=session_setting_variable&id=jqxgridstate&value=orepiya123",true);
-xmlhttp.open("POST","index.php?entryPoint=session_setting_variable",false);
+xmlhttp.open("POST","index.php?entryPoint=session_setting_variable",true);
 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xmlhttp.setRequestHeader("Content-length", params.length);
 xmlhttp.setRequestHeader("Connection", "close");
@@ -53,6 +57,11 @@ xmlhttp.send(params);
 //$.get("index.php?module=REG_Patient&action=session_setting_variable&id=jqxgridstate&value=orepiya123ajax");
 
   this.document.location.href = location;
+  
+ var end = new Date().getTime();
+//var end = window.performance.now();
+var time = end - start;
+alert('Execution time: ' + time);
 }
 
 function clearsession()
@@ -186,10 +195,11 @@ function datedropdown(name,label, data, id, prev)
 //var_dump($_SESSION);
 {/php}
 
-  <script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <!-- <script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
  
-  
+   <script src="custom/jquery/jquery-2.1.0.min.js"></script> 
+  <script src="custom/jquery/jquery-ui.min.js"></script
 
 
     <!--script type="text/javascript" src="../../scripts/jquery-1.10.2.min.js"></script-->
@@ -224,7 +234,7 @@ function datedropdown(name,label, data, id, prev)
 <!-- END GRID -->
 <head>
   <!-- Use Internet Explorer 9 Standards mode -->
-  <meta http-equiv="x-ua-compatible" content="IE=7">
+  <!--meta http-equiv="x-ua-compatible" content="IE=7"-->
 </head>
 
 
@@ -324,14 +334,14 @@ document.getElementById("cal-edit_c").style.zIndex = 9999;}
 	
 	var ddarray = new Array();
 	
-	var dd0 = new datedropdown('Next PCP', 'Next PCP', 'next_pcp', '0', {/literal}{if ($smarty.session.next_pcp == "")}'ALL'{else}'{$smarty.session.next_pcp}' {/if }{literal});
+	//var dd0 = new datedropdown('Next PCP', 'Next PCP', 'next_pcp', '0', {/literal}{if ($smarty.session.next_pcp == "")}'ALL'{else}'{$smarty.session.next_pcp}' {/if }{literal});
+	//ddarray.push(dd0);
+	//var dd1 = new datedropdown('Last UTS', 'Last UTS', 'last_uts', '1', {/literal}{if ($smarty.session.last_uts == "")}'ALL'{else}'{$smarty.session.last_uts}' {/if }{literal});
+	//ddarray.push(dd1);
+	var dd0 = new datedropdown('UTS', 'UTS', 'uts', '0', {/literal}{if ($smarty.session.uts == "")}'ALL'{else}'{$smarty.session.uts}' {/if }{literal});
 	ddarray.push(dd0);
-	var dd1 = new datedropdown('Last UTS', 'Last UTS', 'last_uts', '1', {/literal}{if ($smarty.session.last_uts == "")}'ALL'{else}'{$smarty.session.last_uts}' {/if }{literal});
+	var dd1 = new datedropdown('Refill', 'Refill', 'refill', '1', {/literal}{if ($smarty.session.refill == "")}'ALL'{else}'{$smarty.session.refill}' {/if }{literal});
 	ddarray.push(dd1);
-	var dd2 = new datedropdown('UTS', 'UTS', 'uts', '2', {/literal}{if ($smarty.session.uts == "")}'ALL'{else}'{$smarty.session.uts}' {/if }{literal});
-	ddarray.push(dd2);
-	var dd3 = new datedropdown('Refill', 'Refill', 'refill', '3', {/literal}{if ($smarty.session.refill == "")}'ALL'{else}'{$smarty.session.refill}' {/if }{literal});
-	ddarray.push(dd3);
 	
 	function inactivefilter(inactiveflag) {
 	
@@ -405,8 +415,8 @@ document.getElementById("cal-edit_c").style.zIndex = 9999;}
 		row["mrn"] 			= "{$myrowData.mrn}";
 		row["refill"] 		= "{$myrowData.refill}";
 		row["uts"] 			= "{$myrowData.uts}";
-		row["last_uts"] 	= "{$myrowData.last_uts}";
-		row["next_pcp"] 	= "{$myrowData.next_pcp}";
+		//row["last_uts"] 	= "{$myrowData.last_uts}";
+		//row["next_pcp"] 	= "{$myrowData.next_pcp}";
 		row["pcp"] 			= "{$myrowData.provname}";
 		row["action"] 		= "{$myrowData.patid}";
 		row["risk"] 		=  {if ($myrowData.risk == "")} "NA" {elseif ( $myrowData.risk  >= 0 AND  $myrowData.risk  < 4  )} "LOW"  {elseif ( $myrowData.risk  >= 4 AND  $myrowData.risk  < 7  )} "MODERATE"   {elseif ( $myrowData.risk  >= 7   )} "HIGH"  {elseif ( $myrowData.risk    < 0  )} "NA" {else} "NA" {/if} ;
@@ -428,8 +438,8 @@ document.getElementById("cal-edit_c").style.zIndex = 9999;}
 					{ name: 'mrn', type: 'string' },
                     { name: 'refill', type: 'date' },
                     { name: 'uts', type: 'date' },
-					{ name: 'last_uts', type: 'date' },
-					{ name: 'next_pcp', type: 'date' },
+					//{ name: 'last_uts', type: 'date' },
+					//{ name: 'next_pcp', type: 'date' },
                     { name: 'pcp', type: 'string'},
 					{name: 'risk', type: 'string'},
                     { name: 'action', type: 'string' }
@@ -512,8 +522,8 @@ document.getElementById("cal-edit_c").style.zIndex = 9999;}
 			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110},
 			{ text: 'Refill', filtertype: 'date',  filterable:true, datafield: 'refill', width: 110, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true, cellclassname:datecellclass },
 			{ text: 'UTS', filtertype: 'date', filterable:true, datafield: 'uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
-			{ text: 'Last UTS', filtertype: 'date', filterable:true, datafield: 'last_uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
-			{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			//{ text: 'Last UTS', filtertype: 'date', filterable:true, datafield: 'last_uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			//{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 110,  renderer:columnsrenderer },
 			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH', 'NA'], renderer:columnsrenderer, width: 100},
 			{ text: 'Action', datafield: 'action',  width: 110,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false }
@@ -526,7 +536,11 @@ document.getElementById("cal-edit_c").style.zIndex = 9999;}
 	localizationobj.emptydatastring = "No data to display. Please verify filters and clear unnecessary ones.",
 	$("#jqxgrid").jqxGrid('localizestrings', localizationobj);
 	
-	$("#jqxgrid").jqxGrid('selectionmode', 'singlecell');
+	$("#jqxgrid").jqxGrid('selectionmode', 'cell');
+	$("#jqxgrid").jqxGrid('enablebrowserselection', 'singlecell');
+	//$('#jqxGrid').jqxGrid({ selectionmode: 'none'}); 
+	//$('#jqxGrid').jqxGrid({ enablebrowserselection: true}); 
+	
 	
 	var myprevstate = document.getElementById("testjson").value;
     var setinactive = false;	 //default is false
@@ -551,7 +565,7 @@ document.getElementById("cal-edit_c").style.zIndex = 9999;}
 	document.getElementById("inactivecheck").checked = setinactive;
 	for (var z = 0; z < ddarray.length; z++) {
 		ddarray[z].renderprevious();
-	}
+	} 
 	//$('#jqxgrid').jqxGrid('applyfilters');
 	
 	
