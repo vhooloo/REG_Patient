@@ -488,7 +488,19 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 	
 	
 	}
-	
+
+	if($this->bean3->abherrent_behaviors_c!=null)
+		{
+			$tmp = str_replace("^","'",$this->bean3->abherrent_behaviors_c);
+			echo "<script type='text/javascript'>
+			$(document).ready(function() {
+			var values = [".$tmp."];
+			$('#abherrent_behaviors_c').val(values);
+			});	
+			</script>";
+
+		}
+
 	echo $this->dv3->display("Encounter View");
 	
 	$ida = $this->bean->id;

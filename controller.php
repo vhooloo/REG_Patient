@@ -36,5 +36,7 @@ class REG_PatientController extends SugarController {
 	function action_report2(){		$this->view = 'reports2';	}		
 	function action_report3(){		$this->view = 'reports3';	}		
 	function action_report4(){		$this->view = 'reports4';	}	
+	function action_report5(){		$this->view = 'reports5';	}	
+	function action_report6(){		$this->view = 'reports6';	}	
 }
 ?>

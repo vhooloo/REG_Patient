@@ -1039,11 +1039,25 @@ echo "</div>";
 				$row2=$this->bean->db->fetchByAssoc($result2);
 				$date_created = str_split($row['date_entered'],16);
 				if($count%2==1){
-					echo "<tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab'  tab_name='". $row['summary']."'  link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+
+					echo "<tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab'  tab_name='". $row['summary']."'  link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span>";
+					
+					if(isset($row['abherrent_behaviors_c']) && $row['abherrent_behaviors_c']!="")
+						echo "<img src='custom/themes/default/images/aberrant_behavior.gif'>";
+						
+					echo "</td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+
 				}
 				else
 				{
-					echo "<tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab' tab_name='". $row['summary']."' link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+
+					echo "<tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab' tab_name='". $row['summary']."' link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span>";
+					
+					if(isset($row['abherrent_behaviors_c']) && $row['abherrent_behaviors_c']!="")
+						echo "<img src='custom/themes/default/images/aberrant_behavior.gif'>";
+						
+					echo "</td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+
 				}
 		
 				//return $row; 
