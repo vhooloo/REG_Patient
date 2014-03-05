@@ -161,9 +161,11 @@ function datedropdown(name,label, data, id, prev)
 //var_dump($_SESSION);
 {/php}
 
-  <script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- 
+  <!--script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script-->
+    <script src="custom/jquery/jquery-2.1.0.min.js"></script> 
+  <script src="custom/jquery/jquery-ui.min.js"></script
+
   
 
 
@@ -306,14 +308,14 @@ NWin.onbeforeunload = function(){document.getElementById('iframe').contentWindow
 	
 	var ddarray = new Array();
 	
-	var dd0 = new datedropdown('Next PCP', 'Next PCP', 'next_pcp', '0', {/literal}{if ($smarty.session.next_pcp == "")}'ALL'{else}'{$smarty.session.next_pcp}' {/if }{literal});
+	//var dd0 = new datedropdown('Next PCP', 'Next PCP', 'next_pcp', '0', {/literal}{if ($smarty.session.next_pcp == "")}'ALL'{else}'{$smarty.session.next_pcp}' {/if }{literal});
+	//ddarray.push(dd0);
+	var dd0 = new datedropdown('Last UTS', 'Last UTS', 'last_uts', '0', {/literal}{if ($smarty.session.last_uts == "")}'ALL'{else}'{$smarty.session.last_uts}' {/if }{literal});
 	ddarray.push(dd0);
-	var dd1 = new datedropdown('Last UTS', 'Last UTS', 'last_uts', '1', {/literal}{if ($smarty.session.last_uts == "")}'ALL'{else}'{$smarty.session.last_uts}' {/if }{literal});
+	//var dd0 = new datedropdown('UTS', 'UTS', 'uts', '0', {/literal}{if ($smarty.session.uts == "")}'ALL'{else}'{$smarty.session.uts}' {/if }{literal});
+	//ddarray.push(dd0);
+	var dd1 = new datedropdown('Refill', 'Refill', 'refill', '1', {/literal}{if ($smarty.session.refill == "")}'ALL'{else}'{$smarty.session.refill}' {/if }{literal});
 	ddarray.push(dd1);
-	var dd2 = new datedropdown('UTS', 'UTS', 'uts', '2', {/literal}{if ($smarty.session.uts == "")}'ALL'{else}'{$smarty.session.uts}' {/if }{literal});
-	ddarray.push(dd2);
-	var dd3 = new datedropdown('Refill', 'Refill', 'refill', '3', {/literal}{if ($smarty.session.refill == "")}'ALL'{else}'{$smarty.session.refill}' {/if }{literal});
-	ddarray.push(dd3);
 	
 	function inactivefilter(inactiveflag) {
 	
@@ -385,9 +387,9 @@ NWin.onbeforeunload = function(){document.getElementById('iframe').contentWindow
 		row["patientname"] 	= "{$myrowData.lname}, {$myrowData.fname}//{$myrowData.patid}" ;
 		row["mrn"] 			= "{$myrowData.mrn}";
 		row["refill"] 		= "{$myrowData.refill}";
-		row["uts"] 			= "{$myrowData.uts}";
+		//row["uts"] 			= "{$myrowData.uts}";
 		row["last_uts"] 	= "{$myrowData.last_uts}";
-		row["next_pcp"] 	= "{$myrowData.next_pcp}";
+		//row["next_pcp"] 	= "{$myrowData.next_pcp}";
 		row["pcp"] 			= "{$myrowData.provname}";
 		row["action"] 		= "{$myrowData.patid}";
 		row["risk"] 		=  {if ($myrowData.risk == "")} "NA" {elseif ( $myrowData.risk  >= 0 AND  $myrowData.risk  < 4  )} "LOW"  {elseif ( $myrowData.risk  >= 4 AND  $myrowData.risk  < 7  )} "MODERATE"   {elseif ( $myrowData.risk  >= 7   )} "HIGH"  {elseif ( $myrowData.risk    < 0  )} "NA" {else} "NA" {/if} ;
@@ -408,9 +410,9 @@ NWin.onbeforeunload = function(){document.getElementById('iframe').contentWindow
 					{ name: 'patientname', type: 'string' },
 					{ name: 'mrn', type: 'string' },
                     { name: 'refill', type: 'date' },
-                    { name: 'uts', type: 'date' },
+                    //{ name: 'uts', type: 'date' },
 					{ name: 'last_uts', type: 'date' },
-					{ name: 'next_pcp', type: 'date' },
+					//{ name: 'next_pcp', type: 'date' },
                     { name: 'pcp', type: 'string'},
 					{name: 'risk', type: 'string'},
                     { name: 'action', type: 'string' }
@@ -493,9 +495,9 @@ NWin.onbeforeunload = function(){document.getElementById('iframe').contentWindow
 			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 140, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer },
 			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110},
 			{ text: 'Refill', filtertype: 'date',  filterable:true, datafield: 'refill', width: 110, cellsformat: 'M/dd/yy', renderer:columnsrenderer,  sortable:true, cellclassname:datecellclass },
-			{ text: 'UTS', filtertype: 'date', filterable:true, datafield: 'uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			//{ text: 'UTS', filtertype: 'date', filterable:true, datafield: 'uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'Last UTS', filtertype: 'date', filterable:true, datafield: 'last_uts',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
-			{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
+			//{ text: 'Next PCP', filtertype: 'date', filterable:true, datafield: 'next_pcp',  width: 110,   cellsformat: 'M/dd/yy', renderer:columnsrenderer, sortable:true },
 			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 110,  renderer:columnsrenderer },
 			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH', 'NA'], renderer:columnsrenderer, width: 100},
 			{ text: 'Action', datafield: 'action',  width: 110,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false }

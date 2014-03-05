@@ -32,6 +32,7 @@ class REG_PatientController extends SugarController {
 		$this->bean = new TreatmentPlan();
 	}
 	
+	function action_test() {		$this->view = 'toplistest';	}
 	function action_report1() {		$this->view = 'reports1';	}
 	function action_report2(){		$this->view = 'reports2';	}		
 	function action_report3(){		$this->view = 'reports3';	}		
