@@ -1088,8 +1088,7 @@ echo "</div>";
 	\$('.action_buttons').append($('#copy_text_div'))});
 	  document.getElementById('reg_patient_reg_encounterreg_patient_ida').value='".$ida."';
 	  var combine = document.getElementById('next_appt_other_c').value;
-      var values_of = combine.split('#');
-	  
+	  var values_of = combine.split('#');
 	  for (var i=0;i<values_of.length;i++){
 	  var values_indi = values_of[i].split(',');
 	  var selectedtext=document.getElementById(values_indi[0]).text;

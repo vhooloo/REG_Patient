@@ -6,6 +6,7 @@ table {width:65%;}table.view { border-collapse:collapse; }table.view td, table.v
 <tr>
 <th>Name</th>
 <th>MRN</th>
+<th>PCP</th>
 <th>Refill</th>
 <th>Risk Level</th>
 </tr>
@@ -13,6 +14,7 @@ table {width:65%;}table.view { border-collapse:collapse; }table.view td, table.v
 <tr>
 <td>{$provrowData.last_name},&nbsp{$provrowData.first_name}</td>
 <td>{$provrowData.mrn}</td>
+<td>{$provrowData.provname}</td>
 <td>{$provrowData.refill}</td>
 <td>{if ($provrowData.risk == "")} "NA" {elseif ( $provrowData.risk  >= 0 AND  $provrowData.risk  < 4  )} "LOW"  {elseif ( $provrowData.risk  >= 4 AND  $provrowData.risk  < 7  )} "MODERATE"   {elseif ( $provrowData.risk  >= 7   )} "HIGH"  {elseif ( $provrowData.risk    < 0  )} "NA" {else} "NA" {/if}</td>
 </tr>

@@ -2,7 +2,6 @@
 
 require_once('include/MVC/View/views/view.edit.php');
 require_once('custom/modules/REG_Patient/RiskEvaluation.php');
-
 class REG_PatientViewRiskEvaluation extends ViewEdit {
  
 	function REG_PatientViewViewRiskEvaluation(){
