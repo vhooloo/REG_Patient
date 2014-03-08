@@ -24,9 +24,9 @@ class REG_PatientViewTopListest extends ViewList {
 
 		$myquery = 'SELECT tab4.first_name fname, tab4.last_name lname,  tab5.mrn_c mrn, tab4.id patid, tab5.location_c location, tab5.active_c active, ( SELECT tab1.reg_patient_reg_encounterreg_encounter_idb enclink  FROM reg_patient_reg_encounter_c tab1 WHERE  tab1.reg_patient_reg_encounterreg_patient_ida = patid AND tab1.date_modified = (SELECT max( date_modified ) dat FROM reg_patient_reg_encounter_c enc1 WHERE  enc1.reg_patient_reg_encounterreg_patient_ida = patid) )  enclink, ( SELECT DATE_FORMAT(tab3.next_rx_refill_due_c,"%m/%d/%Y") ref1 FROM reg_encounter_cstm tab3 where tab3.id_c = enclink )  refill,  ( SELECT DATE_FORMAT(MAX(tabuts.test_date),"%m/%d/%Y") uts1 FROM reg_patient_uts_import tabuts where tabuts.patient_mrn = mrn )  last_uts,  (SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = patid AND p2b.deleted = 0) provname, ( SELECT risklvl_c risk1 FROM reg_encounter_cstm tab3 where tab3.id_c = enclink )  risk FROM reg_patient tab4, reg_patient_cstm tab5 WHERE  tab5.id_c = tab4.id ';		
          
-		/**
+		
 		$start = microtime(true); 
-		///cache
+		/* ///cache
 		$cachefile = 'mycahcefile';
 		
 		if (file_exists('mycahcefile') ) {
