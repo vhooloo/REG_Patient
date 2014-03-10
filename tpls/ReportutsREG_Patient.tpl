@@ -124,6 +124,16 @@ $(window).load(function() {
 
 <body class='default'>
     <h3>{$title}</h3>
+	<div style="margin:auto !important; text-align:center">
+	<form method="post" name="formUTS">
+	Report Duration: <select name="duration" id="duration" onchange="this.form.submit()">
+	<option {if $duration eq "1"} selected {/if} value="1">Last 24 Hours</option>
+	<option {if $duration eq "2"} selected {/if} value="2">Last Week</option>
+	<option {if $duration eq "3"} selected {/if} value="3">Last Month</option>
+	<option {if $duration eq "4"} selected {/if} value="4">All Data</option>
+	</select>
+	</form>
+	</div><br>
         <div style="float: left;" id="jqxgrid">
         </div>
         
