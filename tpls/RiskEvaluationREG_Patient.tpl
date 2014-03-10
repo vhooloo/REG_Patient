@@ -322,8 +322,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 
 		<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">MEDD Safety</td>
-	  <td class="" valign="top" align="left"><select name="medd" id="medd" style="background-color:green; width:100px;"
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="medd" id="medd" style="{php} if($this->get_template_vars('myrisk')->medd=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->medd=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->medd=='gt7'){echo"background-color:red;";}{/php} width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->medd=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">&lt 50</option>
 					<option value="4-7" {php} if($this->get_template_vars('myrisk')->medd=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">51-100</option>
 					<option value="gt7" {php} if($this->get_template_vars('myrisk')->medd=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> &gt 100</option>
@@ -335,19 +334,17 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 		•	O2 Dependent = 1
 		•	COPD = 1 </td>
 
-	  <td class="" valign="top" align="left"><select name="pulmonay" id="pulmonay" style="background-color:green; width:100px;" 
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
-					<option value="0-3" {php} if($this->get_template_vars('myrisk')->pulmonay=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">1   &nbsp     </option>
-					<option value="4-7" {php} if($this->get_template_vars('myrisk')->pulmonay=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">2   &nbsp      </option>
-					<option value="gt7" {php} if($this->get_template_vars('myrisk')->pulmonay=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> 3 &nbsp     </option>
+	  <td class="" valign="top" align="left"><select name="pulmonary" id="pulmonary" style="{php} if($this->get_template_vars('myrisk')->pulmonary=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->pulmonary=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->pulmonary=='gt7'){echo"background-color:red;";}{/php}  width:100px;">
+					<option value="0-3" {php} if($this->get_template_vars('myrisk')->pulmonary=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">1   &nbsp     </option>
+					<option value="4-7" {php} if($this->get_template_vars('myrisk')->pulmonary=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">2   &nbsp      </option>
+					<option value="gt7" {php} if($this->get_template_vars('myrisk')->pulmonary=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> 3 &nbsp     </option>
 					</select></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Current Rx’d Other Sedating Medications</td>
 
-	  <td class="" valign="top" align="left"><select name="currentrx" id="currentrx" style="background-color:green; width:100px;" 
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="currentrx" id="currentrx" style="{php} if($this->get_template_vars('myrisk')->currentrx=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->currentrx=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->currentrx=='gt7'){echo"background-color:red;";}{/php}  width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->currentrx=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">None</option>
 					<option value="4-7" {php} if($this->get_template_vars('myrisk')->currentrx=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">1</option>
 					<option value="gt7" {php} if($this->get_template_vars('myrisk')->currentrx=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> &gt 1</option>
@@ -357,8 +354,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">H/o of having Opioids stopped by another provider involuntarily</td>
 
-	  <td class="" valign="top" align="left"><select name="histopioid" id="histopioid" style="background-color:green; width:100px;"
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="histopioid" id="histopioid" style="{php} if($this->get_template_vars('myrisk')->histopioid=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->histopioid=='4-7'){echo"background-color:#fc0;";} {/php} width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->histopioid=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">No</option>
 					<option value="4-7" {php} if($this->get_template_vars('myrisk')->histopioid=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">Yes</option>
 					
@@ -368,8 +364,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Preoccupation with Medications</td>
 
-	  <td class="" valign="top" align="left"><select name="preocc" id="preocc" style="background-color:green; width:100px;"
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="preocc" id="preocc" style="{php} if($this->get_template_vars('myrisk')->preocc=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->preocc=='4-7'){echo"background-color:#fc0;";} {/php} width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->preocc=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">No</option>
 					<option value="4-7" {php} if($this->get_template_vars('myrisk')->preocc=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">Yes</option>
 					
@@ -379,7 +374,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Unstable Social Environment</td>
 
-	  <td class="" valign="top" align="left"><select name="unstable" id="unstable" style="{php} if($this->get_template_vars('myrisk')->unstable=='0-3'){echo"background-color:green; ";} else{echo"background-color:red; ";} {/php}width:100px;" onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="unstable" id="unstable" style="{php} if($this->get_template_vars('myrisk')->unstable=='0-3'){echo"background-color:green; ";} else{echo"background-color:red; ";} {/php} width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->unstable=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">No</option>
 					
 					<option value="gt7" {php} if($this->get_template_vars('myrisk')->unstable=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> Yes</option>
@@ -389,8 +384,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Insecure Medication Storage</td>
 
-	  <td class="" valign="top" align="left"><select name="insecure" id="insecure" style="background-color:green; width:100px;"
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="insecure" id="insecure" style="{php} if($this->get_template_vars('myrisk')->insecure=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->insecure=='gt7'){echo"background-color:red;";}{/php} width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->insecure=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">No</option>
 					
 					<option value="gt7" {php} if($this->get_template_vars('myrisk')->insecure=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> Yes</option>
@@ -400,19 +394,17 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Evidence of Prior aberrant behaviors via chart review</td>
 
-	  <td class="" valign="top" align="left"><select name="priorabberant" id="priorabberant" style="background-color:green; width:100px;"
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = 'red';">
-					<option value="0-3" {php} if($this->get_template_vars('myrisk')->priorabberant=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">No</option>
+	  <td class="" valign="top" align="left"><select name="prioraberrant" id="prioraberrant" style="{php} if($this->get_template_vars('myrisk')->prioraberrant=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->prioraberrant=='gt7'){echo"background-color:red;";} {/php} width:100px;">
+					<option value="0-3" {php} if($this->get_template_vars('myrisk')->prioraberrant=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">No</option>
 					
-					<option value="gt7" {php} if($this->get_template_vars('myrisk')->priorabberant=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> Yes</option>
+					<option value="gt7" {php} if($this->get_template_vars('myrisk')->prioraberrant=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> Yes</option>
 					</select></td></td>
 	  <td class="" valign="top" align="left"></td>
 	</tr>
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">NCM Clinical Risk Assessment  Score</td>
 
-	  <td class="" valign="top" align="left"><select name="ncmscore" id="ncmscore" style="background-color:green; width:100px;"
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="ncmscore" id="ncmscore" style="{php} if($this->get_template_vars('myrisk')->ncmscore=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->ncmscore=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->ncmscore=='gt7'){echo"background-color:red;";}{/php} width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->ncmscore=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">0-3</option>
 					<option value="4-7" {php} if($this->get_template_vars('myrisk')->ncmscore=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">4-7</option>
 					<option value="gt7" {php} if($this->get_template_vars('myrisk')->ncmscore=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> 8-10</option>
@@ -422,8 +414,7 @@ On <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodi
 	<tr class="oddListRowS1" height="20" style="background-color:silver;">
 	  <td class="" valign="top" align="left" scope="row"><h2>Final Clinical Risk Assessment Score</h2></td>
 	  <td class="" valign="top" align="left"></td>
-	  <td class="" valign="top" align="left"><select name="finalscore" id="finalscore" style="background-color:green;width:100px;" 
-				onchange="if (this.selectedIndex==0) this.style.backgroundColor = 'green';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = 'red';">
+	  <td class="" valign="top" align="left"><select name="finalscore" id="finalscore" style="{php} if($this->get_template_vars('myrisk')->finalscore=='0-3'){echo"background-color:green;";} if($this->get_template_vars('myrisk')->finalscore=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->finalscore=='gt7'){echo"background-color:red;";}{/php} width:100px;">
 					<option value="0-3" {php} if($this->get_template_vars('myrisk')->finalscore=='0-3'){echo"selected='selected'";} {/php} style="background-color:green">0-3</option>
 					<option value="4-7" {php} if($this->get_template_vars('myrisk')->finalscore=='4-7'){echo"selected='selected'";} {/php} style="background-color:#fc0">4-7</option>
 					<option value="gt7" {php} if($this->get_template_vars('myrisk')->finalscore=='gt7'){echo"selected='selected'";} {/php} style="background-color:red"> 8-10</option>

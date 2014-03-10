@@ -3,21 +3,28 @@ table {width:65%;}table.view { border-collapse:collapse; }table.view td, table.v
 {/literal}
 <h3>{$title}</h3>
 <table class="list view" >
+{foreach name=provrowIteration from=$data1  item=provrowData1}
+{if $provrowData1.provname!=''}
+<tr><th colspan="4" style="background-color: #ffffff !important;"><h4><strong>Provider :</strong>&nbsp;&nbsp;{$provrowData1.provname}<h4></th></tr>
+{else}
+<tr><th colspan="4" style="background-color: #ffffff !important;"><h4><strong>Provider :</strong>&nbsp;&nbsp;No Provider<h4></th></tr>
+{/if}
 <tr>
 <th>Name</th>
 <th>MRN</th>
-<th>PCP</th>
 <th>Refill</th>
 <th>Risk Level</th>
 </tr>
-{foreach name=provrowIteration from=$data item=provrowData}
+{foreach name=provrowIteration from=$data  item=provrowData }
+{if $provrowData1.provname==$provrowData.provname }
 <tr>
 <td>{$provrowData.last_name},&nbsp{$provrowData.first_name}</td>
 <td>{$provrowData.mrn}</td>
-<td>{$provrowData.provname}</td>
 <td>{$provrowData.refill}</td>
-<td>{if ($provrowData.risk == "")} "NA" {elseif ( $provrowData.risk  >= 0 AND  $provrowData.risk  < 4  )} "LOW"  {elseif ( $provrowData.risk  >= 4 AND  $provrowData.risk  < 7  )} "MODERATE"   {elseif ( $provrowData.risk  >= 7   )} "HIGH"  {elseif ( $provrowData.risk    < 0  )} "NA" {else} "NA" {/if}</td>
+<td>{if ($provrowData.risk == "")} NA {elseif ( $provrowData.risk  >= 0 AND  $provrowData.risk  < 4  )} LOW  {elseif ( $provrowData.risk  >= 4 AND  $provrowData.risk  < 7  )} MODERATE   {elseif ( $provrowData.risk  >= 7   )} HIGH  {elseif ( $provrowData.risk    < 0  )} NA {else} NA {/if}</td>
 </tr>
+{/if}
+{/foreach}
 {foreachelse}
 <tr><td colspan="4" align="center">No records found with no next pill count date</td></tr>
 {/foreach}
