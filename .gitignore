@@ -213,3 +213,16 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+tpls/reports_tpl_backup/Report1REG_Patient.tpl
+tpls/reports_tpl_backup/Report2REG_Patient.tpl
+tpls/reports_tpl_backup/Report3REG_Patient.tpl
+tpls/reports_tpl_backup/Report5REG_Patient.tpl
+tpls/reports_tpl_backup/Report4REG_Patient.tpl
+tpls/reports_tpl_backup/Report6REG_Patient.tpl
+views/reports_backup/view.reports2.php
+views/reports_backup/view.reports5.php
+views/reports_backup/view.reports1.php
+views/reports_backup/view.reports4.php
+views/reports_backup/view.reports3.php
+views/reports_backup/view.reports6.php
+tpls/reports_tpl_backup/ReportUTSREG_Patient.tpl

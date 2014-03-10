@@ -621,6 +621,12 @@ $metadataFile = $this->getMetaDataFile();
 	   $this->dv2->setup('REG_Treatment_Plan', $this->bean2, $treatment_planMetadataFile, $treatment_planTemplate);
       }
 	  
+		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
+		$score = $db->query($riskquery, true);
+		$rowr = $db->fetchByAssoc($score);
+		$finalscore = $rowr['finalscore'];
+		$this->dv3->ss->assign("finalscore", $finalscore); 
+		
 	
 	//echo "<h1 color='r\"e\"d'>hahhahah</h1>";
 	
@@ -653,27 +659,29 @@ $metadataFile = $this->getMetaDataFile();
 		/***** UTS processing **/
 		$this->dv3->ss->assign("notes_flag", "false");
 		$myqueryuts = "SELECT DISTINCT DATE_FORMAT(test_date,'%m/%d/%Y') thisdate1, test_date thisdate, (SELECT DISTINCT test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OXYCODONE' AND test_results_code <> 'PEN') oxy,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OPIATE URINE' AND test_results_code <> 'PEN') opiate,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'METHADONE' AND test_results_code <> 'PEN') methadone,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'COCAIN METAB' AND test_results_code <> 'PEN') cocaine,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BUPRENO UR' AND test_results_code <> 'PEN') bupreno,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BENZODIAZ UR' AND test_results_code <> 'PEN') benzo,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BARBITURA UR'AND test_results_code <> 'PEN') barbi,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'AMPHETAMI UR' AND test_results_code <> 'PEN') amph FROM reg_patient_uts_import WHERE patient_mrn = '".$mrn."' order by 2 desc";
+
         $dbuts = DBManagerFactory::getInstance(); 
+
 		$resultuts = $dbuts->query($myqueryuts);  
+
 		 $lastuts = "";
+
 		 $mydatauts = array();
+
 		 $ctr = 0;
-		 $prevdate = "";   // make changes for expanded opioid
+
 		while($rowuts = $dbuts->fetchRow($resultuts))
+
 		{
+
 			if ($ctr == 0) $lastuts = $rowuts['thisdate1'];   //grab date of last uts
-			if ( $rowuts['thisdate1'] == $prevdate )  //collapse this row into previous row
-			{	
-				//if ($rowuts['oxy'] != null ) $mydatauts[ctr][ = 
-				//$mydatauts[]['barbi'] = "check"; 
-				
-			} 
-			else { $mydatauts[]['thisdate1'] =$rowuts['thisdate1']; $mydatauts[$ctr]['opiate'] =$rowuts['opiate'].$prevdate.$rowuts['thisdate1'];} //generate new row
-			//$mydatauts[]['oxy'] = "check"; 
-			//$mydatauts[$ctr]['barbi'] = "check"; 
+
 			$ctr = $ctr + 1;
-			$prevdate = $rowuts['thisdate1'];
-		};	
+
+			$mydatauts[]=$rowuts;
+
+		};	  
+		
 		$this->dv3->ss->assign("mydatauts", $mydatauts); 
 		$this->dv3->ss->assign("lastuts", $lastuts); 
 		
