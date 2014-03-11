@@ -373,6 +373,14 @@ $metadataFile = $this->getMetaDataFile();
 				  echo "<script>document.getElementById('next_pmp_review_due_c').style.color='red'</script>";
 				}
 			}
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 		
 	}	
@@ -652,25 +660,30 @@ $metadataFile = $this->getMetaDataFile();
 		
 		/***** UTS processing **/
 		$this->dv3->ss->assign("notes_flag", "false");
-		$myqueryuts = "SELECT DISTINCT DATE_FORMAT(test_date,'%m/%d/%Y') thisdate1, test_date thisdate, (SELECT DISTINCT test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OXYCODONE' AND test_results_code <> 'PEN') oxy,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OPIATE URINE' AND test_results_code <> 'PEN') opiate,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'METHADONE' AND test_results_code <> 'PEN') methadone,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'COCAIN METAB' AND test_results_code <> 'PEN') cocaine,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BUPRENO UR' AND test_results_code <> 'PEN') bupreno,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BENZODIAZ UR' AND test_results_code <> 'PEN') benzo,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BARBITURA UR'AND test_results_code <> 'PEN') barbi,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'AMPHETAMI UR' AND test_results_code <> 'PEN') amph FROM reg_patient_uts_import WHERE patient_mrn = '".$mrn."' order by 2 desc";
+		$myqueryuts = "SELECT DISTINCT DATE_FORMAT(test_date,'%m/%d/%Y') thisdate1, test_date thisdate, sdid mysdid, (SELECT DISTINCT test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'OXYCODONE' AND test_results_code <> 'PEN') oxy,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'OPIATE URINE' AND test_results_code <> 'PEN') opiate,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'METHADONE' AND test_results_code <> 'PEN') methadone,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'COCAIN METAB' AND test_results_code <> 'PEN') cocaine,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'BUPRENO UR' AND test_results_code <> 'PEN') bupreno,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'BENZODIAZ UR' AND test_results_code <> 'PEN') benzo,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'BARBITURA UR'AND test_results_code <> 'PEN') barbi,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND sdid = mysdid AND test_type = 'AMPHETAMI UR' AND test_results_code <> 'PEN') amph FROM reg_patient_uts_import WHERE patient_mrn = '".$mrn."' order by 2 desc, 3 desc";
         $dbuts = DBManagerFactory::getInstance(); 
 		$resultuts = $dbuts->query($myqueryuts);  
 		 $lastuts = "";
 		 $mydatauts = array();
-		 $ctr = 0;
+		 $ctr = 0;$utsctr = 0;
 		 $prevdate = "";   // make changes for expanded opioid
+		 $mydatauts = array();
 		while($rowuts = $dbuts->fetchRow($resultuts))
 		{
 			if ($ctr == 0) $lastuts = $rowuts['thisdate1'];   //grab date of last uts
 			if ( $rowuts['thisdate1'] == $prevdate )  //collapse this row into previous row
 			{	
-				//if ($rowuts['oxy'] != null ) $mydatauts[ctr][ = 
-				//$mydatauts[]['barbi'] = "check"; 
+				if ($rowuts['oxy'] != null ) $mydatauts[$utsctr-1]['oxy'] = $rowuts['oxy']; 
+				if ($rowuts['opiate'] != null ) $mydatauts[$utsctr-1]['opiate'] = $rowuts['opiate'];
+				if ($rowuts['methadone'] != null ) $mydatauts[$utsctr-1]['methadone'] = $rowuts['methadone'];
+				if ($rowuts['cocaine'] != null ) $mydatauts[$utsctr-1]['cocaine'] = $rowuts['cocaine'];
+				if ($rowuts['bupreno'] != null ) $mydatauts[$utsctr-1]['bupreno'] = $rowuts['bupreno'];
+				if ($rowuts['benzo'] != null ) $mydatauts[$utsctr-1]['benzo'] = $rowuts['benzo'];
+				if ($rowuts['barbi'] != null ) $mydatauts[$utsctr-1]['barbi'] = $rowuts['barbi'];
+				if ($rowuts['amph'] != null ) $mydatauts[$utsctr-1]['amph'] = $rowuts['amph'];
 				
 			} 
-			else { $mydatauts[]['thisdate1'] =$rowuts['thisdate1']; $mydatauts[$ctr]['opiate'] =$rowuts['opiate'].$prevdate.$rowuts['thisdate1'];} //generate new row
-			//$mydatauts[]['oxy'] = "check"; 
-			//$mydatauts[$ctr]['barbi'] = "check"; 
+			else { $mydatauts[] =$rowuts; $utsctr = $utsctr + 1;} //generate new row
 			$ctr = $ctr + 1;
 			$prevdate = $rowuts['thisdate1'];
 		};	
@@ -990,7 +1003,7 @@ echo "</div>";
 		
 		//display encounter list view
 		//$query2 = "SELECT * FROM reg_structured_element where id in( SELECT reg_treatm68ecelement_idb from reg_treatment_plan_reg_structured_element_c where reg_treatment_plan_reg_structured_elementreg_treatment_plan_ida = '".$tmp."' AND deleted!=1)" ;
-		$query2 = "SELECT * FROM reg_encounter where  id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1) order by date_entered desc" ;
+		$query2 = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c and  id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1) order by date_entered desc" ;
 		$result = $this->bean->db->query($query2, true); 
 		
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
@@ -1018,11 +1031,29 @@ echo "</div>";
 				$row2=$this->bean->db->fetchByAssoc($result2);
 				$date_created = str_split($row['date_entered'],16);
 				if($count%2==1){
-					echo "<tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab'  tab_name='". $row['summary']."'  link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+					/* echo "<tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab'  tab_name='". $row['summary']."'  link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
 				}
 				else
 				{
-					echo "<tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab' tab_name='". $row['summary']."' link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+					echo "<tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab' tab_name='". $row['summary']."' link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>"; */
+					//if(isset($row['abherrent_behaviors_c']))  echo 'h'.$row['abherrent_behaviors_c'];
+					echo "<tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab'  tab_name='". $row['summary']."'  link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span>";
+					
+					if(isset($row['abherrent_behaviors_c']) && $row['abherrent_behaviors_c']!="")
+						echo "<img src='custom/themes/default/images/aberrant_behavior.gif'>!!";
+						
+					echo "</td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+
+				}
+				else
+				{
+
+					echo "<tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab' tab_name='". $row['summary']."' link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span>";
+					
+					if(isset($row['abherrent_behaviors_c']) && $row['abherrent_behaviors_c']!="")
+						echo "<img src='custom/themes/default/images/aberrant_behavior.gif'>!!";
+						
+					echo "</td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
 				}
 		
 				//return $row; 
