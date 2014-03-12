@@ -2,7 +2,7 @@
 <style type="text/css">
 table 
 {
-width:50%;
+width:60%;
 }
 table.view { border-collapse:collapse; }
 table.view td, table.view th { border:1px solid  rgb(171, 195, 215);padding:5px; } 
@@ -54,12 +54,14 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
 				}
 				);			
     		
-{/literal}
+
 	document.getElementById("last_pcp_visit_c1").value = "{$smarty.post.last_pcp_visit_c1}";
 	document.getElementById("last_pcp_visit_c2").value = "{$smarty.post.last_pcp_visit_c2}";
-}
-</script>
 
+}
+	
+</script>
+{/literal}
 
 <link type="text/css" rel="stylesheet" href="custom/topcarejs/jquery.dropdown.css" />
 <script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script>
@@ -230,12 +232,13 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
 
 <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
 
-<table  width="400" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
+<table cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
 
     <thead>
     
-		<th width="25%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Category </div>  </th>
+		<th width="50%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Category </div>  </th>
 		<th width="25%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Assessment    </div>	</th>
+        <th width="25%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Numbers   </div>	</th>
 		
 
     </tr>
@@ -248,68 +251,80 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
 				<td class="" valign="top" align="left" scope="row"> <h2> Number of Sessions/week </h2> </td>
 
 				<td class="" valign="top" align="left"  >  </td>
+                <td class="" valign="top" align="left"  >  </td>
   
 	</tr>
 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with treatment agreements</td>
 	  <td class="" valign="top" align="left"> {math equation="x/y*100" x=$patienttreatment.pattreatct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left"> {$patienttreatment.pattreatct} out of {$numpatient.numpatientct}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">Range of # of early re-fills per year across all patients </td>
 
 	  <td class="" valign="top" align="left"></td>
+      <td class="" valign="top" align="left"></td>
 	</tr>
 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$uts.utsct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$uts.utsct} out of {$numpatient.numpatientct}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year in moderate risk profile group</td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$utsmod.utsct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$utsmod.utsct} out of {$numpatient.numpatientct}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year in high risk profile group </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$utshigh.utsct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$utshigh.utsct} out of {$numpatient.numpatientct}</td>
 	</tr>
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients on multiple short-acting opioids </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$shortacting.shortactingct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$shortacting.shortactingct} out of {$numpatient.numpatientct}</td>
 	</tr>
 	
  
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients on multiple long-acting opioids </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$longacting.longactingct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$longacting.longactingct} out of {$numpatient.numpatientct}</td>
 	</tr>	 
 		 
 		 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with a dosage &#062 50 mg morphine equivalence </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$patientmedd.patmeddct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$patientmedd.patmeddct} out of {$numpatient.numpatientct}</td>
 	</tr>	 
 		 
 			 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with substance abuse history</td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$substancehx.substancect y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$substancehx.substancect} out of {$numpatient.numpatientct}</td>
 	</tr>	 
 		 
 			 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with respiratory history </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$patientresp.patrespct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$patientresp.patrespct} out of {$numpatient.numpatientct}</td>
 	</tr>	 
 		 
 			 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with mental health diagnosis history </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$mentalhx.mentalct y=$numpatient.numpatientct format="%.2f"}</td>
+      <td class="" valign="top" align="left">{$mentalhx.mentalct} out of {$numpatient.numpatientct}</td>
 	</tr>	 
 		 
 		 

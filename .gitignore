@@ -226,3 +226,5 @@ views/reports_backup/view.reports4.php
 views/reports_backup/view.reports3.php
 views/reports_backup/view.reports6.php
 tpls/reports_tpl_backup/ReportUTSREG_Patient.tpl
+tpls/reports_tpl_backup/AcademicDetailREG_Patient - Copy.tpl
+views/reports_backup/view.academicdetail - Copy.php

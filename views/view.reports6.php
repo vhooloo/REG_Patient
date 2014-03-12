@@ -19,10 +19,19 @@ class REG_PatientViewReports6 extends ViewList {
 		{
 			$final[] = $row;
 		}
+
+		$sql1 = "SELECT p.id patid, ( SELECT tab1.reg_patient_reg_encounterreg_encounter_idb enclink  FROM reg_patient_reg_encounter_c tab1 WHERE  tab1.reg_patient_reg_encounterreg_patient_ida = patid AND tab1.date_modified = (SELECT max( date_modified ) dat FROM reg_patient_reg_encounter_c enc1 WHERE  enc1.reg_patient_reg_encounterreg_patient_ida = patid) )  enclink, (SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = patid) provname FROM reg_patient p LEFT JOIN reg_patient_cstm rec ON  rec.id_c=p.id WHERE p.id in (SELECT distinct pe.reg_patient_reg_encounterreg_patient_ida FROM `reg_patient_reg_encounter_c` pe, reg_encounter_cstm e WHERE pe.reg_patient_reg_encounterreg_encounter_idb=e.id_c AND (next_pill_ct_c is not null)) GROUP BY provname";
+		$resultb1 = $db->query($sql1, true);
+		$final1 = array();
+		while($row1 = $db->fetchByAssoc($resultb1))
+		{
+			$final1[] = $row1;
+		}
 		
 		$sugarSmarty = new Sugar_Smarty();
         
         $sugarSmarty->assign("data",$final);
+        $sugarSmarty->assign("data1",$final1);
 		$sugarSmarty->assign("title","Patients who have Next Pill Count");
         $sugarSmarty->display('custom/modules/REG_Patient/tpls/Report6REG_Patient.tpl');
 		
