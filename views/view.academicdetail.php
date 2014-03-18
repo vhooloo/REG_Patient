@@ -109,6 +109,16 @@ class REG_PatientViewAcademicDetail extends ViewEdit {
 		$rowshortacting = $db->fetchRow($resultshortacting);
 		$smarty->assign("shortacting", $rowshortacting);
 		
+		$meddgt7 = "select count(pid) as count from reg_patient_risk rpr, reg_patient rp,reg_provider_reg_patient_c p2xb WHERE rp.id=rpr.pid AND rpr.medd='gt7' AND p2xb.reg_provider_reg_patientreg_patient_idb = rp.id AND p2xb.reg_provider_reg_patientreg_provider_ida = '". $_REQUEST['provid'] . "'";
+		$resultmeddgt7 = $db->query($meddgt7);
+		$rowmeddgt7 = $db->fetchRow($resultmeddgt7);
+		$smarty->assign("meddgt7", $rowmeddgt7);
+		
+		$medd4_7 = "select count(pid) as count from reg_patient_risk rpr, reg_patient rp,reg_provider_reg_patient_c p2xb WHERE rp.id=rpr.pid AND rpr.medd='4-7' AND p2xb.reg_provider_reg_patientreg_patient_idb = rp.id AND p2xb.reg_provider_reg_patientreg_provider_ida = '". $_REQUEST['provid'] . "'";
+		$resultmedd4_7 = $db->query($medd4_7);
+		$rowmedd4_7 = $db->fetchRow($resultmedd4_7);
+		$smarty->assign("medd4_7", $rowmedd4_7);
+		
 		
 		
 		////////////////////////////
