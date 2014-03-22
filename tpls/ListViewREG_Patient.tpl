@@ -391,7 +391,7 @@ NWin.onbeforeunload = function(){document.getElementById('iframe').contentWindow
 		row["next_pcp"] 	= "{$myrowData.next_pcp}";
 		row["pcp"] 			= "{$myrowData.provname}";
 		row["action"] 		= "{$myrowData.patid}";
-		row["risk"] 		=  {if ($myrowData.risk == "")} "NA" {elseif ( $myrowData.risk  >= 0 AND  $myrowData.risk  < 4  )} "LOW"  {elseif ( $myrowData.risk  >= 4 AND  $myrowData.risk  < 7  )} "MODERATE"   {elseif ( $myrowData.risk  >= 7   )} "HIGH"  {elseif ( $myrowData.risk    < 0  )} "NA" {else} "NA" {/if} ;
+		row["risk"] 		=  {if ($myrowData.risk == "")} "NA" {elseif ( $myrowData.risk  eq "0-3" )} "LOW"  {elseif ( $myrowData.risk eq "4-7" )} "MODERATE"   {elseif ( $myrowData.risk  eq "gt7" )} "HIGH"  {else} "NA" {/if} ;
 		data[i] = row;
 	    i = i + 1;
 	{/foreach}

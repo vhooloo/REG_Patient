@@ -43,6 +43,8 @@ class RiskEvaluation  extends SugarBean {
 	 var	$insecure;	               //varchar(12) DEFAULT NULL,
 	 var	$prioraberrant;	               //varchar(12) DEFAULT NULL,
 	 var	$ncmscore;	               //varchar(12) DEFAULT NULL,
+	 var	$long_opioid;	               //varchar(12) DEFAULT 0,
+	 var	$short_opioid;	               //varchar(12) DEFAULT 0,
 	 var	$finalscore;	               //varchar(12) DEFAULT NULL,
 	 var	$comment;	               //mediumtext DEFAULT NULL,
 	 var    $lastmodified;            //date when was it last modified?
@@ -168,6 +170,8 @@ class RiskEvaluation  extends SugarBean {
 				 $this->preocc = 	 $a['preocc'];	
 				 $this->unstable = 	 $a['unstable'];	
 				 $this->insecure = 	 $a['insecure'];	
+				 $this->short_opioid = 	 $a['short_opioid'];	
+				 $this->long_opioid = 	 $a['long_opioid'];	
 				 $this->prioraberrant = 	 $a['prioraberrant'];	
 				 $this->ncmscore = 	 $a['ncmscore'];	
 				 $this->comment = 	 $a['comment'];	
@@ -220,10 +224,10 @@ class RiskEvaluation  extends SugarBean {
 		    }
 
 			//$q = "INSERT INTO reg_patient_risk(id_c,  ort1a, ort1b, ort1c, ort2a, ort2b, ort2c, ort3, ort4, ort5a, ort5b, created_by, modified_by, deleted)".	" VALUES('{$this->id_c}',  '{$this->ort1a}',  '{$this->ort1b}', '{$this->ort1c}', '{$this->ort2a}', '{$this->ort2b}', '{$this->ort2c}', '{$this->ort3}', '{$this->ort4}', '{$this->ort5a}', '{$this->ort5b}','{$current_user->id}', '{$current_user->id}', 0)";
-			$q = "INSERT INTO reg_patient_risk(id_c, pid,  ort1a, ort1b, ort1c, ort2a, ort2b, ort2c, ort3, ort4, ort5a, ort5b, ortsum, medd, pulmonary, currentrx, histopioid, preocc, unstable, insecure, prioraberrant, ncmscore, finalscore,comment, created_by, date_entered)".	" VALUES('{$this->id_c}', '{$this->pid}',  '{$this->ort1a}',  '{$this->ort1b}', '{$this->ort1c}', '{$this->ort2a}', '{$this->ort2b}', '{$this->ort2c}', '{$this->ort3}', '{$this->ort4}', '{$this->ort5a}', '{$this->ort5b}', '{$this->ortsum}', '{$this->medd}', '{$this->pulmonary}', '{$this->currentrx}', '{$this->histopioid}', '{$this->preocc}', '{$this->unstable}', '{$this->insecure}', '{$this->prioraberrant}', '{$this->ncmscore}', '{$this->finalscore}', '{$this->comment}','{$current_user->id}', NOW())";
+			$q = "INSERT INTO reg_patient_risk(id_c, pid,  ort1a, ort1b, ort1c, ort2a, ort2b, ort2c, ort3, ort4, ort5a, ort5b, ortsum, medd, pulmonary, currentrx, histopioid, preocc, unstable, insecure, prioraberrant, ncmscore, finalscore,comment, created_by, date_entered)".	" VALUES('{$this->id_c}', '{$this->pid}',  '{$this->ort1a}',  '{$this->ort1b}', '{$this->ort1c}', '{$this->ort2a}', '{$this->ort2b}', '{$this->ort2c}', '{$this->ort3}', '{$this->ort4}', '{$this->ort5a}', '{$this->ort5b}', '{$this->ortsum}', '{$this->medd}', '{$this->pulmonary}', '{$this->currentrx}', '{$this->histopioid}', '{$this->preocc}', '{$this->unstable}', '{$this->insecure}', '{$this->prioraberrant}', short_opioid = '{$this->short_opioid}', long_opioid = '{$this->long_opioid}', '{$this->ncmscore}', '{$this->finalscore}', '{$this->comment}','{$current_user->id}', NOW())";
 			$GLOBALS['log']->fatal('sql::'.$q);
 		
-			$q_history = "INSERT INTO reg_patient_risk_history(pid,  ort1a, ort1b, ort1c, ort2a, ort2b, ort2c, ort3, ort4, ort5a, ort5b, ortsum, medd, pulmonary, currentrx, histopioid, preocc, unstable, insecure, prioraberrant, ncmscore, finalscore, comment, created_by, date_entered)".	" VALUES('{$this->pid}',  '{$this->ort1a}',  '{$this->ort1b}', '{$this->ort1c}', '{$this->ort2a}', '{$this->ort2b}', '{$this->ort2c}', '{$this->ort3}', '{$this->ort4}', '{$this->ort5a}', '{$this->ort5b}', '{$this->ortsum}', '{$this->medd}', '{$this->pulmonary}', '{$this->currentrx}', '{$this->histopioid}', '{$this->preocc}', '{$this->unstable}', '{$this->insecure}', '{$this->prioraberrant}', '{$this->ncmscore}', '{$this->finalscore}', '{$this->comment}', '{$current_user->id}', NOW())";
+			$q_history = "INSERT INTO reg_patient_risk_history(pid,  ort1a, ort1b, ort1c, ort2a, ort2b, ort2c, ort3, ort4, ort5a, ort5b, ortsum, medd, pulmonary, currentrx, histopioid, preocc, unstable, insecure, prioraberrant, short_opioid, long_opioid, ncmscore, finalscore, comment, created_by, date_entered)".	" VALUES('{$this->pid}',  '{$this->ort1a}',  '{$this->ort1b}', '{$this->ort1c}', '{$this->ort2a}', '{$this->ort2b}', '{$this->ort2c}', '{$this->ort3}', '{$this->ort4}', '{$this->ort5a}', '{$this->ort5b}', '{$this->ortsum}', '{$this->medd}', '{$this->pulmonary}', '{$this->currentrx}', '{$this->histopioid}', '{$this->preocc}', '{$this->unstable}', '{$this->insecure}', '{$this->prioraberrant}', '{$this->short_opioid}', '{$this->long_opioid}', '{$this->ncmscore}', '{$this->finalscore}', '{$this->comment}', '{$current_user->id}', NOW())";
 			$GLOBALS['log']->fatal('sql::'.$q_history);
 			
 			$GLOBALS['log']->fatal('{this->id_c}');
@@ -231,15 +235,16 @@ class RiskEvaluation  extends SugarBean {
 		else {
 	
 			//$q = "UPDATE reg_patient_risk SET   modified_by = '{$current_user->id}', ort1a = '{$this->ort1a}',  ort1b = '{$this->ort1b}', ort1c = '{$this->ort1c}', ort2a = '{$this->ort2a}', ort2b = '{$this->ort2b}', ort2c = '{$this->ort2c}', ort3 = '{$this->ort3}', ort4 = '{$this->ort4}', ort5a = '{$this->ort5a}', ort5b = '{$this->ort5b}' WHERE id_c = '{$this->id_c}'";
-			$q = "UPDATE reg_patient_risk SET   ort1a = '{$this->ort1a}',  ort1b = '{$this->ort1b}', ort1c = '{$this->ort1c}', ort2a = '{$this->ort2a}', ort2b = '{$this->ort2b}', ort2c = '{$this->ort2c}', ort3 = '{$this->ort3}', ort4 = '{$this->ort4}', ort5a = '{$this->ort5a}', ort5b = '{$this->ort5b}', ortsum = '{$this->ortsum}', medd = '{$this->medd}', pulmonary = '{$this->pulmonary}', currentrx = '{$this->currentrx}', histopioid = '{$this->histopioid}', preocc = '{$this->preocc}', unstable = '{$this->unstable}', insecure = '{$this->insecure}', prioraberrant = '{$this->prioraberrant}', ncmscore = '{$this->ncmscore}', finalscore = '{$this->finalscore}', comment = '{$this->comment}', modified_user_id = '{$current_user->id}', date_modified = NOW() WHERE id_c = '{$this->id_c}'";
+			$q = "UPDATE reg_patient_risk SET   ort1a = '{$this->ort1a}',  ort1b = '{$this->ort1b}', ort1c = '{$this->ort1c}', ort2a = '{$this->ort2a}', ort2b = '{$this->ort2b}', ort2c = '{$this->ort2c}', ort3 = '{$this->ort3}', ort4 = '{$this->ort4}', ort5a = '{$this->ort5a}', ort5b = '{$this->ort5b}', ortsum = '{$this->ortsum}', medd = '{$this->medd}', pulmonary = '{$this->pulmonary}', currentrx = '{$this->currentrx}', histopioid = '{$this->histopioid}', preocc = '{$this->preocc}', unstable = '{$this->unstable}', insecure = '{$this->insecure}', prioraberrant = '{$this->prioraberrant}', short_opioid = '{$this->short_opioid}', long_opioid = '{$this->long_opioid}', ncmscore = '{$this->ncmscore}', finalscore = '{$this->finalscore}', comment = '{$this->comment}', modified_user_id = '{$current_user->id}', date_modified = NOW() WHERE id_c = '{$this->id_c}'";
 			
 			$GLOBALS['log']->fatal('sql::'.$q);
 
-			$q_history = "INSERT INTO reg_patient_risk_history(pid,  ort1a, ort1b, ort1c, ort2a, ort2b, ort2c, ort3, ort4, ort5a, ort5b, ortsum, medd, pulmonary, currentrx, histopioid, preocc, unstable, insecure, prioraberrant, ncmscore, finalscore, comment, created_by, date_entered)".	" VALUES('{$this->pid}',  '{$this->ort1a}',  '{$this->ort1b}', '{$this->ort1c}', '{$this->ort2a}', '{$this->ort2b}', '{$this->ort2c}', '{$this->ort3}', '{$this->ort4}', '{$this->ort5a}', '{$this->ort5b}', '{$this->ortsum}', '{$this->medd}', '{$this->pulmonary}', '{$this->currentrx}', '{$this->histopioid}', '{$this->preocc}', '{$this->unstable}', '{$this->insecure}', '{$this->prioraberrant}', '{$this->ncmscore}', '{$this->finalscore}', '{$this->comment}', '{$current_user->id}', NOW())";
+			$q_history = "INSERT INTO reg_patient_risk_history(pid,  ort1a, ort1b, ort1c, ort2a, ort2b, ort2c, ort3, ort4, ort5a, ort5b, ortsum, medd, pulmonary, currentrx, histopioid, preocc, unstable, insecure, prioraberrant, short_opioid, long_opioid, ncmscore, finalscore, comment, created_by, date_entered)".	" VALUES('{$this->pid}',  '{$this->ort1a}',  '{$this->ort1b}', '{$this->ort1c}', '{$this->ort2a}', '{$this->ort2b}', '{$this->ort2c}', '{$this->ort3}', '{$this->ort4}', '{$this->ort5a}', '{$this->ort5b}', '{$this->ortsum}', '{$this->medd}', '{$this->pulmonary}', '{$this->currentrx}', '{$this->histopioid}', '{$this->preocc}', '{$this->unstable}', '{$this->insecure}', '{$this->prioraberrant}', '{$this->short_opioid}', '{$this->long_opioid}', '{$this->ncmscore}', '{$this->finalscore}', '{$this->comment}', '{$current_user->id}', NOW())";
 			$GLOBALS['log']->fatal('sql::'.$q_history);
 		//	die($q_history);
 
 			$GLOBALS['log']->fatal(" '{this->id_c}' ".$v);
+			//$GLOBALS['log']->fatal(" '{this->id_c}' ");
 		}
     
 		

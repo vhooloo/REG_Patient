@@ -64,9 +64,6 @@ echo "<script type='text/javascript'>
 	
 
 
-
-
-
 echo '<script src="custom/jquery/jquery-1.9.1.js"></script>
 	<script src="custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js"></script>
 	<script src="custom/jquery/accordion/js/jquery-migrate-1.2.1.min.js"></script>';
@@ -300,7 +297,12 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			}
 			
 			if($row['next_appt_other_c']!=null){
-				echo "<script>document.getElementById('next_appt_other_c').value='".$row['next_appt_other_c']."'</script>";
+				echo "<script type='text/javascript'>
+			$(document).ready(function() {
+			var values = [".$row['next_appt_other_c']."];
+			$('#next_appt_other_c').val(values);
+			});	
+			</script>";
 				}
 				
 			if($row['next_pmp_review_due_c']!=null){

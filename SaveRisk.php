@@ -116,6 +116,14 @@ if(isset($_POST['pid']) && !empty($_POST['pid'])) {
 	
 	$focus->pid = $_POST['pid'];
 }
+if(isset($_POST['short_opioid']) && !empty($_POST['short_opioid'])) {
+	
+	$focus->short_opioid = $_POST['short_opioid'];
+}
+if(isset($_POST['long_opioid']) && !empty($_POST['long_opioid'])) {
+	
+	$focus->long_opioid = $_POST['long_opioid'];
+}
 
 if(isset($_POST['riskid']) && !empty($_POST['riskid'])) {
 	
@@ -133,6 +141,12 @@ $focus->save();
 ///////////////////////////////////////////////////////////////////////////////
 ////	PAGE REDIRECTION; BAck to patient list
 ///////////////////////////////////////////////////////////////////////////////
-
+if(isset($_POST['flag']) && $_POST['flag']==1)
+{
+echo "<script type='text/javascript'>
+$(document).ready(function(){
+window.close(); });</script>";
+}
+else
 	header("Location: index.php?action=index&module=REG_Patient");
 ?>
