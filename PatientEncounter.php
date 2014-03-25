@@ -45,7 +45,7 @@ echo '<script type="text/javascript"src="custom/jquery/jquery-1.9.1.js"></script
             "<li ><a href=\'#tabs-" + num_tabs + "\'>" + tab_name + "</a><span class=\"ui-icon ui-icon-close\">Remove Tab</span></li>"
         );
 	$("div#tabs").append(
-			"<div style=\'margin: 0 auto;display: table-footer-group;\' id=\'tabs-" + num_tabs + "\'><iframe scrolling=\'no\' frameborder=\'0\' width=\'1081px\' height=\'473px\' src =\'"+a+"\'></iframe></div>"
+			"<div style=\'margin: 0 auto;display: table-footer-group;\' id=\'tabs-" + num_tabs + "\'><iframe scrolling=\'no\' frameborder=\'0\' width=\'800px\' height=\'535px\' src =\'"+a+"\'></iframe></div>"
            
         );
         $("div#tabs").tabs("refresh");
@@ -239,11 +239,16 @@ $metadataFile = $this->getMetaDataFile();
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
 		{
 		    //assign to smarty
+			
+			echo "<script type='text/javascript'>
+			$(document).ready(function() {
+			";
+						
 			$this->dv3->ss->assign("datarow", $row);
 			
 			if($row['pcp_name_c']!=null){
 				
-				echo "<script>document.getElementById('pcp_dummy').value='".$row['pcp_name_c']."'; document.getElementById('pcp_name_c').value='".$row['pcp_name_c']."'</script>";
+				echo "\r\n document.getElementById('pcp_dummy').value='".$row['pcp_name_c']."'; document.getElementById('pcp_name_c').value='".$row['pcp_name_c']."';";
 			}
 			
 			// Last Rx date should be defaulted to last Rx generated date 
@@ -257,73 +262,73 @@ $metadataFile = $this->getMetaDataFile();
 				echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
 				}
 		*/	if($row['pills_bottle_disp_c']!=null){
-				echo "<script>document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'</script>";
+			//	echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'";
 				}
 			if($row['risklvl_c']!=null){
-				echo "<script>document.getElementById('risklvl_c').value='".$row['risklvl_c']."'</script>";
+				echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
 				}
 		 
 		 
 			if($row['last_uts_c']!=null){
 				$date1=strtotime($row['last_uts_c']);
-				echo "<script>document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pcp_visit_c']!=null){
 				$date1=strtotime($row['last_pcp_visit_c']);
-				echo "<script>document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pain_nurse_visit_c']!=null){
 				$date1=strtotime($row['last_pain_nurse_visit_c']);
-				echo "<script>document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+			//	echo "\r\n document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."'";
 			}
 			if($row['last_nurse_phone_contact_c']!=null){
 				$date1=strtotime($row['last_nurse_phone_contact_c']);
-				echo "<script>document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pmp_review_done_c']!=null){
 				$date1=strtotime($row['last_pmp_review_done_c']);
-				echo "<script>document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['narcotic_contract_in_chart_c']==1){
-				echo "<script> $('#narcotic_contract_in_chart_c').prop('checked', true); </script>";
+				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
 			if($row['narcotic_contract_sign_c']!=null){
 				$date1=strtotime($row['narcotic_contract_sign_c']);
-				echo "<script>document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."';";
 			}
 			
 			
 			if($row['pt_confirms_taking_c']==1){
-				echo "<script> $('#pt_confirms_taking_c').prop('checked', true); </script>";
+				echo "\r\n  $('#pt_confirms_taking_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
 			}				
 			if($row['pt_confirms_storing_c']==1){
-				echo "<script> $('#pt_confirms_storing_c').prop('checked', true); </script>";
+				echo "\r\n  $('#pt_confirms_storing_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
 			}
 			if($row['aberrant_behavior_noted_c']==1){
-				echo "<script> $('#aberrant_behavior_noted_c').prop('checked', true); </script>";
+				echo "\r\n  $('#aberrant_behavior_noted_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
 			}
 			if($row['med_safety_pulm_prob_c']==1){
-				echo "<script> $('#med_safety_pulm_prob_c').prop('checked', true); </script>";
+				echo "\r\n  $('#med_safety_pulm_prob_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
 			}
 			if($row['med_safety_sedatives_c']==1){
-				echo "<script> $('#med_safety_sedatives_c').prop('checked', true); </script>";
+				echo "\r\n  $('#med_safety_sedatives_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
 			}
 			
 			if($row['med_safety_high_medd_c']==1){
-				echo "<script> $('#med_safety_high_medd_c').prop('checked', true); </script>";
+				echo "\r\n  $('#med_safety_high_medd_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
 			}
 			
 			if($row['pt_active_c']==0)
 			{	
-				echo "<script> $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);</script>";
+				echo "\r\n  $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);";
 				
 				//echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
 			}
@@ -334,99 +339,104 @@ $metadataFile = $this->getMetaDataFile();
 			if($row['next_rx_refill_due_c']!=null){
 				$date1=strtotime($row['next_rx_refill_due_c']);
 				
-				echo "<script>document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-					echo "<script>document.getElementById('next_rx_refill_due_c').style.color='red'</script>";
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
 				}
 			}
 			if($row['next_uts_due_c']!=null){
 				$date1=strtotime($row['next_uts_due_c']);
-				echo "<script>document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_uts_due_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
 				}
 			}
 			
 			if($row['next_pcp_visit_c']!=null){
 				$date1=strtotime($row['next_pcp_visit_c']);
-				echo "<script>document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pcp_visit_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
 				}
 			}
 			if($row['nxt_appt_pain_c']!=null){
 				$date1=strtotime($row['nxt_appt_pain_c']);
-				echo "<script>document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('nxt_appt_pain_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
 				}
 			}
 			
 			if($row['next_appt_other_c']!=null){
-				echo "<script>document.getElementById('next_appt_other_c').value='".$row['next_appt_other_c']."'</script>";
+				echo "\r\n document.getElementById('next_appt_other_c').value='".$row['next_appt_other_c']."';";
 				}
 				
 			if($row['next_pmp_review_due_c']!=null){
 				$date1=strtotime($row['next_pmp_review_due_c']);
-				echo "<script>document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'; ";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pmp_review_due_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
 				}
 			}
+			echo "}); </script>";
 		}
 		
 	}	
 	else if($flag3==1){
 	
+	echo "<script type='text/javascript'>
+	$(document).ready(function() {
+	";
+	
 		if($this->bean3->pcp_name_c!=null){
 				
-				echo "<script>document.getElementById('pcp_dummy').value='".$this->bean3->pcp_name_c."'; document.getElementById('pcp_name_c').value='".$this->bean3->pcp_name_c."'</script>";
+				echo "\r\n document.getElementById('pcp_dummy').value='".$this->bean3->pcp_name_c."'; document.getElementById('pcp_name_c').value='".$this->bean3->pcp_name_c."';";
 			}
 		if($this->bean3->presc_refill_early_c==0){
-				echo "<script> $('#presc_refill_early_c').prop('checked', false);</script>";
+				echo "\r\n  $('#presc_refill_early_c').prop('checked', false);";
 				//echo "<script>document.getElementById('presc_refill_early_c').checked=false;</script>";
 			}	
 			
 		if($this->bean3->pt_active_c==0){
-				echo "<script> $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);</script>";
+				echo "\r\n  $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);";
 				//echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
 			}	
 	
 	/*	if($this->bean3->last_rx_generated_c!=null){
 				$date1=strtotime($this->bean3->last_rx_generated_c);
-				echo "<script>document.getElementById('last_rx_generated_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "<script>document.getElementById('last_rx_generated_c').value='".date('m/d/Y',$date1)."'";
 			}
 		*/ 
 			
 		 
 			if($this->bean3->last_uts_c!=null){
 				$date1=strtotime($this->bean3->last_uts_c);
-				echo "<script>document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pcp_visit_c!=null){
 				$date1=strtotime($this->bean3->last_pcp_visit_c);
-				echo "<script>document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pain_nurse_visit_c!=null){
 				$date1=strtotime($this->bean3->last_pain_nurse_visit_c);
-				echo "<script>document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_nurse_phone_contact_c!=null){
 				$date1=strtotime($this->bean3->last_nurse_phone_contact_c);
-				echo "<script>document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pmp_review_done_c!=null){
 				$date1=strtotime($this->bean3->last_pmp_review_done_c);
-				echo "<script>document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->narcotic_contract_in_chart_c==1){
-				echo "<script> $('#narcotic_contract_in_chart_c').prop('checked', true);</script>";
+				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true);";
 				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
 			if($this->bean3->narcotic_contract_sign_c!=null){
 				$date1=strtotime($this->bean3->narcotic_contract_sign_c);
-				echo "<script>document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."';";
 			}
 			
 			$datenow = date('m/d/Y');
@@ -434,102 +444,102 @@ $metadataFile = $this->getMetaDataFile();
 			if($this->bean3->next_rx_refill_due_c!=null){
 				$date1=strtotime($this->bean3->next_rx_refill_due_c);
 				
-				echo "<script>document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-					echo "<script>document.getElementById('next_rx_refill_due_c').style.color='red'</script>";
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
 				}
 			}
 			if($this->bean3->next_uts_due_c!=null){
 				$date1=strtotime($this->bean3->next_uts_due_c);
-				echo "<script>document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_uts_due_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
 				}
 			}
 			
 			if($this->bean3->next_pcp_visit_c!=null){
 				$date1=strtotime($this->bean3->next_pcp_visit_c);
-				echo "<script>document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pcp_visit_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
 				}
 			}
 			if($this->bean3->nxt_appt_pain_c!=null){
 				$date1=strtotime($this->bean3->nxt_appt_pain_c);
-				echo "<script>document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('nxt_appt_pain_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
 				}
 			}
 			
 			
 			if($this->bean3->next_appt_other_c!=null){
-				echo "<script>document.getElementById('next_appt_other_c').value='".$this->bean3->next_appt_other_c."'</script>";
+				echo "\r\n document.getElementById('next_appt_other_c').value='".$this->bean3->next_appt_other_c."';";
 				}
 				
 				
 			if($this->bean3->next_pmp_review_due_c!=null){
 				$date1=strtotime($this->bean3->next_pmp_review_due_c);
-				echo "<script>document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pmp_review_due_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
 				}
 			}	
 			
 			if($this->bean3->history_c!=null){
-				echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
+				echo "\r\n document.getElementById('history_c').value='".trim($this->bean3->history_c)."';";
 				}
 			if($this->bean3->pills_bottle_disp_c!=null){
-				echo "<script>document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."'</script>";
+				echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."';";
 				}
 			if($this->bean3->risklvl_c!=null){
-				echo "<script>document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'</script>";
+				echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."';";
 				}
 
 			if($this->bean3->summary!=null){
 				$summ=explode(":",$this->bean3->summary);
-				echo "<script>document.getElementById('summary').value='".$summ[1]."'</script>";
+				echo "\r\n document.getElementById('summary').value='".$summ[1]."';";
 				}
 						
 			if($this->bean3->pt_confirms_taking_c==1){
-				echo "<script> $('#pt_confirms_taking_c').prop('checked', true);</script>";
+				echo "\r\n  $('#pt_confirms_taking_c').prop('checked', true);";
 				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
 			}				
 			if($this->bean3->pt_confirms_storing_c==1){
-				echo "<script> $('#pt_confirms_storing_c').prop('checked', true);</script>";
+				echo "\r\n  $('#pt_confirms_storing_c').prop('checked', true);";
 				//echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
 			}
 			if($this->bean3->aberrant_behavior_noted_c==1){
-				echo "<script> $('#aberrant_behavior_noted_c').prop('checked', true);</script>";
+				echo "\r\n  $('#aberrant_behavior_noted_c').prop('checked', true);";
 				//echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
 			}
 			if($this->bean3->med_safety_pulm_prob_c==1){
-				echo "<script> $('#med_safety_pulm_prob_c').prop('checked', true);</script>";
+				echo "\r\n  $('#med_safety_pulm_prob_c').prop('checked', true);";
 				//echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
 			}
 			if($this->bean3->med_safety_sedatives_c==1){
-				echo "<script> $('#med_safety_sedatives_c').prop('checked', true);</script>";
+				echo "\r\n  $('#med_safety_sedatives_c').prop('checked', true);";
 				//echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
 			}
 			
 			if($this->bean3->med_safety_high_medd_c==1){
-				echo "<script> $('#med_safety_high_medd_c').prop('checked', true);</script>";
+				echo "\r\n  $('#med_safety_high_medd_c').prop('checked', true);";
 				//echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
 			}
 			if($this->bean3->patient_present_c==1){
-				echo "<script> $('#patient_present_c').prop('checked', true);</script>";
+				echo "\r\n  $('#patient_present_c').prop('checked', true);";
 				//echo "<script>document.getElementById('patient_present_c').checked='true';</script>";
 			}else{
-				echo "<script> $('#patient_present_c').prop('checked', false);</script>";
+				echo "\r\n  $('#patient_present_c').prop('checked', false);";
 				//echo "<script>document.getElementById('patient_present_c').checked=false;</script>";
 			}
 			
 			if($this->bean3->date_modified!=null){
 				$date1=strtotime($this->bean3->date_modified);
-				echo "<script>document.getElementById('date_last_modified').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('date_last_modified').value='".date('m/d/Y',$date1)."';";
 			}
 	
-	
+		echo "}); </script>";
 	}
 	
 	/*	else
@@ -1072,7 +1082,7 @@ echo "</div>";
 	\$('.action_buttons').append($('#copy_text_div'))});
 	 document.getElementsByName('uts_not_collected_c')[0].value='PatientEncounter';
 	  document.getElementById('reg_patient_reg_encounterreg_patient_ida').value='".$ida."';
-	  var combine = document.getElementById('next_appt_other_c').value;
+	  /*var combine = document.getElementById('next_appt_other_c').value;
       var values_of = combine.split('#');
 	  
 	  for (var i=0;i<values_of.length;i++){
@@ -1080,7 +1090,7 @@ echo "</div>";
 	  var selectedtext=document.getElementById(values_indi[0]).text;
 	  var date_value=values_indi[1];
 	 \$('<li style=\"margin-left:0px;\"> <img src=\"custom/modules/REG_Encounter/tpls/cross.jpg\" class=\"remove\"></img>'+selectedtext+' - '+date_value+' </li>').appendTo('#entry_list');
-	  }
+	  }*/
 	 
 	</script>";
 		echo "<script type='text/javascript'>\$(function(){\$('#accordion').accordion();  \$('#accordion1').accordion(); }); </script>";

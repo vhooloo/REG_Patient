@@ -267,7 +267,7 @@ a.style.display = "none";
  <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
  <table width="100%" cellpadding="0" cellspacing="0">
   <tr>
-   <td width="60%" valign="top"><table width="100%" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
+   <td width="50%" valign="top"><table width="100%" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
      <thead>
      <th width="75%" scope="col"> <div align="left" width="100%" style="white-space: normal;"> Question </div>
       </th>
