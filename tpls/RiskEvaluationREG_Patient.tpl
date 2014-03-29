@@ -216,11 +216,11 @@ $ort_terms[] = array( 'TAG' => 'ORT-1A', 'DOM' => 'Family History of Substance A
 $ort_terms[] = array( 'TAG' => 'ORT-1B', 'DOM' => 'Family History of Substance Abuse (Illegal Drugs)', 'FEM' => '2', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort1b);
 $ort_terms[] = array( 'TAG' => 'ORT-1C', 'DOM' => 'Family History of Substance Abuse (Prescription Drugs) ', 'FEM' => '4', 'MALE' => '4', 'VAL'=>$this->get_template_vars('myrisk')->ort1c);
 $ort_terms[] = array( 'TAG' => 'ORT-2A', 'DOM' => 'Personal History of Substance Abuse (Alcohol) ', 'FEM' => '3', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort2a);
-$ort_terms[] = array( 'TAG' => 'ORT-2B', 'DOM' => 'Personal History of Substance Abuse (Illegal Drugs', 'FEM' => '4', 'MALE' => '4', 'VAL' => $this->get_template_vars('myrisk')->ort2b);
+$ort_terms[] = array( 'TAG' => 'ORT-2B', 'DOM' => 'Personal History of Substance Abuse (Illegal Drugs)', 'FEM' => '4', 'MALE' => '4', 'VAL' => $this->get_template_vars('myrisk')->ort2b);
 $ort_terms[] = array( 'TAG' => 'ORT-2C', 'DOM' => 'Personal History of Substance Abuse (Prescription Drugs) ', 'FEM' => '5', 'MALE' => '5', 'VAL' => $this->get_template_vars('myrisk')->ort2c);
 $ort_terms[] = array( 'TAG' => 'ORT-3', 'DOM' => 'Age (Age 1-45) ', 'FEM' => '1', 'MALE' => '1', 'VAL' => $this->get_template_vars('myrisk')->ort3);
 $ort_terms[] = array( 'TAG' => 'ORT-4', 'DOM' => 'History of Preadolescent Sexual Abuse', 'FEM' => '3', 'MALE' => '3', 'VAL' => $this->get_template_vars('myrisk')->ort4);
-$ort_terms[] = array( 'TAG' => 'ORT-5A', 'DOM' => 'Psychological Disease (Attention Deficit Disorder, (Obsessive Compulsive Disorder, Bipolar, Schizophrenia) ', 'FEM' => '2', 'MALE' => '2', 'VAL' => $this->get_template_vars('myrisk')->ort5a);
+$ort_terms[] = array( 'TAG' => 'ORT-5A', 'DOM' => 'Psychological Disease (Attention Deficit Disorder, Obsessive Compulsive Disorder, Bipolar, Schizophrenia) ', 'FEM' => '2', 'MALE' => '2', 'VAL' => $this->get_template_vars('myrisk')->ort5a);
 $ort_terms[] = array( 'TAG' => 'ORT-5B', 'DOM' => 'Psychological Disease (Depression) ', 'FEM' => '1', 'MALE' => '1', 'VAL' => $this->get_template_vars('myrisk')->ort5b);
 
 $this->assign("ort_terms",  $ort_terms );
@@ -265,7 +265,7 @@ a.style.display = "none";
   </h2>
  </div>
  <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
- <table width="100%" cellpadding="0" cellspacing="0">
+ <table width="1200" cellpadding="0" cellspacing="0" align="center">
   <tr>
    <td width="50%" valign="top"><table width="100%" cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
      <thead>
@@ -295,16 +295,6 @@ a.style.display = "none";
       <td class="" valign="top" align="left" scope="row"><h2> ORT-SUM: Sum of Above </h2></td>
       <td class="" valign="top" align="left"></td>
       <td class="" valign="top" align="left"  ><input style="background-color:#58FA82; width:70px;" name="ortsum" id="ORT_SUM" value = "0" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';">
-     </tr>
-     <tr class="oddListRowS1" height="20">
-      <td colspan="3" align="left" valign="top" class="" scope="row">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:none !important">
-         <tr valign="top">
-          <td width="30%" valign="top"><strong>Comment</strong></td>
-          <td align="right"><textarea name="comment" cols="80" rows="4" id="comment">{php} echo $this->get_template_vars('myrisk')->comment; {/php}</textarea></td>
-         </tr>
-        </table>
-      </td>
      </tr>
       </tbody>
      
@@ -408,33 +398,36 @@ a.style.display = "none";
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->ncmscore=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> 8-10</option>
         </select></td>
       </tr>
-      <tr class="oddListRowS1" height="20" style="background-color:silver;">
-       <td class="" valign="top" align="left" scope="row"><h2>Final Clinical Risk Assessment Score</h2></td>
-       <td class="" valign="top" align="left"><select name="finalscore" id="finalscore" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->finalscore=='0-3'){echo"background-color:#58FA82;";} if($this->
+
+     </tbody>
+    </table></td>
+  </tr>
+  <tr>
+   <td colspan="2" valign="top"><Table cellpadding="0" cellspacing="0" width="100%"><tr class="oddListRowS1" height="20" style="background-color:silver;"><td width="88%" valign="top" align="left" scope="row"><h2>Final Clinical Risk Assessment Score</h2></td>
+       <td width="12%" class="" valign="top" align="left"><select name="finalscore" id="finalscore" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->finalscore=='0-3'){echo"background-color:#58FA82;";} if($this->
          
        get_template_vars('myrisk')->finalscore=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->finalscore=='gt7'){echo"background-color:#FA5858;";}{/php} width:100px;">
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->finalscore=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">0-3</option>
          <option value="4-7" {php} if($this->get_template_vars('myrisk')->finalscore=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">4-7</option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->finalscore=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> 8-10</option>
-        </select></td>
-      </tr>
-      <tr class="oddListRowS1" height="20">
-       <td class="" valign="top" align="left" scope="row">&nbsp;</td>
-       <td class="" valign="top" align="left">&nbsp;</td>
-      </tr>
-      <tr class="oddListRowS1" height="20">
-       <td colspan="2" align="center" valign="bottom" scope="row" >
+        </select></td></tr></Table></td>
+  </tr>
+  <tr>
+  <td colspan="2">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #ABC3D7">
+         <tr valign="top">
+          <td width="20%" valign="top"><strong>Comment</strong></td>
+          <td align="right"><textarea name="comment" cols="180" rows="4" id="comment">{php} echo $this->get_template_vars('myrisk')->comment; {/php}</textarea></td>
+         </tr>
+        </table>
+  </td>
+  </tr>
+      <tr class="oddListRowS1" height="20" >
+       <td colspan="2" align="center" valign="bottom" scope="row" style="border: 1px solid #ABC3D7">
 	   
 	   <button type="button" {if isset($smarty.request.flag) && $smarty.request.flag eq 1} onclick="javascript:window.close();" {else} onclick="javascript:history.back();" {/if}> Back </button> &nbsp; <button type="submit"> Save </button>
        </td>
       </tr>
-     </tbody>
-    </table></td>
-  </tr>
-  <tr>
-   <td></td>
-   <td></td>
-  </tr>
  </table>
 </form>
 <script type="text/javascript"> <!-- FOR UPDATES, prefill existing values, compute sum ----->

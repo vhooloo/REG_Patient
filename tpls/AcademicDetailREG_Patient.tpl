@@ -232,13 +232,13 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
 
 <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
 
-<table cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view">
+<table cellspacing="0" cellpadding="0" border="1" name="mytable" id="mytable" class="list view" style="width:650px !important" align="center">
 
     <thead>
     
-		<th width="50%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Category </div>  </th>
-		<th width="25%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Assessment    </div>	</th>
-        <th width="25%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Numbers   </div>	</th>
+		<th width="70%" scope="col">    <div align="left" width="100%" style="white-space: normal;">  Category </div>  </th>
+		<th width="15%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Assessment    </div>	</th>
+        <th width="15%" scope="col">    <div  id = "dyn1" align="left" width="100%" style="white-space: normal;">  Numbers   </div>	</th>
 		
 
     </tr>
@@ -274,7 +274,7 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
       <td class="" valign="top" align="left">{$uts.utsct} out of {$numpatient.numpatientct}</td>
 	</tr>
 	
-	<tr class="oddListRowS1" height="20">
+<!--	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year in moderate risk profile group</td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$utsmod.utsct y=$numpatient.numpatientct format="%.2f"}</td>
       <td class="" valign="top" align="left">{$utsmod.utsct} out of {$numpatient.numpatientct}</td>
@@ -284,7 +284,7 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
 	  <td class="" valign="top" align="left" scope="row">% of patients with &#060 than 2 urine tox/year in high risk profile group </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$utshigh.utsct y=$numpatient.numpatientct format="%.2f"}</td>
       <td class="" valign="top" align="left">{$utshigh.utsct} out of {$numpatient.numpatientct}</td>
-	</tr>
+	</tr>-->
 	
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients on multiple short-acting opioids </td>

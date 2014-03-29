@@ -224,7 +224,9 @@ $metadataFile = $this->getMetaDataFile();
 		if($flag3==1){
 			echo "<script type='text/javascript'>alert('The Encounter does not exist. It will be saved as a new Encounter'); </script>";
 		}	
-		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc" ;
+		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where summary like 'PEnc%' AND reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc limit 1" ;
+		
+		$query2b = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc limit 1" ;
 		
 		$queryprov = "SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = '" . $this->bean->id . "'";
 		$db = DBManagerFactory::getInstance();  
@@ -264,10 +266,10 @@ $metadataFile = $this->getMetaDataFile();
 		*/	if($row['pills_bottle_disp_c']!=null){
 			//	echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'";
 				}
-			if($row['risklvl_c']!=null){
+			/*if($row['risklvl_c']!=null){
 				echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
 				}
-		 
+		 */
 		 
 			if($row['last_uts_c']!=null){
 				$date1=strtotime($row['last_uts_c']);
@@ -294,14 +296,18 @@ $metadataFile = $this->getMetaDataFile();
 				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
-			if($row['narcotic_contract_sign_c']!=null){
+			/*if($row['narcotic_contract_sign_c']!=null){
 				$date1=strtotime($row['narcotic_contract_sign_c']);
 				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."';";
-			}
+			}*/
 			
 			
 			if($row['pt_confirms_taking_c']==1){
 				echo "\r\n  $('#pt_confirms_taking_c').prop('checked', true); ";
+				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
+			}
+			if($row['pt_ben_opioid_c']==1){
+				echo "\r\n  $('#pt_ben_opioid_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
 			}				
 			if($row['pt_confirms_storing_c']==1){
@@ -336,14 +342,14 @@ $metadataFile = $this->getMetaDataFile();
 			
 			$datenow = date('m/d/Y');
 			
-			if($row['next_rx_refill_due_c']!=null){
+			/*if($row['next_rx_refill_due_c']!=null){
 				$date1=strtotime($row['next_rx_refill_due_c']);
 				
 				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
 					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
 				}
-			}
+			}*/
 			if($row['next_uts_due_c']!=null){
 				$date1=strtotime($row['next_uts_due_c']);
 				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
@@ -371,13 +377,13 @@ $metadataFile = $this->getMetaDataFile();
 				echo "\r\n document.getElementById('next_appt_other_c').value='".$row['next_appt_other_c']."';";
 				}
 				
-			if($row['next_pmp_review_due_c']!=null){
+			/*if($row['next_pmp_review_due_c']!=null){
 				$date1=strtotime($row['next_pmp_review_due_c']);
 				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'; ";
 				if(date('m/d/Y',$date1)<$datenow){
 				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
 				}
-			}
+			}*/
 			echo "}); </script>";
 		}
 		
@@ -434,21 +440,21 @@ $metadataFile = $this->getMetaDataFile();
 				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
-			if($this->bean3->narcotic_contract_sign_c!=null){
+			/*if($this->bean3->narcotic_contract_sign_c!=null){
 				$date1=strtotime($this->bean3->narcotic_contract_sign_c);
 				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."';";
-			}
+			}*/
 			
 			$datenow = date('m/d/Y');
 			
-			if($this->bean3->next_rx_refill_due_c!=null){
+			/*if($this->bean3->next_rx_refill_due_c!=null){
 				$date1=strtotime($this->bean3->next_rx_refill_due_c);
 				
 				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
 					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
 				}
-			}
+			}*/
 			if($this->bean3->next_uts_due_c!=null){
 				$date1=strtotime($this->bean3->next_uts_due_c);
 				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
@@ -478,13 +484,13 @@ $metadataFile = $this->getMetaDataFile();
 				}
 				
 				
-			if($this->bean3->next_pmp_review_due_c!=null){
+			/*if($this->bean3->next_pmp_review_due_c!=null){
 				$date1=strtotime($this->bean3->next_pmp_review_due_c);
 				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
 				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
 				}
-			}	
+			}	*/
 			
 			if($this->bean3->history_c!=null){
 				echo "\r\n document.getElementById('history_c').value='".trim($this->bean3->history_c)."';";
@@ -492,9 +498,9 @@ $metadataFile = $this->getMetaDataFile();
 			if($this->bean3->pills_bottle_disp_c!=null){
 				echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."';";
 				}
-			if($this->bean3->risklvl_c!=null){
+			/*if($this->bean3->risklvl_c!=null){
 				echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."';";
-				}
+				}*/
 
 			if($this->bean3->summary!=null){
 				$summ=explode(":",$this->bean3->summary);
@@ -542,6 +548,84 @@ $metadataFile = $this->getMetaDataFile();
 		echo "}); </script>";
 	}
 	
+	$result1 = $this->bean->db->query($query2b, true); 
+		if(($row = $this->bean->db->fetchByAssoc($result1) ) != null )
+		{
+			echo "<script type='text/javascript'>
+				$(document).ready(function() {
+				";
+
+			if($row['risklvl_c']!=null){
+				echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
+				}
+			
+			$datenow = date('m/d/Y');
+			
+			
+			if($row['narcotic_contract_sign_c']!=null){
+			
+				$date1=strtotime($row['narcotic_contract_sign_c']);
+				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($row['next_pill_ct_c']!=null){
+				$date1=strtotime($row['next_pill_ct_c']);
+				echo "\r\n document.getElementById('next_pill_ct_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($row['next_rx_refill_due_c']!=null){
+				$date1=strtotime($row['next_rx_refill_due_c']);
+				
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."'";
+				if(date('m/d/Y',$date1)<$datenow){
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red'";
+				}
+			}
+			if($row['next_pmp_review_due_c']!=null){
+				$date1=strtotime($row['next_pmp_review_due_c']);
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'";
+				if(date('m/d/Y',$date1)<$datenow){
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red'";
+				}
+			}
+			echo "}); </script>";
+
+		}else if($flag3==1){
+	
+	echo "<script type='text/javascript'>
+	$(document).ready(function() {
+	";
+				if($this->bean3->risklvl_c!=null){
+				echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'";
+			}
+			
+			$datenow = date('m/d/Y');
+			
+			
+			if($this->bean3->narcotic_contract_sign_c!=null){
+				$date1=strtotime($this->bean3->narcotic_contract_sign_c);
+				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($this->bean3->next_pill_ct_c!=null){
+				$date1=strtotime($this->bean3->next_pill_ct_c);
+				echo "\r\n document.getElementById('next_pill_ct_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($this->bean3->next_rx_refill_due_c!=null){
+				$date1=strtotime($this->bean3->next_rx_refill_due_c);
+				
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
+				if(date('m/d/Y',$date1)<$datenow){
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
+				}
+			}
+			if($this->bean3->next_pmp_review_due_c!=null){
+				$date1=strtotime($this->bean3->next_pmp_review_due_c);
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."';";
+				if(date('m/d/Y',$date1)<$datenow){
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
+				}
+			}
+			
+			echo "}); </script>";
+	}
 	/*	else
 		{
 		  echo "<script>document.getElementById('sf12_1').innerHTML='Not Available'</script>";
@@ -699,7 +783,7 @@ $metadataFile = $this->getMetaDataFile();
        // echo $this->dv->display();
 	   
 		$this->dv3->process();
-		echo "<table width='100%'><tr><td width='800' style='width:800px;border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;margin-top: 0;vertical-align: top;'  >";
+		echo "<table ><tr><td width='800' style='width:800px;border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;margin-top: 0;vertical-align: top;'  >";
 		echo '<div   id="tabs">
 	<ul id ="tablist">
 		<li><a href="#tabs-1"><b>New</b></a></li>
@@ -887,7 +971,7 @@ $metadataFile = $this->getMetaDataFile();
 		echo "</td>";
 		
 		//Alert Section
-		echo "<td style='border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;vertical-align: top;' ><div id='accordion'>";
+		echo "<td style='width:400px;border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;vertical-align: top;' ><div id='accordion'>";
 		
 // Display Treatment Plan
 		if(!empty($this->row))
