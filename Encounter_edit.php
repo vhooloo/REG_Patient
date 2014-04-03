@@ -145,7 +145,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div><font style='font-size: 15px; font-weight: bold'>".$typevalue." : " .$this->bean3->date_entered . " ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind. </b><input type='text' id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."'> </input><br> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript:$(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value=''></input></div>";
+        echo "<div style='font-family:Verdana,Arial,sans-serif !important'><font style='font-size: 14px; font-weight: bold'>".$typevalue." : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind. </b> <input type='text' disabled id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."'> </input><br> &nbsp;<b>Encounter Date:</b>  " .$this->bean3->date_entered . "&nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' disabled onclick='javascript:$(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value=''></input></div>";
 
 		
 		//echo $this->dv3->display("Encounter View");
@@ -204,11 +204,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		 
 			if($row['last_uts_c']!=null){
 				$date1=strtotime($row['last_uts_c']);
-				echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pcp_visit_c']!=null){
 				$date1=strtotime($row['last_pcp_visit_c']);
-				echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pain_nurse_visit_c']!=null){
 				//$date1=strtotime($row['last_pain_nurse_visit_c']);
@@ -216,11 +216,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			}
 			if($row['last_nurse_phone_contact_c']!=null){
 				$date1=strtotime($row['last_nurse_phone_contact_c']);
-				echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pmp_review_done_c']!=null){
 				$date1=strtotime($row['last_pmp_review_done_c']);
-				echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['narcotic_contract_in_chart_c']==1){
 				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true); ";
@@ -279,25 +279,25 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			}
 			if($row['next_uts_due_c']!=null){
 				$date1=strtotime($row['next_uts_due_c']);
-				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
-				}
+				//echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
+				//}
 			}
 			
 			if($row['next_pcp_visit_c']!=null){
 				$date1=strtotime($row['next_pcp_visit_c']);
-				echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
-				}
+				//echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
+				//}
 			}
 			if($row['nxt_appt_pain_c']!=null){
 				$date1=strtotime($row['nxt_appt_pain_c']);
-				echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
-				}
+				//echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
+				//}
 			}
 			
 			if($row['next_appt_other_c']!=null){
@@ -363,11 +363,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		 
 			if($this->bean3->last_uts_c!=null){
 				$date1=strtotime($this->bean3->last_uts_c);
-				echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pcp_visit_c!=null){
 				$date1=strtotime($this->bean3->last_pcp_visit_c);
-				echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pain_nurse_visit_c!=null){
 				//$date1=strtotime($this->bean3->last_pain_nurse_visit_c);
@@ -375,11 +375,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			}
 			if($this->bean3->last_nurse_phone_contact_c!=null){
 				$date1=strtotime($this->bean3->last_nurse_phone_contact_c);
-				echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pmp_review_done_c!=null){
 				$date1=strtotime($this->bean3->last_pmp_review_done_c);
-				echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
+				//echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->narcotic_contract_in_chart_c==1){
 				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true);";
@@ -403,25 +403,25 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			}
 			if($this->bean3->next_uts_due_c!=null){
 				$date1=strtotime($this->bean3->next_uts_due_c);
-				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
-				}
+				//echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
+				//}
 			}
 			
 			if($this->bean3->next_pcp_visit_c!=null){
 				$date1=strtotime($this->bean3->next_pcp_visit_c);
-				echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
-				}
+				//echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
+				//}
 			}
 			if($this->bean3->nxt_appt_pain_c!=null){
 				$date1=strtotime($this->bean3->nxt_appt_pain_c);
-				echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
-				}
+				//echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
+				//}
 			}
 			
 			
@@ -498,20 +498,38 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 
 	if($this->bean3->abherrent_behaviors_c!=null)
 		{
-			$tmp = str_replace("^","'",$this->bean3->abherrent_behaviors_c);
+			//$tmp = str_replace("^","'",$this->bean3->abherrent_behaviors_c); 
+			//$tmp = str_replace("^,^","<br>",$this->bean3->abherrent_behaviors_c);
+			//$tmp = str_replace("^","",$tmp);
+			
+			$tmp = str_replace("^,^","</li><li>",$this->bean3->abherrent_behaviors_c);
+			$tmp = str_replace("^","<li>",$tmp);
+			//print $this->bean3->abherrent_behaviors_c;
 			echo "<script type='text/javascript'>
 			$(document).ready(function() {
-			var values = [".$tmp."];
+			//var values = [".$tmp."];
 			//$('#abherrent_behaviors_c').val(values);
+			$('<br><span><ul style=\'margin:0px !important;padding:0px !important \'>".$tmp."</ul></span>').insertAfter('#abherrent_behaviors_c');
+			$('#abherrent_behaviors_c').hide();
 			
-			for(var i in values) {
+			/*for(var i in values) {
 				var optionVal = values[i];
 				$('#abherrent_behaviors_c').find('option[value='+optionVal+']').prop('selected', 'selected');
-			}
+			}*/
 
 			});	
 			</script>";
 
+		}
+		else
+		{
+			echo "<script type='text/javascript'>
+			$(document).ready(function() {
+				$('<span>N/A</span>').insertAfter('#abherrent_behaviors_c');
+				$('#abherrent_behaviors_c').hide();
+
+			});	
+			</script>";
 		}
 
 	echo $this->dv3->display("Encounter View");
@@ -527,8 +545,9 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		FormName.elements[i].disabled=true;
 		}
 		
+		
 	var notesarea= document.getElementById('history_c');
-	notesarea.disabled=true;
+	notesarea.disabled=false;
 	notesarea.readOnly=true;
 	
 	

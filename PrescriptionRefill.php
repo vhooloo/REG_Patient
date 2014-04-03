@@ -46,7 +46,7 @@ echo '<script type="text/javascript" src="custom/jquery/jquery-1.9.1.js"></scrip
             "<li ><a href=\'#tabs-" + num_tabs + "\'>" + tab_name + "</a><span class=\"ui-icon ui-icon-close\">Remove Tab</span></li>"
         );
 	$("div#tabs").append(
-			"<div style=\'margin: 0 auto;display: table-footer-group;\' id=\'tabs-" + num_tabs + "\'><iframe scrolling=\'no\' frameborder=\'0\' width=\'800px\' height=\'535px\' src =\'"+a+"\'></iframe></div>"
+			"<div style=\'margin: 0 auto;display: table-footer-group;\' id=\'tabs-" + num_tabs + "\'><iframe scrolling=\'no\' frameborder=\'0\' width=\'790px\' height=\'550px\' src =\'"+a+"\'></iframe></div>"
            
         );
         $("div#tabs").tabs("refresh");
@@ -277,11 +277,11 @@ $metadataFile = $this->getMetaDataFile();
 		 
 			if($row['last_uts_c']!=null){
 				$date1=strtotime($row['last_uts_c']);
-				echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."'";
+				//echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."'";
 			}
 			if($row['last_pcp_visit_c']!=null){
 				$date1=strtotime($row['last_pcp_visit_c']);
-				echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."'";
+				//echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."'";
 			}
 			if($row['last_pain_nurse_visit_c']!=null){
 				$date1=strtotime($row['last_pain_nurse_visit_c']);
@@ -289,15 +289,15 @@ $metadataFile = $this->getMetaDataFile();
 			}
 			if($row['last_nurse_phone_contact_c']!=null){
 				$date1=strtotime($row['last_nurse_phone_contact_c']);
-				echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."'";
+				//echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."'";
 			}
 			if($row['last_pmp_review_done_c']!=null){
 				$date1=strtotime($row['last_pmp_review_done_c']);
-				echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'";
+				//echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'";
 			}
 			if($row['narcotic_contract_in_chart_c']==1){
-				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true); ";
-				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
+				//echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true); ";
+
 			}
 			
 			/*if($row['narcotic_contract_sign_c']!=null){
@@ -352,18 +352,18 @@ $metadataFile = $this->getMetaDataFile();
 			}*/
 			if($row['next_uts_due_c']!=null){
 				$date1=strtotime($row['next_uts_due_c']);
-				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."'";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('next_uts_due_c').style.color='red'";
-				}
+				//echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."'";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_uts_due_c').style.color='red'";
+				//}
 			}
 			
 			if($row['next_pcp_visit_c']!=null){
 				$date1=strtotime($row['next_pcp_visit_c']);
-				echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."'";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red'";
-				}
+				//echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."'";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red'";
+				//}
 			}
 			if($row['nxt_appt_pain_c']!=null){
 				$date1=strtotime($row['nxt_appt_pain_c']);
@@ -388,10 +388,6 @@ $metadataFile = $this->getMetaDataFile();
 			
 			echo " }); 
 			</script>";
-			
-			
-			
-			
 			
 			
 		}
@@ -560,7 +556,8 @@ $metadataFile = $this->getMetaDataFile();
 	$result1 = $this->bean->db->query($query2b, true); 
 		if(($row = $this->bean->db->fetchByAssoc($result1) ) != null )
 		{
-			echo "<script type='text/javascript'>
+			$this->dv3->ss->assign("datarow1", $row);
+			echo "<script type='text/javascript'> 
 				$(document).ready(function() {
 				";
 
@@ -570,26 +567,29 @@ $metadataFile = $this->getMetaDataFile();
 			
 			$datenow = date('m/d/Y');
 			
+			if($row['narcotic_contract_in_chart_c']==1){
+				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true); ";
+			}
 			
 			if($row['narcotic_contract_sign_c']!=null){
 				$date1=strtotime($row['narcotic_contract_sign_c']);
-				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'";
+				echo " \r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."';"; 
 			}
 			if($row['next_pill_ct_c']!=null){
 				$date1=strtotime($row['next_pill_ct_c']);
-				echo "\r\n document.getElementById('next_pill_ct_c').value='".date('m/d/Y',$date1)."'";
+				echo "\r\n document.getElementById('next_pill_ct_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['next_rx_refill_due_c']!=null){
 				$date1=strtotime($row['next_rx_refill_due_c']);
 				
-				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."'";
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
 					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red'";
 				}
 			}
 			if($row['next_pmp_review_due_c']!=null){
 				$date1=strtotime($row['next_pmp_review_due_c']);
-				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'";
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
 				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red'";
 				}
@@ -806,7 +806,7 @@ $metadataFile = $this->getMetaDataFile();
 	<div style="margin: 0 auto;display: table-footer-group;" id="tabs-1">';
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div><font style='font-size: 14px; font-weight: bold'>Rx Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind.</b> &nbsp;<input type='text' id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."' > </input> &nbsp;&nbsp;<br> <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript: $(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
+        echo "<div style='font-family:Verdana,Arial,sans-serif !important'><font style='font-size: 14px; font-weight: bold'>Rx Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind.</b> &nbsp;<input disabled type='text' id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."' > </input> &nbsp;&nbsp;<br> <b>Patient Active</b> <input disabled type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript: $(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
 
 	
 		echo $this->dv3->display("Encounter View");
