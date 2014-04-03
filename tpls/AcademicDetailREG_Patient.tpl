@@ -299,21 +299,21 @@ On <input name = "assdate" id = "assdate"  value = "{$smarty.now|date_format}" >
       <td class="" valign="top" align="left">{$longacting.longactingct} out of {$numpatient.numpatientct}</td>
 	</tr>	 
 		 
-		 
+<!--		 
 	<tr class="oddListRowS1" height="20">
 	  <td class="" valign="top" align="left" scope="row">% of patients with a dosage &#062 50 mg morphine equivalence </td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$patientmedd.patmeddct y=$numpatient.numpatientct format="%.2f"}</td>
       <td class="" valign="top" align="left">{$patientmedd.patmeddct} out of {$numpatient.numpatientct}</td>
 	</tr>	 
-		 
+-->
 	<tr class="oddListRowS1" height="20">
-	  <td class="" valign="top" align="left" scope="row">If MEDD Safety > 50 in Risk Evaluation</td>
+	  <td class="" valign="top" align="left" scope="row">% of patients with a dosage &#062 50 mg morphine equivalence</td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$medd4_7.count y=$numpatient.numpatientct format="%.2f"}</td>
       <td class="" valign="top" align="left">{$medd4_7.count} out of {$numpatient.numpatientct}</td>
 	</tr>	 
 		 
 	<tr class="oddListRowS1" height="20">
-	  <td class="" valign="top" align="left" scope="row">If MEDD Safety > 100 in Risk Evaluation</td>
+	  <td class="" valign="top" align="left" scope="row">% of patients with a dosage &#062 100 mg morphine equivalence</td>
 	  <td class="" valign="top" align="left">{math equation="x/y*100" x=$meddgt7.count y=$numpatient.numpatientct format="%.2f"}</td>
       <td class="" valign="top" align="left">{$meddgt7.count} out of {$numpatient.numpatientct}</td>
 	</tr>	 
