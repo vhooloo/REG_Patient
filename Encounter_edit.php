@@ -477,7 +477,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			if($this->bean3->pills_bottle_disp_c!=null){
 				//echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."'";
 				}
-			if($this->bean3->risklvl_c!=null && $this->bean3->risklvl_c!=0)
+			if($this->bean3->risklvl_c!=null)
 			{
 				if(is_numeric($this->bean3->risklvl_c))
 				{
@@ -502,7 +502,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			}
 			else
 			{
-				echo " var values = 'N/A'; $('#risklvl_c').val(values);";
+				//echo " var values = 'N/A'; $('#risklvl_c').val(values);";
 			}
 				
 			

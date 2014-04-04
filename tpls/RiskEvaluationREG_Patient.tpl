@@ -288,7 +288,7 @@ a.style.display = "none";
       <td valign="top"  align="left" >&nbsp &nbsp {$myrowData.TAG}: {$myrowData.DOM} </td>
       <td class="" valign="top" align="left"><input type="checkbox" id="{$myrowData.TAG}_check" name ="{$myrowData.TAG}_check" 
 					onclick="if(this.checked) document.getElementById('{$myrowData.TAG}_val').value = ('{$patdata.gender}' == 'female' ? '{$myrowData.FEM}' : '{$myrowData.MALE}' ); else document.getElementById('{$myrowData.TAG}_val').value = 0;document.getElementById('ORT_SUM').value = parseInt(document.getElementById('ORT-1A_val').value) + parseInt(document.getElementById('ORT-1B_val').value) +parseInt(document.getElementById('ORT-1C_val').value) +parseInt(document.getElementById('ORT-2A_val').value) +parseInt(document.getElementById('ORT-2B_val').value) +parseInt(document.getElementById('ORT-2C_val').value) +parseInt(document.getElementById('ORT-3_val').value) +parseInt(document.getElementById('ORT-4_val').value)+parseInt(document.getElementById('ORT-5A_val').value)+parseInt(document.getElementById('ORT-5B_val').value); if (parseInt(document.getElementById('ORT_SUM').value) <= 7) document.getElementById('ORT_SUM').style.backgroundColor = 'yellow';   else  document.getElementById('ORT_SUM').style.backgroundColor = '#FA5858';  if (parseInt(document.getElementById('ORT_SUM').value) <= 3) document.getElementById('ORT_SUM').style.backgroundColor = '#58FA82';    "></td>
-      <td class="" valign="top" align="left"><input type="input" id="{$myrowData.TAG}_val" name ="{$myrowData.TAG}_val" value = '0' onchange="" style="width:70px;"></td>
+      <td class="" valign="top" align="left"><input type="input" id="{$myrowData.TAG}_val" name ="{$myrowData.TAG}_val" value = '' onchange="" style="width:70px;"></td>
      </tr>
      {/foreach}
      <tr class="oddListRowS1" height="20">
@@ -319,9 +319,10 @@ a.style.display = "none";
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">MEDD Safety</td>
-       <td class="" valign="top" align="left"><select name="medd" id="medd" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->medd=='0-3'){echo "background-color:#58FA82; text-decoraction:blink;";} if($this->
+       <td class="" valign="top" align="left"><select name="medd" id="medd" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#fc0';if (this.selectedIndex==3) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->medd=='0-3'){echo "background-color:#58FA82; text-decoraction:blink;";} if($this->
          
         get_template_vars('myrisk')->medd=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->medd=='gt7'){echo"background-color:#FA5858;";}{/php} width:100px;">
+         <option style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->medd=='0-3')echo"selected='selected'"; {/php} style="background-color:#58FA82">&lt 50</option>
          <option value="4-7" {php} if($this->get_template_vars('myrisk')->medd=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">51-100</option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->medd=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> &gt 100</option>
@@ -330,17 +331,19 @@ a.style.display = "none";
       <tr class="oddListRowS1" height="20">
        <!--<td class="" valign="top" align="left" scope="row">Pulmonary Disease (add scores) OSA =1 , O2 dependent = 1, COPD = 1 </td>-->
        <td class="" valign="top" align="left" scope="row">Obstructive Sleep Apnea </td>
-       <td class="" valign="top" align="left"><select name="pulmonary" id="pulmonary" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->pulmonary=='0-3'){echo"background-color:#58FA82;";} if($this->
+       <td class="" valign="top" align="left"><select name="pulmonary" id="pulmonary" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#fc0';if (this.selectedIndex==3) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->pulmonary=='0-3'){echo"background-color:#58FA82;";} if($this->
          
         get_template_vars('myrisk')->pulmonary=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->pulmonary=='gt7'){echo"background-color:#FA5858;";}{/php}  width:100px;">
-         <option value="0-3" {php} if($this->get_template_vars('myrisk')->pulmonary=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">1   &nbsp </option>
+          <option  style="background-color:#ffffff">&nbsp;</option>
+		  <option value="0-3" {php} if($this->get_template_vars('myrisk')->pulmonary=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">1   &nbsp </option>
          <option value="4-7" {php} if($this->get_template_vars('myrisk')->pulmonary=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">2   &nbsp </option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->pulmonary=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> 3 &nbsp </option>
         </select></td>
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">Current Rx’d Other Sedating Medications</td>
-       <td class="" valign="top" align="left"><select name="currentrx" id="currentrx" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->currentrx=='0-3'){echo"background-color:#58FA82;";} if($this->get_template_vars('myrisk')->currentrx=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->currentrx=='gt7'){echo"background-color:#FA5858;";}{/php}  width:100px;">
+       <td class="" valign="top" align="left"><select name="currentrx" id="currentrx" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#fc0';if (this.selectedIndex==3) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->currentrx=='0-3'){echo"background-color:#58FA82;";} if($this->get_template_vars('myrisk')->currentrx=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->currentrx=='gt7'){echo"background-color:#FA5858;";}{/php}  width:100px;">
+         <option  style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->currentrx=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">None</option>
          <option value="4-7" {php} if($this->get_template_vars('myrisk')->currentrx=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">1</option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->currentrx=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> &gt 1</option>
@@ -348,52 +351,56 @@ a.style.display = "none";
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">H/o of having Opioids stopped by another provider involuntarily</td>
-       <td class="" valign="top" align="left"><select name="histopioid" id="histopioid" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';" style="{php} if($this->get_template_vars('myrisk')->histopioid=='0-3'){echo"background-color:#58FA82;";} if($this->
+       <td class="" valign="top" align="left"><select name="histopioid" id="histopioid" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#fc0';" style="{php} if($this->get_template_vars('myrisk')->histopioid=='0-3'){echo"background-color:#58FA82;";} if($this->
          
         get_template_vars('myrisk')->histopioid=='4-7'){echo"background-color:#fc0;";} {/php} width:100px;">
+         <option  style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->histopioid=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">No</option>
          <option value="4-7" {php} if($this->get_template_vars('myrisk')->histopioid=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">Yes</option>
         </select></td>
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">Preoccupation with Medications</td>
-       <td class="" valign="top" align="left"><select name="preocc" id="preocc" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';" style="{php} if($this->get_template_vars('myrisk')->preocc=='0-3'){echo"background-color:#58FA82;";} if($this->
-         
-        get_template_vars('myrisk')->preocc=='4-7'){echo"background-color:#fc0;";} {/php} width:100px;">
+       <td class="" valign="top" align="left"><select name="preocc" id="preocc" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#fc0';" style="{php} if($this->get_template_vars('myrisk')->preocc=='0-3'){echo"background-color:#58FA82;";} if($this->get_template_vars('myrisk')->preocc=='4-7'){echo"background-color:#fc0;";} {/php} width:100px;">
+         <option style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->preocc=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">No</option>
          <option value="4-7" {php} if($this->get_template_vars('myrisk')->preocc=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">Yes</option>
         </select></td>
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">Unstable Social Environment</td>
-       <td class="" valign="top" align="left"><select name="unstable" id="unstable" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->unstable=='0-3'){echo"background-color:#58FA82; ";} else{echo"background-color:#FA5858; ";} {/php} width:100px;">
+       <td class="" valign="top" align="left"><select name="unstable" id="unstable" onchange="if(this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->unstable=='0-3'){echo"background-color:#58FA82;";} if($this->get_template_vars('myrisk')->unstable=='gt7'){echo"background-color:#FA5858;";} {/php} width:100px;">
+         <option  style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->unstable=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">No</option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->unstable=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> Yes</option>
         </select></td>
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">Insecure Medication Storage</td>
-       <td class="" valign="top" align="left"><select name="insecure" id="insecure" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->insecure=='0-3'){echo"background-color:#58FA82;";} if($this->
+       <td class="" valign="top" align="left"><select name="insecure" id="insecure" onchange="if(this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->insecure=='0-3'){echo"background-color:#58FA82;";} if($this->
          
         get_template_vars('myrisk')->insecure=='gt7'){echo"background-color:#FA5858;";}{/php} width:100px;">
+         <option  style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->insecure=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">No</option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->insecure=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> Yes</option>
         </select></td>
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">Evidence of Prior aberrant behaviors via chart review</td>
-       <td class="" valign="top" align="left"><select name="prioraberrant" id="prioraberrant" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->prioraberrant=='0-3'){echo"background-color:#58FA82;";} if($this->
+       <td class="" valign="top" align="left"><select name="prioraberrant" id="prioraberrant" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->prioraberrant=='0-3'){echo"background-color:#58FA82;";} if($this->
          
        get_template_vars('myrisk')->prioraberrant=='gt7'){echo"background-color:#FA5858;";} {/php} width:100px;">
+         <option  style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->prioraberrant=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">No</option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->prioraberrant=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> Yes</option>
         </select></td>
       </tr>
       <tr class="oddListRowS1" height="20">
        <td class="" valign="top" align="left" scope="row">NCM Clinical Risk Assessment  Score</td>
-       <td class="" valign="top" align="left"><select name="ncmscore" id="ncmscore" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->ncmscore=='0-3'){echo"background-color:#58FA82;";} if($this->
+       <td class="" valign="top" align="left"><select name="ncmscore" id="ncmscore" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#fc0';if (this.selectedIndex==3) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->ncmscore=='0-3'){echo"background-color:#58FA82;";} if($this->
          
        get_template_vars('myrisk')->ncmscore=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->ncmscore=='gt7'){echo"background-color:#FA5858;";}{/php} width:100px;">
+         <option  style="background-color:#ffffff">&nbsp;</option>
          <option value="0-3" {php} if($this->get_template_vars('myrisk')->ncmscore=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">0-3</option>
          <option value="4-7" {php} if($this->get_template_vars('myrisk')->ncmscore=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">4-7</option>
          <option value="gt7" {php} if($this->get_template_vars('myrisk')->ncmscore=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> 8-10</option>
@@ -405,12 +412,13 @@ a.style.display = "none";
   </tr>
   <tr>
    <td colspan="2" valign="top"><Table cellpadding="0" cellspacing="0" width="100%"><tr class="oddListRowS1" height="20" style="background-color:silver;"><td width="88%" valign="top" align="left" scope="row"><h2>Final Clinical Risk Assessment Score</h2></td>
-       <td width="12%" class="" valign="top" align="left"><select name="finalscore" id="finalscore" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->finalscore=='0-3'){echo"background-color:#58FA82;";} if($this->
+       <td width="12%" class="" valign="top" align="left"><select name="finalscore" id="finalscore" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#ffffff';if (this.selectedIndex==1) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==2) this.style.backgroundColor = '#fc0';if (this.selectedIndex==3) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->finalscore=='0-3'){echo"background-color:#58FA82;";} if($this->
          
        get_template_vars('myrisk')->finalscore=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->finalscore=='gt7'){echo"background-color:#FA5858;";}{/php} width:100px;">
-         <option value="0-3" {php} if($this->get_template_vars('myrisk')->finalscore=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">0-3</option>
-         <option value="4-7" {php} if($this->get_template_vars('myrisk')->finalscore=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">4-7</option>
-         <option value="gt7" {php} if($this->get_template_vars('myrisk')->finalscore=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> 8-10</option>
+         <option value="N/A" style="background-color:#ffffff">&nbsp;</option>
+         <option value="0-3" {php} if($this->get_template_vars('myrisk')->finalscore=='0-3') echo"selected='selected'"; {/php} style="background-color:#58FA82">Low</option>
+         <option value="4-7" {php} if($this->get_template_vars('myrisk')->finalscore=='4-7') echo"selected='selected'"; {/php} style="background-color:#fc0">Moderate</option>
+         <option value="gt7" {php} if($this->get_template_vars('myrisk')->finalscore=='gt7') echo"selected='selected'"; {/php} style="background-color:#FA5858"> High</option>
         </select></td></tr></Table></td>
   </tr>
   <tr>

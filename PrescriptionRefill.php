@@ -695,7 +695,7 @@ $metadataFile = $this->getMetaDataFile();
 		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
 		$score = $db->query($riskquery, true);
 		$rowr = $db->fetchByAssoc($score);
-		$finalscore = $rowr['finalscore'];
+		$finalscore = trim($rowr['finalscore']);
 		$this->dv3->ss->assign("finalscore", $finalscore); 
 		
 		
