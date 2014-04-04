@@ -562,7 +562,7 @@ $metadataFile = $this->getMetaDataFile();
 				";
 
 			if($row['risklvl_c']!=null){
-				echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
+				//echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
 				}
 			
 			$datenow = date('m/d/Y');
@@ -603,7 +603,7 @@ $metadataFile = $this->getMetaDataFile();
 				";
 				
 			if($this->bean3->risklvl_c!=null){
-				echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'";
+				//echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'";
 			}
 			
 			$datenow = date('m/d/Y');
@@ -692,7 +692,11 @@ $metadataFile = $this->getMetaDataFile();
 		
 		
 		
-		
+		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
+		$score = $db->query($riskquery, true);
+		$rowr = $db->fetchByAssoc($score);
+		$finalscore = $rowr['finalscore'];
+		$this->dv3->ss->assign("finalscore", $finalscore); 
 		
 		
 		
@@ -726,11 +730,7 @@ $metadataFile = $this->getMetaDataFile();
       }
 	  
 	  
-		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
-		$score = $db->query($riskquery, true);
-		$rowr = $db->fetchByAssoc($score);
-		$finalscore = $rowr['finalscore'];
-		$this->dv3->ss->assign("finalscore", $finalscore); 
+		
 		
 	  
 	

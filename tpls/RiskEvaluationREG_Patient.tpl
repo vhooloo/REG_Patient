@@ -328,7 +328,8 @@ a.style.display = "none";
         </select></td>
       </tr>
       <tr class="oddListRowS1" height="20">
-       <td class="" valign="top" align="left" scope="row">Pulmonary Disease (add scores) OSA =1 , O2 dependent = 1, COPD = 1 </td>
+       <!--<td class="" valign="top" align="left" scope="row">Pulmonary Disease (add scores) OSA =1 , O2 dependent = 1, COPD = 1 </td>-->
+       <td class="" valign="top" align="left" scope="row">Obstructive Sleep Apnea </td>
        <td class="" valign="top" align="left"><select name="pulmonary" id="pulmonary" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';" style="{php} if($this->get_template_vars('myrisk')->pulmonary=='0-3'){echo"background-color:#58FA82;";} if($this->
          
         get_template_vars('myrisk')->pulmonary=='4-7'){echo"background-color:#fc0;";} if($this->get_template_vars('myrisk')->pulmonary=='gt7'){echo"background-color:#FA5858;";}{/php}  width:100px;">

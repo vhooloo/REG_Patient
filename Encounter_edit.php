@@ -60,15 +60,14 @@ echo "<script type='text/javascript'>
 			
 	
 	</script>
+	<script src='custom/jquery/jquery-1.9.1.js' />
+	<script src='custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js' />
+	<script src='custom/jquery/accordion/js/jquery-migrate-1.2.1.min.js' />
+	<link rel='stylesheet' type='text/css' href='themes/" . $theme . "/style.css' />
 	</head>";
 	
 
 
-echo '<script src="custom/jquery/jquery-1.9.1.js"></script>
-	<script src="custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js"></script>
-	<script src="custom/jquery/accordion/js/jquery-migrate-1.2.1.min.js"></script>';
-
-echo "<link rel='stylesheet' type='text/css' href='../themes/" . $theme . "/style.css' />";
 
 global $mod_strings;
 global $app_list_strings;
@@ -131,6 +130,14 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		
 
 		//$this->dv3->process();
+		
+		
+		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
+		$score = $this->bean->db->query($riskquery, true);
+		$rowr = $this->bean->db->fetchByAssoc($score);
+		$finalscore = $rowr['finalscore'];
+		$this->dv3->ss->assign("finalscore", $finalscore); 
+		
 		$summary = $this->bean3->summary;
 		$enc_detail=explode(":",$summary);
 		$type= $enc_detail[0];
@@ -197,10 +204,37 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		*/	if($row['pills_bottle_disp_c']!=null){
 				//echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'";
 				}
-			if($row['risklvl_c']!=null){
-				echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
+			//if($row['risklvl_c']!=null){
+				//echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
+				//}
+		 if($row['risklvl_c']!=null && $row['risklvl_c']!=0)
+			{
+				if(is_numeric($row['risklvl_c']))
+				{
+					if($row['risklvl_c'] >= 7)
+					{
+						echo " var values = 'HIGH'; $('#risklvl_c').val(values);";
+					}
+					else if($row['risklvl_c'] >= 4 && $row['risklvl_c'] <= 6)
+					{
+						echo " var values = 'MODERATE'; $('#risklvl_c').val(values);";
+					}
+					else if($row['risklvl_c'] >= 0 && $row['risklvl_c'] <= 3)
+					{
+						echo " var values = 'LOW'; $('#risklvl_c').val(values);";
+					}
 				}
-		 
+				else
+				{
+					echo " var values = '".$row['risklvl_c']."'; $('#risklvl_c').val(values);";
+				}
+			
+			}
+			else
+			{
+				echo " var values = 'N/A'; $('#risklvl_c').val(values);";
+			}
+			
 		 
 			if($row['last_uts_c']!=null){
 				$date1=strtotime($row['last_uts_c']);
@@ -331,15 +365,14 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
        
 		$result1 = $this->bean->db->query($query2b, true); 
 		
-		echo "<script type='text/javascript'>
-		$(document).ready(function() {
-		";
-		
 		if(($row1 = $this->bean->db->fetchRow($result1) ) != null )
 		{
 		    $this->dv3->ss->assign("datarow", $row1);
 	    }
 		
+		echo "<script type='text/javascript'>
+		$(document).ready(function() {
+		";
 		if($this->bean3->pcp_name_c!=null){
 				
 				echo "\r\n document.getElementById('pcp_dummy').value='".$this->bean3->pcp_name_c."'; document.getElementById('pcp_name_c').value='".$this->bean3->pcp_name_c."';";
@@ -444,11 +477,35 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 			if($this->bean3->pills_bottle_disp_c!=null){
 				//echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."'";
 				}
-			if($this->bean3->risklvl_c!=null){
-				echo "var values = [".$this->bean3->risklvl_c."];
-			$('#risklvl_c').val(values);";
-			
+			if($this->bean3->risklvl_c!=null && $this->bean3->risklvl_c!=0)
+			{
+				if(is_numeric($this->bean3->risklvl_c))
+				{
+					if($this->bean3->risklvl_c >= 7)
+					{
+						echo " var values = 'HIGH'; $('#risklvl_c').val(values);";
+					}
+					else if($this->bean3->risklvl_c >= 4 && $this->bean3->risklvl_c <= 6)
+					{
+						echo " var values = 'MODERATE'; $('#risklvl_c').val(values);";
+					}
+					else if($this->bean3->risklvl_c >= 0 && $this->bean3->risklvl_c <= 3)
+					{
+						echo " var values = 'LOW'; $('#risklvl_c').val(values);";
+					}
 				}
+				else
+				{
+					echo " var values = '".$this->bean3->risklvl_c."'; $('#risklvl_c').val(values);";
+				}
+			
+			}
+			else
+			{
+				echo " var values = 'N/A'; $('#risklvl_c').val(values);";
+			}
+				
+			
 
 			if($this->bean3->summary!=null){
 				$summ=explode(":",$this->bean3->summary);

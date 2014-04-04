@@ -561,7 +561,7 @@ $metadataFile = $this->getMetaDataFile();
 				";
 
 			if($row['risklvl_c']!=null){
-				echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
+				//echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
 				}
 			 
 			$datenow = date('m/d/Y');
@@ -599,7 +599,7 @@ $metadataFile = $this->getMetaDataFile();
 	$(document).ready(function() {
 	";
 				if($this->bean3->risklvl_c!=null){
-				echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'";
+				//echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'";
 			}
 			
 			$datenow = date('m/d/Y');
@@ -681,17 +681,12 @@ $metadataFile = $this->getMetaDataFile();
 	//	echo "<script src='custom/jquery/jquery.js'></script><script src='custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js'></script>";
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
+		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
+		$score = $db->query($riskquery, true);
+		$rowr = $db->fetchByAssoc($score);
+		$finalscore = $rowr['finalscore'];
+		$this->dv3->ss->assign("finalscore", $finalscore); 
 		
 		
 		//display treatment plan details
@@ -720,11 +715,7 @@ $metadataFile = $this->getMetaDataFile();
 	   $this->dv2->setup('REG_Treatment_Plan', $this->bean2, $treatment_planMetadataFile, $treatment_planTemplate);
       }
 	  
-		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
-		$score = $db->query($riskquery, true);
-		$rowr = $db->fetchByAssoc($score);
-		$finalscore = $rowr['finalscore'];
-		$this->dv3->ss->assign("finalscore", $finalscore); 
+		
 		
 	
 	//echo "<h1 color='r\"e\"d'>hahhahah</h1>";
