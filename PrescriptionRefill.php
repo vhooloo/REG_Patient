@@ -409,7 +409,7 @@ $metadataFile = $this->getMetaDataFile();
 			}	
 			
 		if($this->bean3->pt_active_c==0){
-				echo "\r\n  $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);";
+				echo "\r\n  $('#pt_active_dummy').prop('checked', false); \r\n $('#pt_active_c').prop('checked', false);";
 				//echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
 			}	
 	
@@ -552,7 +552,7 @@ $metadataFile = $this->getMetaDataFile();
 	
 	echo " }); </script>";
 	}
-	
+	$active="";
 	$result1 = $this->bean->db->query($query2b, true); 
 		if(($row = $this->bean->db->fetchByAssoc($result1) ) != null )
 		{
@@ -594,6 +594,11 @@ $metadataFile = $this->getMetaDataFile();
 				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red'";
 				}
 			}
+			if($row['pt_active_c']==1) {
+				$active = "checked='checked'";
+			} else {
+				$active =  "";
+			}
 			echo "}); </script>";
 
 		}else if($flag3==1){
@@ -601,7 +606,10 @@ $metadataFile = $this->getMetaDataFile();
 			echo "<script type='text/javascript'>
 				$(document).ready(function() {
 				";
-				
+			if($this->bean3->presc_refill_early_c==0){
+				echo "\r\n  $('#presc_refill_early_c').prop('checked', false);";
+				//echo "<script>document.getElementById('presc_refill_early_c').checked=false;</script>";
+			}		
 			if($this->bean3->risklvl_c!=null){
 				//echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'";
 			}
@@ -806,7 +814,7 @@ $metadataFile = $this->getMetaDataFile();
 	<div style="margin: 0 auto;display: table-footer-group;" id="tabs-1">';
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div style='font-family:Verdana,Arial,sans-serif !important'><font style='font-size: 14px; font-weight: bold'>Rx Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind.</b> &nbsp;<input disabled type='text' id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."' > </input> &nbsp;&nbsp;<br> <b>Patient Active</b> <input disabled type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript: $(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
+        echo "<div style='font-family:Verdana,Arial,sans-serif !important'><font style='font-size: 14px; font-weight: bold'>Rx Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind.</b> &nbsp;<input disabled type='text' id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."' > </input> &nbsp;&nbsp;<br> <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' ".$active."  onclick='javascript: $(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
 
 	
 		echo $this->dv3->display("Encounter View");

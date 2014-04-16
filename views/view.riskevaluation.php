@@ -24,7 +24,7 @@ class REG_PatientViewRiskEvaluation extends ViewEdit {
 		
         //parent::display();
  		$db = DBManagerFactory::getInstance();  
-		$myquery = "SELECT tab4a.first_name fname, tab4a.last_name lname,  tab5a.mrn_c mrn, tab4a.gender gender FROM reg_patient  tab4a , reg_patient_cstm tab5a WHERE tab4a.id = tab5a.id_c AND tab4a.id = '". $_REQUEST['patid'] . "'";  
+		$myquery = "SELECT tab4a.first_name fname, tab4a.last_name lname,  tab5a.mrn_c mrn, tab4a.gender gender,location_c FROM reg_patient  tab4a , reg_patient_cstm tab5a WHERE tab4a.id = tab5a.id_c AND tab4a.id = '". $_REQUEST['patid'] . "'";  
 		
 	    $result = $db->query($myquery);
 		$patdata = null;
@@ -46,9 +46,12 @@ class REG_PatientViewRiskEvaluation extends ViewEdit {
 		//echo 'request'.$_REQUEST['patid'];
 		//else return false; //param not found 
 		//var_dump($risk);
+		//print "<pre>";
+		//print_r($risk);
 
 		$smarty->assign("myrisk", $risk);
         global $current_user;
+
 		$smarty->assign("myuser", $current_user);
 		$smarty->assign("test", "test");
 		

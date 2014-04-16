@@ -52,8 +52,8 @@ Calendar.setup ({inputField : "last_pcp_visit_c2",ifFormat : "%m/%d/%Y %I:%M%P",
 	document.getElementById("last_pcp_visit_c2").value = "{$smarty.post.last_pcp_visit_c2}";
 }
 </script>
-<link type="text/css" rel="stylesheet" href="custom/topcarejs/jquery.dropdown.css" />
-<script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script> 
+<!--<link type="text/css" rel="stylesheet" href="custom/topcarejs/jquery.dropdown.css" />
+<script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script> -->
 {literal} 
 <script>
 
@@ -253,15 +253,15 @@ a.style.display = "none";
  </div>
  <div id="demo1" style="text-align:center;line-height: 400%;" >
   <h2> Patient Name
-   <input name = "ptname" id = "ptname" value = "{$patdata.lname},{$patdata.fname}" >
+   <input name = "ptname" id = "ptname" value = "{$patdata.lname},{$patdata.fname}" readonly>
    MRN
-   <input name = "mrn" id = "mrn" value = "{$patdata.mrn}" >
+   <input name = "mrn" id = "mrn" value = "{$patdata.mrn}" readonly>
    Clinical Site
-   <input name = "clinsite" id = "clinsite" value = "" >
+   <input name = "clinsite" id = "clinsite" value = "{$patdata.location_c}" readonly >
    Based on Intake Assessment by NCM
-   <input name = "ncm" id = "ncm" value = "{$myuser->full_name}" >
+   <input name = "ncm" id = "ncm" value = "{$myuser->full_name}" readonly>
    On
-   <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodified)} {$myrisk->lastmodified|date_format} {else} New Risk Profile{/if}" >
+   <input name = "assdate" id = "assdate"  value = "{if !empty($myrisk->lastmodified)} {$myrisk->lastmodified|date_format} {else} New Risk Profile{/if}" readonly>
   </h2>
  </div>
  <input name = "sortmemory" id = "sortmemory" value = "" type = "hidden">
@@ -287,14 +287,14 @@ a.style.display = "none";
      <tr class="oddListRowS1" height="20">
       <td valign="top"  align="left" >&nbsp &nbsp {$myrowData.TAG}: {$myrowData.DOM} </td>
       <td class="" valign="top" align="left"><input type="checkbox" id="{$myrowData.TAG}_check" name ="{$myrowData.TAG}_check" 
-					onclick="if(this.checked) document.getElementById('{$myrowData.TAG}_val').value = ('{$patdata.gender}' == 'female' ? '{$myrowData.FEM}' : '{$myrowData.MALE}' ); else document.getElementById('{$myrowData.TAG}_val').value = 0;document.getElementById('ORT_SUM').value = parseInt(document.getElementById('ORT-1A_val').value) + parseInt(document.getElementById('ORT-1B_val').value) +parseInt(document.getElementById('ORT-1C_val').value) +parseInt(document.getElementById('ORT-2A_val').value) +parseInt(document.getElementById('ORT-2B_val').value) +parseInt(document.getElementById('ORT-2C_val').value) +parseInt(document.getElementById('ORT-3_val').value) +parseInt(document.getElementById('ORT-4_val').value)+parseInt(document.getElementById('ORT-5A_val').value)+parseInt(document.getElementById('ORT-5B_val').value); if (parseInt(document.getElementById('ORT_SUM').value) <= 7) document.getElementById('ORT_SUM').style.backgroundColor = 'yellow';   else  document.getElementById('ORT_SUM').style.backgroundColor = '#FA5858';  if (parseInt(document.getElementById('ORT_SUM').value) <= 3) document.getElementById('ORT_SUM').style.backgroundColor = '#58FA82';    "></td>
-      <td class="" valign="top" align="left"><input type="input" id="{$myrowData.TAG}_val" name ="{$myrowData.TAG}_val" value = '' onchange="" style="width:70px;"></td>
+					onclick="if(this.checked) document.getElementById('{$myrowData.TAG}_val').value = ('{$patdata.gender}' == 'female' ? '{$myrowData.FEM}' : '{$myrowData.MALE}' ); else document.getElementById('{$myrowData.TAG}_val').value = 0;document.getElementById('ORT_SUM').value = parseInt(document.getElementById('ORT-1A_val').value) + parseInt(document.getElementById('ORT-1B_val').value) +parseInt(document.getElementById('ORT-1C_val').value) +parseInt(document.getElementById('ORT-2A_val').value) +parseInt(document.getElementById('ORT-2B_val').value) +parseInt(document.getElementById('ORT-2C_val').value) +parseInt(document.getElementById('ORT-3_val').value) +parseInt(document.getElementById('ORT-4_val').value)+parseInt(document.getElementById('ORT-5A_val').value)+parseInt(document.getElementById('ORT-5B_val').value); if (parseInt(document.getElementById('ORT_SUM').value) <= 3) document.getElementById('ORT_SUM').style.backgroundColor = '#58FA82'; else if (parseInt(document.getElementById('ORT_SUM').value) <= 7) document.getElementById('ORT_SUM').style.backgroundColor = 'yellow';  else document.getElementById('ORT_SUM').style.backgroundColor = '#FA5858';"></td>
+      <td class="" valign="top" align="left"><input type="text" readonly id="{$myrowData.TAG}_val" name ="{$myrowData.TAG}_val" value = '' style="width:70px;"></td>
      </tr>
      {/foreach}
      <tr class="oddListRowS1" height="20">
       <td class="" valign="top" align="left" scope="row"><h2> ORT-SUM: Sum of Above </h2></td>
-      <td class="" valign="top" align="left"></td>
-      <td class="" valign="top" align="left"  ><input style="background-color:#58FA82; width:70px;" name="ortsum" id="ORT_SUM" value = "0" onchange="if (this.selectedIndex==0) this.style.backgroundColor = '#58FA82';if (this.selectedIndex==1) this.style.backgroundColor = '#fc0';if (this.selectedIndex==2) this.style.backgroundColor = '#FA5858';">
+      <td class="" valign="top" align="left"> </td>
+      <td class="" valign="top" align="left"  ><input style="{php} if($this->get_template_vars('myrisk')->ortsum <= 3) echo "background-color:#58FA82;"; else if($this->get_template_vars('myrisk')->ortsum >= 4 || $this->get_template_vars('myrisk')->ortsum <= 7) echo "background-color:#fc0;"; else if($this->get_template_vars('myrisk')->ortsum >= 8) echo "background-color:#FA5858;"; {/php} width:70px;" name="ortsum" id="ORT_SUM" value = "0" readonly>
      </tr>
       </tbody>
      
@@ -452,6 +452,14 @@ a.style.display = "none";
 	  
     {/foreach} 
        document.getElementById('ORT_SUM').value = sum;
+	   
+	if (sum <= 3)
+		document.getElementById('ORT_SUM').style.backgroundColor = '#58FA82';
+	else if (sum <= 7)
+		document.getElementById('ORT_SUM').style.backgroundColor = 'yellow'; 
+	else 
+		document.getElementById('ORT_SUM').style.backgroundColor = '#FA5858';
+	   
 </script> 
 {literal} 
 <script>

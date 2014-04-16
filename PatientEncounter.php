@@ -552,7 +552,7 @@ $metadataFile = $this->getMetaDataFile();
 	
 		echo "}); </script>";
 	}
-	
+	$active="";
 	$result1 = $this->bean->db->query($query2b, true); 
 		if(($row = $this->bean->db->fetchByAssoc($result1) ) != null )
 		{
@@ -590,6 +590,11 @@ $metadataFile = $this->getMetaDataFile();
 				if(date('m/d/Y',$date1)<$datenow){
 				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red'";
 				}
+			}
+			if($row['pt_active_c']==1) {
+				$active = "checked='checked'";
+			} else {
+				$active = "";
 			}
 			echo "}); </script>";
 
@@ -788,7 +793,7 @@ $metadataFile = $this->getMetaDataFile();
 	<div style="margin: 0 auto;display: table-footer-group;" id="tabs-1">';
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div style='font-family:Verdana,Arial,sans-serif !important'><font style='font-size: 14px; font-weight: bold'>Patient Encounter : ".$this->bean->name."  &nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind.</b> &nbsp;&nbsp;<input type='text' disabled id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> <br>&nbsp;&nbsp; <b>Patient Active</b>&nbsp; <input type='checkbox' name='pt_active_dummy' disabled id='pt_active_dummy' onclick='javascript:document.getElementById(\"pt_active_c\").checked=this.checked' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
+        echo "<div style='font-family:Verdana,Arial,sans-serif !important'><font style='font-size: 14px; font-weight: bold'>Patient Encounter : ".$this->bean->name."  &nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind.</b> &nbsp;&nbsp;<input type='text' disabled id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> <br>&nbsp;&nbsp; <b>Patient Active</b>&nbsp; <input type='checkbox' name='pt_active_dummy' ".$active." id='pt_active_dummy' onclick='javascript:document.getElementById(\"pt_active_c\").checked=this.checked' style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
 
 	
 		echo $this->dv3->display("Encounter View");
