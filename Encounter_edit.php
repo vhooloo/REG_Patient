@@ -108,6 +108,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		//-----------------
 		//include/EditView/EditView.tpl 
 		//custom/modules/REG_Encounter/tpls/PR_EditView.tpl
+		echo "testing permissions....";
+		if ( $this->bean->ACLAccess('view') ) {
+			echo "User can view this record in the DetailView";}
+		
+		
 		$query2a = "SELECT assistant FROM reg_patient where id = '".$this->bean->id."' AND deleted!=1" ;
 		$result = $this->bean->db->query($query2a, true);
 

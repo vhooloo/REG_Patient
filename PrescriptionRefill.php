@@ -16,7 +16,8 @@ $session_pid = "P".$_REQUEST['record'];
 echo '<script type="text/javascript"src="custom/jquery/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js"></script>
 	<script type="text/javascript" src="custom/jquery/accordion/js/jquery-migrate-1.2.1.min.js"></script>
-	
+	<script type="text/javascript" src="custom/topcarejs/jquery-sticky-notes/script/jquery.stickynotes.js"></script>
+	<link rel="stylesheet" href="custom/topcarejs/jquery-sticky-notes/css/jquery.stickynotes.css" type="text/css">
 	<script type="text/javascript">
 	$(function() {
 		$( "#tabs" ).tabs({
@@ -34,9 +35,44 @@ echo '<script type="text/javascript"src="custom/jquery/jquery-1.9.1.js"></script
 
 	echo '<script type="text/javascript">	
 	
+	var clicksave = function() {
+	
+      var note_ids = jQuery.fn.stickyNotes.currentlyEditedNotes();
+			for (var i = note_ids.length - 1; i >= 0; i--){
+				var note_id = note_ids[i]
+				if (note_id != null) {
+					jQuery.fn.stickyNotes.stopEditing(note_id);
+				}				
+			};
+		 document.getElementById("stickynotes_history_c").value= JSON.stringify(jQuery.fn.stickyNotes.notes);
+		 var _form = document.getElementById(\'EditView\'); 
+		 _form.action.value=\'Save\'; 
+		 if(check_form(\'EditView\')) _form.submit();
+	};
+
+	var created = function(note) {
+	  document.getElementById("history_c").value= JSON.stringify(jQuery.fn.stickyNotes.notes);
+	}	
+	
+	
+	
+	
 	$(document).ready(function() {
-    
-    
+	
+
+	var options;
+	//alert ( document.getElementById("stickynotes_history_c").value);
+	if ( document.getElementById("stickynotes_history_c").value != "" )
+     	{ try {options = JSON.parse(\'{"notes":\' + document.getElementById("stickynotes_history_c").value + \'}\'); $("#notes").stickyNotes(options);}  catch(err){$("#notes").stickyNotes();}  }
+	else { $("#notes").stickyNotes();}
+	//alert("This" + $("#history_c").html());
+	//var options = {"editCallback": created};
+	//alert (options + JSON.stringify(options));
+     //$("#notes").stickyNotes(options);
+	 //$("#note-4").focusout(function() { document.getElementById("stickynotes_history_c").value= JSON.stringify(jQuery.fn.stickyNotes.notes);alert ("blurredout");});
+	 //$("#textarea-note-4").focusout(function() { alert ("blurred");});
+	 //console.log(JSON.stringify(jQuery.fn.stickyNotes.notes));
+    //$("#notes").stickyNotes();
     $(".add-tab").click(function() {
 
         var num_tabs = $("div#tabs ul#tablist li").length + 1;
@@ -210,7 +246,11 @@ $metadataFile = $this->getMetaDataFile();
 		
 		
 		}
-		//var_dump($this->ss);
+		
+		echo "testing permissions";
+		if ( $this->bean->ACLAccess('view') ) {
+			echo "User can view this record in the DetailView";}
+		//var_dump($this->bean);
 		//$this->bean3->retrieve('e7370d19-2754-77fa-10ee-519530915b6f');
 	//	var_dump($this->bean3);
 		//-----------------
@@ -231,6 +271,14 @@ $metadataFile = $this->getMetaDataFile();
 		$db = DBManagerFactory::getInstance();  
 		$provider = $db->query($queryprov); 
 		$provrow = $db->fetchRow($provider);
+		
+		$queryrefill = "SELECT pills_bottle_disp_c pills FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and summary like 'RxRF%' and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc LIMIT 0,1" ;
+		$refillprevious = 0;
+		$refilldays = $db->query($queryrefill);
+        if ( ($refillrow = $db->fetchRow($refilldays)) != null ) {
+		
+			$refillprevious = $refillrow['pills'];
+			$this->dv3->ss->assign("refillprevious", $refillprevious); }
 		
 		$this->dv3->ss->assign("provrow", $provrow);
 		$this->dv3->ss->assign("notes_flag", "false");   //do not default notes
@@ -263,6 +311,7 @@ $metadataFile = $this->getMetaDataFile();
 				}
 		*/	if($row['pills_bottle_disp_c']!=null){
 				echo "<script>document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'</script>";
+				
 				}
 			if($row['risklvl_c']!=null){
 				echo "<script>document.getElementById('risklvl_c').value='".$row['risklvl_c']."'</script>";
@@ -710,7 +759,7 @@ $metadataFile = $this->getMetaDataFile();
 	<div style="margin: 0 auto;display: table-footer-group;" id="tabs-1">';
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div><font style='font-size: 15px; font-weight: bold'>Prescription Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript: $(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
+        echo "<div><font style='font-size: 15px; font-weight: bold'>Prescription Refill : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input--> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript: $(\"#pt_active_c\").prop(\"checked\", this.checked);' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='35' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
 
 	
 		echo $this->dv3->display("Encounter View");
@@ -1081,10 +1130,22 @@ echo "</div>";
 	$ida = $this->bean->id;
 	
 	echo "<script type='text/javascript'>
- 
+// /*  \$(function(){\$( 'form' ).submit(function( event ) {
+		// alert( 'Handler for .submit() called.' );
+		// event.preventDefault();
+	// });});
+	// \$(function(){\$( window ).unload(function() {
+			// alert( 'Handler for .unload() called.' );
+	// });}); */
    
-	\$(function(){\$('.moduleTitle').remove();});		
-	    \$(function(){ \$('.action_buttons div').remove(); \$('.action_buttons').append('<input type=\"button\" id=\"back\" title=\"Back to registry\" value=\"Back to Registry\" onclick=\"javascript:window.location.href=\'index.php?module=REG_Patient&action=index&parentTab=Registry\'\">');
+	\$(function(){
+	
+	
+	\$('.moduleTitle').remove();});		
+	\$('#SAVE_HEADER').remove();
+	    \$(function(){ \$('.action_buttons div').remove();  \$('.action_buttons').append('<input type=\"button\" id=\"mysave\" title=\"Mysave\" value=\"Save\"  onclick=\" clicksave();\">');\$('.action_buttons').append('<input type=\"button\" id=\"back\" title=\"Back\" value=\"Back\" onclick=\"javascript:window.location.href=\'index.php?module=REG_Patient&action=index&parentTab=Registry\'\">'); \$('.action_buttons').append('<input type=\"button\" id=\"mycopy\" title=\"Copy To Clipboard\" value=\"Copy\"  onclick=\" copyToClipboard()();\">');
+		//\$('.action_buttons').append('<input type=\"button\" id=\"mysave1\" title=\"Mysave\" value=\"My Save\" onclick=\"document.getElementById(\'history_c\').value= JSON.stringify(jQuery.fn.stickyNotes.notes);alert(JSON.stringify(jQuery.fn.stickyNotes.notes));var _form = document.getElementById(\'EditView\'); _form.action.value=\'Save\'; if(check_form(\'EditView\')) _form.submit();\">');
+		
 	\$('.action_buttons').append($('#copy_text_div'))});
 	  document.getElementById('reg_patient_reg_encounterreg_patient_ida').value='".$ida."';
 	  var combine = document.getElementById('next_appt_other_c').value;
