@@ -45,7 +45,7 @@ echo '<script type="text/javascript"src="custom/jquery/jquery-1.9.1.js"></script
             "<li ><a href=\'#tabs-" + num_tabs + "\'>" + tab_name + "</a><span class=\"ui-icon ui-icon-close\">Remove Tab</span></li>"
         );
 	$("div#tabs").append(
-			"<div style=\'margin: 0 auto;display: table-footer-group;\' id=\'tabs-" + num_tabs + "\'><iframe scrolling=\'no\' frameborder=\'0\' width=\'1081px\' height=\'473px\' src =\'"+a+"\'></iframe></div>"
+			"<div style=\'margin: 0 auto;display: table-footer-group;\' id=\'tabs-" + num_tabs + "\'><iframe style=\'padding:0\' scrolling=\'no\' frameborder=\'0\' width=\'790px\' height=\'550px\' src =\'"+a+"\'></iframe></div>"
            
         );
         $("div#tabs").tabs("refresh");
@@ -224,7 +224,9 @@ $metadataFile = $this->getMetaDataFile();
 		if($flag3==1){
 			echo "<script type='text/javascript'>alert('The Encounter does not exist. It will be saved as a new Encounter'); </script>";
 		}	
-		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc" ;
+		$query2a = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where summary like 'PEnc%' AND reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc limit 1" ;
+		
+		$query2b = "SELECT * FROM reg_encounter natural join reg_encounter_cstm where id=id_c  and id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1 ) order by date_entered desc limit 1" ;
 		
 		$queryprov = "SELECT p1b.name provname  from reg_provider p1b, reg_provider_reg_patient_c p2b  WHERE p2b.reg_provider_reg_patientreg_provider_ida = p1b.id  AND p2b.reg_provider_reg_patientreg_patient_idb = '" . $this->bean->id . "'";
 		$db = DBManagerFactory::getInstance();  
@@ -239,11 +241,16 @@ $metadataFile = $this->getMetaDataFile();
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
 		{
 		    //assign to smarty
+			
+			echo "<script type='text/javascript'>
+			$(document).ready(function() {
+			";
+						
 			$this->dv3->ss->assign("datarow", $row);
 			
 			if($row['pcp_name_c']!=null){
 				
-				echo "<script>document.getElementById('pcp_dummy').value='".$row['pcp_name_c']."'; document.getElementById('pcp_name_c').value='".$row['pcp_name_c']."'</script>";
+				echo "\r\n document.getElementById('pcp_dummy').value='".$row['pcp_name_c']."'; document.getElementById('pcp_name_c').value='".$row['pcp_name_c']."';";
 			}
 			
 			// Last Rx date should be defaulted to last Rx generated date 
@@ -257,73 +264,78 @@ $metadataFile = $this->getMetaDataFile();
 				echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
 				}
 		*/	if($row['pills_bottle_disp_c']!=null){
-				echo "<script>document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'</script>";
+			//	echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$row['pills_bottle_disp_c']."'";
 				}
-			if($row['risklvl_c']!=null){
-				echo "<script>document.getElementById('risklvl_c').value='".$row['risklvl_c']."'</script>";
+			/*if($row['risklvl_c']!=null){
+				echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
 				}
-		 
+		 */
 		 
 			if($row['last_uts_c']!=null){
 				$date1=strtotime($row['last_uts_c']);
-				echo "<script>document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."'</script>";
+				//echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pcp_visit_c']!=null){
 				$date1=strtotime($row['last_pcp_visit_c']);
-				echo "<script>document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				//echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pain_nurse_visit_c']!=null){
 				$date1=strtotime($row['last_pain_nurse_visit_c']);
-				echo "<script>document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+			//	echo "\r\n document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."'";
 			}
 			if($row['last_nurse_phone_contact_c']!=null){
 				$date1=strtotime($row['last_nurse_phone_contact_c']);
-				echo "<script>document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."'</script>";
+				//echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['last_pmp_review_done_c']!=null){
 				$date1=strtotime($row['last_pmp_review_done_c']);
-				echo "<script>document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'</script>";
+				//echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($row['narcotic_contract_in_chart_c']==1){
-				echo "<script> $('#narcotic_contract_in_chart_c').prop('checked', true); </script>";
+				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
-			if($row['narcotic_contract_sign_c']!=null){
+			/*//if($row['narcotic_contract_sign_c']!=null){
 				$date1=strtotime($row['narcotic_contract_sign_c']);
-				echo "<script>document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'</script>";
-			}
+				//echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."';";
+			}*/
 			
 			
 			if($row['pt_confirms_taking_c']==1){
-				echo "<script> $('#pt_confirms_taking_c').prop('checked', true); </script>";
+				echo "\r\n  $('#pt_confirms_taking_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
+			}
+
+			if($row['pt_ben_opioid_c']==1){
+				echo "\r\n  $('#pt_ben_opioid_c').prop('checked', true); ";
 			}				
+
 			if($row['pt_confirms_storing_c']==1){
-				echo "<script> $('#pt_confirms_storing_c').prop('checked', true); </script>";
+				//echo "\r\n  $('#pt_confirms_storing_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
 			}
 			if($row['aberrant_behavior_noted_c']==1){
-				echo "<script> $('#aberrant_behavior_noted_c').prop('checked', true); </script>";
+				//echo "\r\n  $('#aberrant_behavior_noted_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
 			}
 			if($row['med_safety_pulm_prob_c']==1){
-				echo "<script> $('#med_safety_pulm_prob_c').prop('checked', true); </script>";
+				//echo "\r\n  $('#med_safety_pulm_prob_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
 			}
 			if($row['med_safety_sedatives_c']==1){
-				echo "<script> $('#med_safety_sedatives_c').prop('checked', true); </script>";
+				//echo "\r\n  $('#med_safety_sedatives_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
 			}
 			
 			if($row['med_safety_high_medd_c']==1){
-				echo "<script> $('#med_safety_high_medd_c').prop('checked', true); </script>";
+				//echo "\r\n  $('#med_safety_high_medd_c').prop('checked', true); ";
 				//echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
 			}
 			
 			if($row['pt_active_c']==0)
 			{	
-				echo "<script> $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);</script>";
+				echo "\r\n  $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);";
 				
 				//echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
 			}
@@ -331,207 +343,299 @@ $metadataFile = $this->getMetaDataFile();
 			
 			$datenow = date('m/d/Y');
 			
-			if($row['next_rx_refill_due_c']!=null){
+			/*if($row['next_rx_refill_due_c']!=null){
 				$date1=strtotime($row['next_rx_refill_due_c']);
 				
-				echo "<script>document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-					echo "<script>document.getElementById('next_rx_refill_due_c').style.color='red'</script>";
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
 				}
-			}
+			}*/
 			if($row['next_uts_due_c']!=null){
 				$date1=strtotime($row['next_uts_due_c']);
-				echo "<script>document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."'</script>";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_uts_due_c').style.color='red'</script>";
-				}
+				//echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
+				//}
 			}
 			
 			if($row['next_pcp_visit_c']!=null){
 				$date1=strtotime($row['next_pcp_visit_c']);
-				echo "<script>document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
-				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pcp_visit_c').style.color='red'</script>";
-				}
+				//echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
+				//if(date('m/d/Y',$date1)<$datenow){
+				  //echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
+				//}
 			}
 			if($row['nxt_appt_pain_c']!=null){
 				$date1=strtotime($row['nxt_appt_pain_c']);
-				echo "<script>document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('nxt_appt_pain_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
 				}
 			}
 			
 			if($row['next_appt_other_c']!=null){
-				echo "<script>document.getElementById('next_appt_other_c').value='".$row['next_appt_other_c']."'</script>";
+				echo "\r\n document.getElementById('next_appt_other_c').value='".$row['next_appt_other_c']."';";
 				}
 				
-			if($row['next_pmp_review_due_c']!=null){
+			/*if($row['next_pmp_review_due_c']!=null){
 				$date1=strtotime($row['next_pmp_review_due_c']);
-				echo "<script>document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'; ";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pmp_review_due_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
 				}
-			}
+			}*/
+			echo "}); </script>";
 		}
 		
 	}	
 	else if($flag3==1){
 	
+	echo "<script type='text/javascript'>
+	$(document).ready(function() {
+	";
+	
 		if($this->bean3->pcp_name_c!=null){
 				
-				echo "<script>document.getElementById('pcp_dummy').value='".$this->bean3->pcp_name_c."'; document.getElementById('pcp_name_c').value='".$this->bean3->pcp_name_c."'</script>";
+				echo "\r\n document.getElementById('pcp_dummy').value='".$this->bean3->pcp_name_c."'; document.getElementById('pcp_name_c').value='".$this->bean3->pcp_name_c."';";
 			}
 		if($this->bean3->presc_refill_early_c==0){
-				echo "<script> $('#presc_refill_early_c').prop('checked', false);</script>";
+				echo "\r\n  $('#presc_refill_early_c').prop('checked', false);";
 				//echo "<script>document.getElementById('presc_refill_early_c').checked=false;</script>";
 			}	
 			
 		if($this->bean3->pt_active_c==0){
-				echo "<script> $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);</script>";
+				echo "\r\n  $('#pt_active_dummy').prop('checked', false); $('#pt_active_c').prop('checked', false);";
 				//echo "<script>document.getElementById('pt_active_dummy').checked=false; document.getElementById('pt_active_c').checked=false</script>";
 			}	
 	
 	/*	if($this->bean3->last_rx_generated_c!=null){
 				$date1=strtotime($this->bean3->last_rx_generated_c);
-				echo "<script>document.getElementById('last_rx_generated_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "<script>document.getElementById('last_rx_generated_c').value='".date('m/d/Y',$date1)."'";
 			}
 		*/ 
 			
 		 
 			if($this->bean3->last_uts_c!=null){
 				$date1=strtotime($this->bean3->last_uts_c);
-				echo "<script>document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_uts_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pcp_visit_c!=null){
 				$date1=strtotime($this->bean3->last_pcp_visit_c);
-				echo "<script>document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pain_nurse_visit_c!=null){
 				$date1=strtotime($this->bean3->last_pain_nurse_visit_c);
-				echo "<script>document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pain_nurse_visit_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_nurse_phone_contact_c!=null){
 				$date1=strtotime($this->bean3->last_nurse_phone_contact_c);
-				echo "<script>document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_nurse_phone_contact_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->last_pmp_review_done_c!=null){
 				$date1=strtotime($this->bean3->last_pmp_review_done_c);
-				echo "<script>document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('last_pmp_review_done_c').value='".date('m/d/Y',$date1)."';";
 			}
 			if($this->bean3->narcotic_contract_in_chart_c==1){
-				echo "<script> $('#narcotic_contract_in_chart_c').prop('checked', true);</script>";
+				echo "\r\n  $('#narcotic_contract_in_chart_c').prop('checked', true);";
 				//echo "<script>document.getElementById('narcotic_contract_in_chart_c').checked=true</script>";
 			}
 			
-			if($this->bean3->narcotic_contract_sign_c!=null){
+			/*if($this->bean3->narcotic_contract_sign_c!=null){
 				$date1=strtotime($this->bean3->narcotic_contract_sign_c);
-				echo "<script>document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'</script>";
-			}
+				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."';";
+			}*/
 			
 			$datenow = date('m/d/Y');
 			
-			if($this->bean3->next_rx_refill_due_c!=null){
+			/*if($this->bean3->next_rx_refill_due_c!=null){
 				$date1=strtotime($this->bean3->next_rx_refill_due_c);
 				
-				echo "<script>document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-					echo "<script>document.getElementById('next_rx_refill_due_c').style.color='red'</script>";
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
 				}
-			}
+			}*/
 			if($this->bean3->next_uts_due_c!=null){
 				$date1=strtotime($this->bean3->next_uts_due_c);
-				echo "<script>document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_uts_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_uts_due_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_uts_due_c').style.color='red';";
 				}
 			}
 			
 			if($this->bean3->next_pcp_visit_c!=null){
 				$date1=strtotime($this->bean3->next_pcp_visit_c);
-				echo "<script>document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_pcp_visit_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pcp_visit_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_pcp_visit_c').style.color='red';";
 				}
 			}
 			if($this->bean3->nxt_appt_pain_c!=null){
 				$date1=strtotime($this->bean3->nxt_appt_pain_c);
-				echo "<script>document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('nxt_appt_pain_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('nxt_appt_pain_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('nxt_appt_pain_c').style.color='red';";
 				}
 			}
 			
 			
 			if($this->bean3->next_appt_other_c!=null){
-				echo "<script>document.getElementById('next_appt_other_c').value='".$this->bean3->next_appt_other_c."'</script>";
+				echo "\r\n document.getElementById('next_appt_other_c').value='".$this->bean3->next_appt_other_c."';";
 				}
 				
 				
-			if($this->bean3->next_pmp_review_due_c!=null){
+			/*if($this->bean3->next_pmp_review_due_c!=null){
 				$date1=strtotime($this->bean3->next_pmp_review_due_c);
-				echo "<script>document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."';";
 				if(date('m/d/Y',$date1)<$datenow){
-				  echo "<script>document.getElementById('next_pmp_review_due_c').style.color='red'</script>";
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
 				}
-			}	
+			}	*/
 			
 			if($this->bean3->history_c!=null){
-				echo "<script>document.getElementById('history_c').value='".trim($this->bean3->history_c)."'</script>";
+				echo "\r\n document.getElementById('history_c').value='".trim($this->bean3->history_c)."';";
 				}
 			if($this->bean3->pills_bottle_disp_c!=null){
-				echo "<script>document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."'</script>";
+				echo "\r\n document.getElementById('pills_bottle_disp_c').value='".$this->bean3->pills_bottle_disp_c."';";
 				}
-			if($this->bean3->risklvl_c!=null){
-				echo "<script>document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'</script>";
-				}
+			/*if($this->bean3->risklvl_c!=null){
+				echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."';";
+				}*/
 
 			if($this->bean3->summary!=null){
 				$summ=explode(":",$this->bean3->summary);
-				echo "<script>document.getElementById('summary').value='".$summ[1]."'</script>";
+				echo "\r\n document.getElementById('summary').value='".$summ[1]."';";
 				}
 						
+			if($this->bean3->pt_ben_opioid_c == 1){
+				echo "\r\n  $('#pt_ben_opioid_c').prop('checked', true); ";
+				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
+			}
 			if($this->bean3->pt_confirms_taking_c==1){
-				echo "<script> $('#pt_confirms_taking_c').prop('checked', true);</script>";
+				echo "\r\n  $('#pt_confirms_taking_c').prop('checked', true);";
 				//echo "<script>document.getElementById('pt_confirms_taking_c').checked=true;</script>";
 			}				
 			if($this->bean3->pt_confirms_storing_c==1){
-				echo "<script> $('#pt_confirms_storing_c').prop('checked', true);</script>";
+				echo "\r\n  $('#pt_confirms_storing_c').prop('checked', true);";
 				//echo "<script>document.getElementById('pt_confirms_storing_c').checked=true;</script>";
 			}
 			if($this->bean3->aberrant_behavior_noted_c==1){
-				echo "<script> $('#aberrant_behavior_noted_c').prop('checked', true);</script>";
+				echo "\r\n  $('#aberrant_behavior_noted_c').prop('checked', true);";
 				//echo "<script>document.getElementById('aberrant_behavior_noted_c').checked=true;</script>";
 			}
 			if($this->bean3->med_safety_pulm_prob_c==1){
-				echo "<script> $('#med_safety_pulm_prob_c').prop('checked', true);</script>";
+				echo "\r\n  $('#med_safety_pulm_prob_c').prop('checked', true);";
 				//echo "<script>document.getElementById('med_safety_pulm_prob_c').checked=true;</script>";
 			}
 			if($this->bean3->med_safety_sedatives_c==1){
-				echo "<script> $('#med_safety_sedatives_c').prop('checked', true);</script>";
+				echo "\r\n  $('#med_safety_sedatives_c').prop('checked', true);";
 				//echo "<script>document.getElementById('med_safety_sedatives_c').checked=true;</script>";
 			}
 			
 			if($this->bean3->med_safety_high_medd_c==1){
-				echo "<script> $('#med_safety_high_medd_c').prop('checked', true);</script>";
+				echo "\r\n  $('#med_safety_high_medd_c').prop('checked', true);";
 				//echo "<script>document.getElementById('med_safety_high_medd_c').checked=true;</script>";
 			}
 			if($this->bean3->patient_present_c==1){
-				echo "<script> $('#patient_present_c').prop('checked', true);</script>";
+				echo "\r\n  $('#patient_present_c').prop('checked', true);";
 				//echo "<script>document.getElementById('patient_present_c').checked='true';</script>";
 			}else{
-				echo "<script> $('#patient_present_c').prop('checked', false);</script>";
+				echo "\r\n  $('#patient_present_c').prop('checked', false);";
 				//echo "<script>document.getElementById('patient_present_c').checked=false;</script>";
 			}
 			
 			if($this->bean3->date_modified!=null){
 				$date1=strtotime($this->bean3->date_modified);
-				echo "<script>document.getElementById('date_last_modified').value='".date('m/d/Y',$date1)."'</script>";
+				echo "\r\n document.getElementById('date_last_modified').value='".date('m/d/Y',$date1)."';";
 			}
 	
-	
+		echo "}); </script>";
 	}
+	$active="";
+	$result1 = $this->bean->db->query($query2b, true); 
+		if(($row = $this->bean->db->fetchByAssoc($result1) ) != null )
+		{
+			echo "<script type='text/javascript'>
+				$(document).ready(function() {
+				";
+
+			if($row['risklvl_c']!=null){
+				//echo "\r\n document.getElementById('risklvl_c').value='".$row['risklvl_c']."';";
+				}
+			 
+			$datenow = date('m/d/Y');
+			
+			
+			if($row['narcotic_contract_sign_c']!=null){
+			
+				$date1=strtotime($row['narcotic_contract_sign_c']);
+				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($row['next_pill_ct_c']!=null){
+				$date1=strtotime($row['next_pill_ct_c']);
+				echo "\r\n document.getElementById('next_pill_ct_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($row['next_rx_refill_due_c']!=null){
+				$date1=strtotime($row['next_rx_refill_due_c']);
+				
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."'";
+				if(date('m/d/Y',$date1)<$datenow){
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red'";
+				}
+			}
+			if($row['next_pmp_review_due_c']!=null){
+				$date1=strtotime($row['next_pmp_review_due_c']);
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."'";
+				if(date('m/d/Y',$date1)<$datenow){
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red'";
+				}
+			}
+			if($row['pt_active_c']==1) {
+				$active = "checked='checked'";
+			} else {
+				$active = "";
+			}
+			echo "}); </script>";
+
+		}else if($flag3==1){
 	
+	echo "<script type='text/javascript'>
+	$(document).ready(function() {
+	";
+				if($this->bean3->risklvl_c!=null){
+				//echo "\r\n document.getElementById('risklvl_c').value='".$this->bean3->risklvl_c."'";
+			}
+			
+			$datenow = date('m/d/Y');
+			
+			
+			if($this->bean3->narcotic_contract_sign_c!=null){
+				$date1=strtotime($this->bean3->narcotic_contract_sign_c);
+				echo "\r\n document.getElementById('narcotic_contract_sign_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($this->bean3->next_pill_ct_c!=null){
+				$date1=strtotime($this->bean3->next_pill_ct_c);
+				echo "\r\n document.getElementById('next_pill_ct_c').value='".date('m/d/Y',$date1)."'";
+			}
+			if($this->bean3->next_rx_refill_due_c!=null){
+				$date1=strtotime($this->bean3->next_rx_refill_due_c);
+				
+				echo "\r\n document.getElementById('next_rx_refill_due_c').value='".date('m/d/Y',$date1)."';";
+				if(date('m/d/Y',$date1)<$datenow){
+					echo "\r\n document.getElementById('next_rx_refill_due_c').style.color='red';";
+				}
+			}
+			if($this->bean3->next_pmp_review_due_c!=null){
+				$date1=strtotime($this->bean3->next_pmp_review_due_c);
+				echo "\r\n document.getElementById('next_pmp_review_due_c').value='".date('m/d/Y',$date1)."';";
+				if(date('m/d/Y',$date1)<$datenow){
+				  echo "\r\n document.getElementById('next_pmp_review_due_c').style.color='red';";
+				}
+			}
+			
+			echo "}); </script>";
+	}
 	/*	else
 		{
 		  echo "<script>document.getElementById('sf12_1').innerHTML='Not Available'</script>";
@@ -582,17 +686,12 @@ $metadataFile = $this->getMetaDataFile();
 	//	echo "<script src='custom/jquery/jquery.js'></script><script src='custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js'></script>";
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
+		$riskquery = "select finalscore from reg_patient_risk where pid='".$this->bean->id."'";
+		$score = $db->query($riskquery, true);
+		$rowr = $db->fetchByAssoc($score);
+		$finalscore = trim($rowr['finalscore']);
+		$this->dv3->ss->assign("finalscore", $finalscore); 
 		
 		
 		//display treatment plan details
@@ -621,6 +720,8 @@ $metadataFile = $this->getMetaDataFile();
 	   $this->dv2->setup('REG_Treatment_Plan', $this->bean2, $treatment_planMetadataFile, $treatment_planTemplate);
       }
 	  
+		
+		
 	
 	//echo "<h1 color='r\"e\"d'>hahhahah</h1>";
 	
@@ -653,27 +754,29 @@ $metadataFile = $this->getMetaDataFile();
 		/***** UTS processing **/
 		$this->dv3->ss->assign("notes_flag", "false");
 		$myqueryuts = "SELECT DISTINCT DATE_FORMAT(test_date,'%m/%d/%Y') thisdate1, test_date thisdate, (SELECT DISTINCT test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OXYCODONE' AND test_results_code <> 'PEN') oxy,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'OPIATE URINE' AND test_results_code <> 'PEN') opiate,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'METHADONE' AND test_results_code <> 'PEN') methadone,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'COCAIN METAB' AND test_results_code <> 'PEN') cocaine,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BUPRENO UR' AND test_results_code <> 'PEN') bupreno,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BENZODIAZ UR' AND test_results_code <> 'PEN') benzo,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'BARBITURA UR'AND test_results_code <> 'PEN') barbi,(SELECT DISTINCT  test_results_code from reg_patient_uts_import WHERE  patient_mrn = '".$mrn."' AND test_date = thisdate AND test_type = 'AMPHETAMI UR' AND test_results_code <> 'PEN') amph FROM reg_patient_uts_import WHERE patient_mrn = '".$mrn."' order by 2 desc";
+
         $dbuts = DBManagerFactory::getInstance(); 
+
 		$resultuts = $dbuts->query($myqueryuts);  
+
 		 $lastuts = "";
+
 		 $mydatauts = array();
+
 		 $ctr = 0;
-		 $prevdate = "";   // make changes for expanded opioid
+
 		while($rowuts = $dbuts->fetchRow($resultuts))
+
 		{
+
 			if ($ctr == 0) $lastuts = $rowuts['thisdate1'];   //grab date of last uts
-			if ( $rowuts['thisdate1'] == $prevdate )  //collapse this row into previous row
-			{	
-				//if ($rowuts['oxy'] != null ) $mydatauts[ctr][ = 
-				//$mydatauts[]['barbi'] = "check"; 
-				
-			} 
-			else { $mydatauts[]['thisdate1'] =$rowuts['thisdate1']; $mydatauts[$ctr]['opiate'] =$rowuts['opiate'].$prevdate.$rowuts['thisdate1'];} //generate new row
-			//$mydatauts[]['oxy'] = "check"; 
-			//$mydatauts[$ctr]['barbi'] = "check"; 
+
 			$ctr = $ctr + 1;
-			$prevdate = $rowuts['thisdate1'];
-		};	
+
+			$mydatauts[]=$rowuts;
+
+		};	  
+		
 		$this->dv3->ss->assign("mydatauts", $mydatauts); 
 		$this->dv3->ss->assign("lastuts", $lastuts); 
 		
@@ -681,7 +784,7 @@ $metadataFile = $this->getMetaDataFile();
        // echo $this->dv->display();
 	   
 		$this->dv3->process();
-		echo "<table width='100%'><tr><td  width='70%' style='border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;margin-top: 0;vertical-align: top;'  >";
+		echo "<table ><tr><td width='800' style='width:800px;border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;margin-top: 0;vertical-align: top;'  >";
 		echo '<div   id="tabs">
 	<ul id ="tablist">
 		<li><a href="#tabs-1"><b>New</b></a></li>
@@ -690,7 +793,7 @@ $metadataFile = $this->getMetaDataFile();
 	<div style="margin: 0 auto;display: table-footer-group;" id="tabs-1">';
 		echo "<input type='hidden' id ='patient_name' value='".$this->bean->name."'></input>";
 		
-        echo "<div><font style='font-size: 15px; font-weight: bold'>Patient Encounter : ".$this->bean->name."  &nbsp;&nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indication for Pain Medication</b><input type='text' id = 'indication' size='15' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> &nbsp;&nbsp; <b>Patient Active</b> <input type='checkbox' name='pt_active_dummy' id='pt_active_dummy' onclick='javascript:document.getElementById(\"pt_active_c\").checked=this.checked' checked style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
+        echo "<div style='font-family:Verdana,Arial,sans-serif !important'><font style='font-size: 14px; font-weight: bold'>Patient Encounter : ".$this->bean->name."  &nbsp;".$mrn."</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pain Medication Ind.</b> &nbsp;&nbsp;<input type='text' disabled id = 'indication' size='30' onblur='set_session(this.id,this.value);'  value='".$value."'> </input> <br>&nbsp;&nbsp; <b>Patient Active</b>&nbsp; <input type='checkbox' name='pt_active_dummy' ".$active." id='pt_active_dummy' onclick='javascript:document.getElementById(\"pt_active_c\").checked=this.checked' style='vertical-align:middle;'> &nbsp;&nbsp; <b>PCP Name</b> <input type='text' size='15' id='pcp_dummy' width onblur='javascript:document.getElementById(\"pcp_name_c\").value=this.value' value='".$provrow['provname']."' disabled></input></div>";
 
 	
 		echo $this->dv3->display("Encounter View");
@@ -869,7 +972,7 @@ $metadataFile = $this->getMetaDataFile();
 		echo "</td>";
 		
 		//Alert Section
-		echo "<td style='border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;vertical-align: top;' ><div id='accordion'>";
+		echo "<td style='width:400px;border-color: rgb( 100, 100, 255); border-style: ridge;border-width: 2px;vertical-align: top;' ><div id='accordion'>";
 		
 // Display Treatment Plan
 		if(!empty($this->row))
@@ -990,7 +1093,8 @@ echo "</div>";
 		
 		//display encounter list view
 		//$query2 = "SELECT * FROM reg_structured_element where id in( SELECT reg_treatm68ecelement_idb from reg_treatment_plan_reg_structured_element_c where reg_treatment_plan_reg_structured_elementreg_treatment_plan_ida = '".$tmp."' AND deleted!=1)" ;
-		$query2 = "SELECT * FROM reg_encounter where  id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1) order by date_entered desc" ;
+		//$query2 = "SELECT * FROM reg_encounter where  id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1) order by date_entered desc" ;
+		$query2 = "SELECT re.*,rec.abherrent_behaviors_c FROM reg_encounter re,reg_encounter_cstm rec where re.id=rec.id_c AND re.id in( SELECT  reg_patient_reg_encounterreg_encounter_idb from reg_patient_reg_encounter_c where reg_patient_reg_encounterreg_patient_ida = '".$this->bean->id."' AND deleted!=1) order by re.date_entered desc" ;
 		$result = $this->bean->db->query($query2, true); 
 		
 		if(($row = $this->bean->db->fetchByAssoc($result) ) != null )
@@ -1017,12 +1121,23 @@ echo "</div>";
 				$result2 = $this->bean->db->query($query3, true); 
 				$row2=$this->bean->db->fetchByAssoc($result2);
 				$date_created = str_split($row['date_entered'],16);
+				$date_created[0] = date("m-d-Y",strtotime($date_created[0]));
 				if($count%2==1){
-					echo "<tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab'  tab_name='". $row['summary']."'  link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+					echo "<tr height=\"20\" class=\"oddListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab'  tab_name='". $row['summary']."'  link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span>";
+					
+					if(isset($row['abherrent_behaviors_c']) && $row['abherrent_behaviors_c']!="")
+						echo "<img src='custom/themes/default/images/aberrant_behavior.gif'>";
+					
+					echo "</td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
 				}
 				else
 				{
-					echo "<tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab' tab_name='". $row['summary']."' link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
+					echo "<tr height=\"20\" class=\"evenListRowS1\"><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot1b\"><a class='add-tab' tab_name='". $row['summary']."' link=\"index.php?entryPoint=Encounter_edit&record=".$this->bean->id."&enc_id=".$row['id']."\">".$row['summary']."</a></span>";
+					
+					if(isset($row['abherrent_behaviors_c']) && $row['abherrent_behaviors_c']!="")
+						echo "<img src='custom/themes/default/images/aberrant_behavior.gif'>";
+					
+					echo "</td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$date_created[0]."</span></td><td scope=\"row\" valign=\"top\" class=\"\"><span sugar=\"slot2b\">".$row2['first_name']."&nbsp;".$row2['last_name']."</span></td></tr>";
 				}
 		
 				//return $row; 
@@ -1046,13 +1161,12 @@ echo "</div>";
 	$ida = $this->bean->id;
 	echo "<script type='text/javascript'>
  
-   
 	\$(function(){\$('.moduleTitle').remove();});		
 	    \$(function(){ \$('.action_buttons div').remove(); \$('.action_buttons').append('<input type=\"button\" id=\"back\" title=\"Back to registry\" value=\"Back to Registry\" onclick=\"javascript:window.location.href=\'index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DREG_Patient%26action%3Dindex%26parentTab%3DRegistry\'\">');
 	\$('.action_buttons').append($('#copy_text_div'))});
 	 document.getElementsByName('uts_not_collected_c')[0].value='PatientEncounter';
 	  document.getElementById('reg_patient_reg_encounterreg_patient_ida').value='".$ida."';
-	  var combine = document.getElementById('next_appt_other_c').value;
+	  /*var combine = document.getElementById('next_appt_other_c').value;
       var values_of = combine.split('#');
 	  
 	  for (var i=0;i<values_of.length;i++){
@@ -1060,7 +1174,7 @@ echo "</div>";
 	  var selectedtext=document.getElementById(values_indi[0]).text;
 	  var date_value=values_indi[1];
 	 \$('<li style=\"margin-left:0px;\"> <img src=\"custom/modules/REG_Encounter/tpls/cross.jpg\" class=\"remove\"></img>'+selectedtext+' - '+date_value+' </li>').appendTo('#entry_list');
-	  }
+	  }*/
 	 
 	</script>";
 		echo "<script type='text/javascript'>\$(function(){\$('#accordion').accordion();  \$('#accordion1').accordion(); }); </script>";
