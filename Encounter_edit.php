@@ -33,9 +33,15 @@ var action_sugar_grp1 = \'ajaxui\';
 <script src="cache/include/javascript/sugar_field_grp.js?v=GogGz9QEok1-e0Ft6rexxQ" type="text/javascript"></script>
 <link href="themes/Sugar5/images/sugar_icon.ico?v=GogGz9QEok1-e0Ft6rexxQ" type="image/x-icon" rel="icon"><script id="yui_3_3_0_1_13788423908072" type="text/javascript" charset="utf-8" src="http://yui.yahooapis.com/combo?3.3.0/build/oop/oop-min.js&amp;3.3.0/build/event-custom/event-custom-base-min.js&amp;3.3.0/build/io/io-base-min.js"></script>';
 
-echo "<script type='text/javascript'>
+echo "
+	<!--script src='custom/jquery/jquery-1.9.1.js' /-->
+	<!--script src='custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js' /-->
+	<!--script src='custom/jquery/accordion/js/jquery-migrate-1.2.1.min.js' /-->
+	<link rel='stylesheet' type='text/css' href='themes/" . $theme . "/style.css' />
+<script type='text/javascript'>
 
-		
+
+
 
 				function set_session(a,b){var xmlhttp;
 
@@ -58,15 +64,26 @@ echo "<script type='text/javascript'>
 				
             }
 			
-	
+
 	</script>
-	<script src='custom/jquery/jquery-1.9.1.js' />
-	<script src='custom/jquery/accordion/js/jquery-ui-1.10.0.custom.js' />
-	<script src='custom/jquery/accordion/js/jquery-migrate-1.2.1.min.js' />
-	<link rel='stylesheet' type='text/css' href='themes/" . $theme . "/style.css' />
-	</head>";
 	
 
+	
+
+	</head>";
+	
+echo '<script type="text/javascript">
+$(document).ready(function() {
+	
+
+	var options;
+
+	if ( document.getElementById("stickynotes_history_c").value != "" )
+     	{ try {options = JSON.parse(\'{"notes":\' + document.getElementById("stickynotes_history_c").value + \'}\'); $("#notes").stickyNotes(options);}  catch(err){$("#notes").stickyNotes();}  }
+	else { $("#notes").stickyNotes();}
+});
+</script>
+';
 
 
 global $mod_strings;
@@ -74,7 +91,7 @@ global $app_list_strings;
 global $app_strings;
 require_once('include/DetailView/DetailView2.php');
 require_once('include/EditView/EditView2.php');
-
+require_once('custom/Modules/REG_Patient/RefillCommon.php');
 TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------> to prevent reg_encounter edit view from caching
 		$this->ss = new Sugar_Smarty();
 		$this->dv3 = new EditView();
@@ -107,7 +124,7 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 		echo "testing permissions....";
 		if ( $this->bean->ACLAccess('view') ) {
 			echo "User can view this record in the DetailView";}
-		
+		setEditUserRole($this->dv3);
 		
 		$query2a = "SELECT assistant FROM reg_patient where id = '".$this->bean->id."' AND deleted!=1" ;
 		$result = $this->bean->db->query($query2a, true);
@@ -560,10 +577,11 @@ TemplateHandler::clearCache('REG_Encounter','EditView.tpl');   //ADDED :--------
 
 	if($this->bean3->abherrent_behaviors_c!=null)
 		{
+		    //echo "Abherring"; echo $this->bean3->abherrent_behaviors_c;
 			//$tmp = str_replace("^","'",$this->bean3->abherrent_behaviors_c); 
 			//$tmp = str_replace("^,^","<br>",$this->bean3->abherrent_behaviors_c);
 			//$tmp = str_replace("^","",$tmp);
-			
+			$this->dv3->ss->assign("abherrent_behaviors", str_replace("^","",$this->bean3->abherrent_behaviors_c));   //show notes on view of previous 
 			$tmp = str_replace("^,^","</li><li>",$this->bean3->abherrent_behaviors_c);
 			$tmp = str_replace("^","<li>",$tmp);
 			//print $this->bean3->abherrent_behaviors_c;

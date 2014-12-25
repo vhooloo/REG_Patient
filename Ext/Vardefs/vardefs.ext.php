@@ -96,6 +96,14 @@ $dictionary["REG_Patient"]["fields"]["reg_treatment_plan_reg_patient"] = array (
 
  
 
+ // created: 2014-11-23 13:51:24
+
+ 
+
+ // created: 2014-11-23 13:50:04
+
+ 
+
  // created: 2014-01-13 14:40:35
 $dictionary['REG_Patient']['fields']['ethnicity']['default']='';
 

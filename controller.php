@@ -19,12 +19,12 @@ class REG_PatientController extends SugarController {
 		//$GLOBALS['log']->fatal('in controller');
 		$this->bean = new REG_PatientListView();
 	}
-	function action_riskevaluation() {
-		$this->view = 'riskevaluation';
+	//function action_riskevaluation() {
+	//	$this->view = 'riskevaluation';
 		//$GLOBALS['log']->fatal('in controller');
 		//$this->bean = new REG_PatientRiskView();
-		$this->bean = new RiskEvaluation();
-	}
+	//	$this->bean = new RiskEvaluation();
+	//}
 	function action_academicdetail() {		$this->view = 'academicdetail';		//$GLOBALS['log']->fatal('in controller');		//$this->bean = new REG_PatientRiskView();		//$this->bean = new RiskEvaluation();	
 	}	
 	function action_treatmentplan() {
@@ -38,6 +38,10 @@ class REG_PatientController extends SugarController {
 	function action_report4(){		$this->view = 'reports4';	}	
 	function action_report5(){		$this->view = 'reports5';	}	
 	function action_report6(){		$this->view = 'reports6';	}	
+//<<<<<<< HEAD
 	function action_test7(){		$this->view = 'test7';}
+//=======
+	function action_reportuts(){	$this->view = 'reportsuts';	}	
+//>>>>>>> 3097a71433de82fec730df252659026274347e46
 }
 ?>
