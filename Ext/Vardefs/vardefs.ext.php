@@ -117,6 +117,10 @@ $dictionary['REG_Patient']['fields']['ethnicity']['default']='';
 
  
 
+ // created: 2015-04-30 10:34:40
+
+ 
+
  // created: 2014-01-13 14:40:06
 $dictionary['REG_Patient']['fields']['race']['default']='';
 

@@ -1,0 +1,3 @@
+UPDATE reg_patient_cstm tab6 LEFT JOIN (SELECT tab4.id patid, (SELECT tab1.reg_patient_reg_encounterreg_encounter_idb enclink  FROM reg_patient_reg_encounter_c tab1 WHERE  tab1.reg_patient_reg_encounterreg_patient_ida = patid AND tab1.date_modified = (SELECT max( date_modified ) dat FROM reg_patient_reg_encounter_c enc1 WHERE  enc1.reg_patient_reg_encounterreg_patient_ida = patid)  LIMIT 1)  enclink,  (SELECT tab3.next_rx_refill_due_c FROM reg_encounter_cstm tab3 where tab3.id_c = enclink ) refill FROM reg_patient tab4 ) tab5
+ON tab5.patid = tab6.id_c
+SET tab6.pmp_date_c = tab5.refill

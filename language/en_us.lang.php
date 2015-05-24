@@ -1,5 +1,5 @@
 <?php
-// created: 2014-11-23 13:51:24
+// created: 2015-04-30 10:34:40
 $mod_strings = array (
   'LBL_REG_TREATMENT_PLAN_REG_PATIENT_FROM_REG_TREATMENT_PLAN_TITLE' => 'Treatment Plan',
   'LBL_DETAILVIEW_PANEL1' => 'New Panel 1',
@@ -15,4 +15,5 @@ $mod_strings = array (
   'LBL_REG_PATIENT_STATUS' => 'reg patient status',
   'LBL_AUDIT_FLAG' => 'audit flag',
   'LBL_AUDIT_DATE' => 'audit date',
+  'LBL_PMP_DATE' => 'pmp date',
 );

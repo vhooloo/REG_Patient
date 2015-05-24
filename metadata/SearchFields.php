@@ -1,5 +1,5 @@
 <?php
-// created: 2014-11-23 13:51:22
+// created: 2015-04-30 10:34:38
 $searchFields['REG_Patient'] = array (
   'first_name' => 
   array (

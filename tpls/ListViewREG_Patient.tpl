@@ -6,6 +6,16 @@
 <!-- --GRID -->
 <link rel="stylesheet" href="custom/topcarejs/jqwidgets/styles/jqx.base.css" type="text/css" />
 <link rel="stylesheet" href="custom/topcarejs/jqwidgets/styles/jqx.office.css" type="text/css" />
+ <!--link href="custom/topcarejs/sliders/css/styles.css" media="all" rel="stylesheet"-->
+
+  
+ 
+  
+     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" media="all" rel="stylesheet">
+	<link href="custom/topcarejs/slider/css/bootstrap-slider.css" media="all" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
 
 <!--script type="text/javascript" src="custom/topcarejs/jquery.dropdown.js"></script-->
 
@@ -114,7 +124,7 @@ function updateaudit(auditcheck, row, value)
 	//alert(flag + id[1]);
 
  
-    var params = "&pid="+id[1]+"&audit_flag="+flag;
+    var params = "&update_action=audit&pid="+id[1]+"&audit_flag="+flag;
 	//alert(params+row+data[row]["patientname"]);
 	//alert(data[row]["audit"]);
 	data[row]["audit"] = flag == 1? "true//"+id[1]: "false//"+id[1];
@@ -272,19 +282,23 @@ function datedropdown(name,label, data, id, prev)
     <script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxdatetimeinput.js"></script>
 	<script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxgrid.grouping.js"></script>
 	<script type="text/javascript" src="custom/topcarejs/jqwidgets/globalization/globalize.js"></script>
+		 <script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxgrid.edit.js"></script>
 		<script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxdata.export.js"></script> 
 	<script type="text/javascript" src="custom/topcarejs/jqwidgets/jqxgrid.export.js"></script> 
-	
+ <script type="text/javascript" src="custom/topcarejs/slider/js/bootstrap-slider.js"></script>
+ 
 	<!--[if IE 7]>
 		<script type="text/javascript" src="custom/topcarejs/json2.js"></script>
 	<![endif]--> 
     <!--script type="text/javascript" src="../../scripts/gettheme.js"></script>
     <script type="text/javascript" src="generatedata.js"></script-->
     
+ 
+  	
 
-
-    
-
+        <!--script src="custom/topcarejs/sliders/js/plugin.js"></script>
+    <script src="custom/topcarejs/sliders/js/main.js"></script>
+<script src="custom/topcarejs/jRange-master/jquery.range.js"></script-->
 
 
 <!-- END GRID -->
@@ -319,14 +333,34 @@ function datedropdown(name,label, data, id, prev)
 		}
 		
 		
+		
     </style> {/literal}
+
+	<!--div class="container text-center" id="slidertop"-->
+    
+        <!--div class="col-md-8"-->
+ 		  <!--img src="custom/themes/scale.jpg" width="650px" style="position:relative;margin-bottom:-30px;">
+          <input class="slider" id="slider1" data-slider-max="10" data-slider-min="0" data-slider-step="1" data-slider-value="-0.001" type="text" style="width: 600px;visibility: hidden;position:relative;top: -5px;"-->
+          <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+     
+      <!--/div-->
+    <!--/div-->
+	 <!--div class="row" style="position:relative;margin-bottom:30px;margin-left:40px">
+        <div class="col-md-8">
+	<input type="text" class="single-slider" value="0" >
+	      </div>
+    </div-->
 
 
 <input id="inactivecheck" type="checkbox"  onclick="inactivefilter(this.checked);" {if ($smarty.session.inactive == "true")}checked{/if} > Include Inactive patients </input>
 <input id="statuscheck" type="checkbox" onclick="statusfilter(this.checked);"  {if ($smarty.session.status == "true")}checked{/if} > Patients to be followed-up </input>
 <input type="button" value="Export to Excel" id='excelExport' />
+<input type="button" value="Test CSV" id='exporttest' />
 <input name="testjson" id = "testjson"   value="{$smarty.session.jqxgridstate nofilter}" maxlength = "10000"/>
 
+
+	
+	
         <div id="jqxgrid"  ></div>
         
 
@@ -404,10 +438,15 @@ function datedropdown(name,label, data, id, prev)
 					{ name: 'location', type: 'string' },
 					{ name: 'patientname', type: 'string' },
 					{ name: 'patientnameexport', type: 'string' },
+					{ name: 'firstname', type: 'string' },
+					{ name: 'lastname', type: 'string' },
 					{ name: 'mrn', type: 'string' },
                     { name: 'refill', type: 'date' },
                     { name: 'status', type: 'string' },
 					{ name: 'last_uts', type: 'date' },
+					{ name: 'pmp_date', type: 'date' },
+					{ name: 'dob', type:'date' },
+					{ name: 'zip', type:'string' },
 					//{ name: 'next_pcp', type: 'date' },
                     { name: 'pcp', type: 'string'},
 					//{name: 'riskString',  value: 'risk', values: { source: riskAdapter.records, value: 'value', name: 'label' } },
@@ -448,6 +487,60 @@ function datedropdown(name,label, data, id, prev)
     var sortColumnDataField = sortInfo.sortcolumn;
 	alert(sortInfo + sortdirection + sortColumnDataField);
 });   */
+
+/*$('.single-slider').jRange({
+    from: 0,
+    to: 10,
+    step: 1,
+    scale: ["0 no pain",1,2,3,4,5,6,7,8,9,"10 max pain"],
+    format: '%s',
+    width: 300,
+    showLabels: true
+});
+
+*/
+$("#ex1").bootstrapSlider({
+tooltip: 'always',
+formatter: function(value) {
+		return 'Current value: ' + value;
+	},
+	//ticks: [0, 1, 2, 3, 4],
+    ticks_labels: ['$0', '$100', '$200', '$300', '$400'],
+}).on('change', function(){if (this.value > 10 ) $("#ex1Slider .slider-selection").css('background', 'red'); else $("#ex1Slider .slider-selection").css('background', 'green');});
+
+
+
+
+/*
+$('#slidertop').on('click', function(){
+   console.log("You clicked the button "+ $("#slider1").attr("data-slider-value") + " " + $("#slidertop .tooltip .tooltip-inner").text());
+});
+
+	$("#slider1").click(function() {
+	  console.log("clicked");
+	  console.log("hooray"+$(this).attr("data-slider-value"));
+	});
+	
+	$('.slider').bind('focus blur select change click dblclick mousedown mouseup mouseover mousemove mouseout keypress keydown keyup', function(e) {
+      console.log(e.type + ": " + $(this).val() );
+}); 
+	
+*/
+	$("#exporttest").click(function() {
+	var A = [['n','sqrt(n)']];  // initialize array of rows with header row as 1st item
+for(var j=1;j<10000;++j){ A.push([j, Math.sqrt(j)]) }
+var csvRows = [];
+for(var i=0,l=A.length; i<l; ++i){
+    csvRows.push(A[i].join(','));   // unquoted CSV row
+}
+var csvString = csvRows.join("\r\n");
+	var IEwindow = window.open();
+	IEwindow.document.write(csvString);
+	IEwindow.document.close();
+	IEwindow.document.execCommand('SaveAs', true,  "testdfg.csv");
+	setTimeout(function(){ IEwindow.close(); }, 5000);
+	});
+	
 	
 	$("#excelExport").click(function() {
 	//alert("test");
@@ -457,12 +550,47 @@ function datedropdown(name,label, data, id, prev)
 	$("#jqxgrid").jqxGrid('hidecolumn', 'patientname');
 	$("#jqxgrid").jqxGrid('hidecolumn', 'action');
 	$("#jqxgrid").jqxGrid('showcolumn', 'patientnameexport');
-    $("#jqxgrid").jqxGrid('exportdata', 'xls', 'jqxGrid');
-	console.log("done?");
-	$("#jqxgrid").jqxGrid('showcolumn', 'action');
-	$("#jqxgrid").jqxGrid('showcolumn', 'patientname');
-	$("#jqxgrid").jqxGrid('hidecolumn', 'patientnameexport');
+    var mydataload = $("#jqxgrid").jqxGrid('exportdata', 'json',null, true, null, true);
+	var myjson = eval("(" + mydataload + ")");
+	console.log(myjson);
+	var csvRows = [];
+		for(var i = 0; i < myjson.length; i++) {
+    var obj = myjson[i];
+
+		//var id = obj["MRN"];
+		//var name = obj["Location1"];
+		csvRows.push(obj["firstname"] + "," + obj["lastname"] + "," + obj["ZIP"] + "," + obj["DOB"] );
+		//console.log(id);
+		//console.log(name);
+	}
+	var csvString = csvRows.join("\r\n");
+		var IEwindow = window.open();
+
+	IEwindow.document.write(csvString);
+	IEwindow.document.close();
+	if (IEwindow.document.execCommand('SaveAs', null,  "pmpexport.csv"))
+	{
+	IEwindow.close();}
+	else
+	{
+		
+		var uri = 'data:application/csv;charset=utf-8,' + escape(csvString);
+        var link = IEwindow.document.createElement("a");
+        link.href = uri;
+        link.style = "visibility:hidden";
+        link.download = "pmpexport.csv";
+        IEwindow.document.body.appendChild(link);
+        link.click();
+        IEwindow.document.body.removeChild(link);
+		setTimeout(function(){ IEwindow.close(); }, 100);
+		//IEwindow.close();
+	}
+	
+	//$("#jqxgrid").jqxGrid('showcolumn', 'action');
+	//$("#jqxgrid").jqxGrid('showcolumn', 'patientname');
+	//$("#jqxgrid").jqxGrid('hidecolumn', 'patientnameexport');
 	});
+	
 	
 	//$(window).focus(function() {
 	//$("#jqxgrid").jqxGrid('showcolumn', 'patientname');
@@ -476,11 +604,13 @@ function datedropdown(name,label, data, id, prev)
 		//window.lastElementClicked = event.target;
 		clearTimeout(mytimeout);
 		console.log("clicked and cleared");
-		mytimeout = setTimeout(function(){ document.location.href = "./index.php?module=Users&action=Logout"; }, 600000);
+		mytimeout = setTimeout(function(){ document.location.href = "./index.php?module=Users&action=Logout&login_module=REG_Patient&login_action=index"; }, 600000);
 		//alert(event.target);
 	});
 	
-	
+		$( window ).resize(function() {
+  console.log( "Handler for .resize() called." );
+});
 
 	/*function refillfilter(value, type) {
 	  
@@ -611,7 +741,7 @@ function datedropdown(name,label, data, id, prev)
 	
 	$(window).load(function() {
         //$(document).load(function () {
-     mytimeout = setTimeout(function(){ document.location.href = "./index.php?module=Users&action=Logout&loginErrorMessage=SessionExpired"; }, 60000);
+     mytimeout = setTimeout(function(){ document.location.href = "./index.php?module=Users&action=Logout&loginErrorMessage=SessionExpired"; }, 600000);
 				
 	//var data = new Array();
 	var i = 0;
@@ -737,10 +867,15 @@ function datedropdown(name,label, data, id, prev)
 		row["location"] 	= "{$myrowData.location}";
 		row["patientname"] 	= "{$myrowData.lname}, {$myrowData.fname}//{$myrowData.patid}" ;
 		row["patientnameexport"] 	= "{$myrowData.lname}, {$myrowData.fname}" ;
+		row["firstname"] 	= "{$myrowData.fname}" ;
+		row["lastname"] 	= "{$myrowData.lname}" ;
 		row["mrn"] 			= "{$myrowData.mrn}";
 		row["refill"] 		= "{$myrowData.refill}";
 		row["status"] 			= "{$myrowData.status}";
 		row["last_uts"] 	= "{$myrowData.last_uts}"; //|date_format:"%m/%d/%Y"}";
+		row["pmp_date"] 	= "{$myrowData.pmp_date}"; //|date_format:"%m/%d/%Y"}";
+		row["dob"] 			= "{$myrowData.dob}";
+		row["zip"]          = "{$myrowData.zip}";
 		//row["next_pcp"] 	= "{$myrowData.next_pcp}";
 		row["pcp"] 			= "{$myrowData.provname}";
 		row["action"] 		= "{$myrowData.patid}";
@@ -878,63 +1013,6 @@ function datedropdown(name,label, data, id, prev)
 	$("#jqxgrid").jqxGrid(
 	{
 		columnsheight: 35,
-		showtoolbar: true,
-		showtoolbar: true,
-                rendertoolbar: function (toolbar) {
-                    var me = this;
-                    var container = $("<div style='margin: 5px;'></div>");
-                    toolbar.append(container);
-                    container.append('<input id="addrowbutton" type="button" value="Add New Row" />');
-                    container.append('<input style="margin-left: 5px;" id="addmultiplerowsbutton" type="button" value="Add Multiple New Rows" />');
-                    container.append('<input style="margin-left: 5px;" id="deleterowbutton" type="button" value="Delete Selected Row" />');
-                    container.append('<input style="margin-left: 5px;" id="updaterowbutton" type="button" value="Update Selected Row" />');
-                    $("#addrowbutton").jqxButton();
-                    $("#addmultiplerowsbutton").jqxButton();
-                    $("#deleterowbutton").jqxButton();
-                    $("#updaterowbutton").jqxButton();
-                    // update row.
-                    $("#updaterowbutton").on('click', function () {
-                        var datarow = generaterow();
-                        var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                        var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
-                        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                            var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
-                            var commit = $("#jqxgrid").jqxGrid('updaterow', id, datarow);
-                            $("#jqxgrid").jqxGrid('ensurerowvisible', selectedrowindex);
-                        }
-                    });
-                    // create new row.
-                    $("#addrowbutton").on('click', function () {
-                        var datarow = generaterow();
-						data.splice(2,0,datarow);
-                        var commit = $("#jqxgrid").jqxGrid('addrow', 3, datarow);
-						//var dataAdapter = new $.jqx.dataAdapter(source);
-						//$("#jqxgrid").jqxGrid({ source: dataAdapter });
-						var addstate = $("#jqxgrid").jqxGrid('savestate');
-						$("#jqxgrid").jqxGrid("updatebounddata");
-						$("#jqxgrid").jqxGrid('loadstate', addstate);
-                    });
-                    // create new rows.
-                    $("#addmultiplerowsbutton").on('click', function () {
-                        $("#jqxgrid").jqxGrid('beginupdate');
-                        for (var i = 0; i < 10; i++) {
-                            var datarow = generaterow();
-                            var commit = $("#jqxgrid").jqxGrid('addrow', null, datarow);
-                        }
-                        $("#jqxgrid").jqxGrid('endupdate');
-                    });
-                    // delete row.fnactive
-                    $("#deleterowbutton").on('click', function () {
-                        var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                        var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
-                        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                            var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
-							console.log(id);
-                            var commit = $("#jqxgrid").jqxGrid('deleterow', id);
-                        }
-                    });
-                },
-		//theme: 'office',
 		width: 1210,
 		height: 600,
 		source: dataAdapter,
@@ -942,37 +1020,83 @@ function datedropdown(name,label, data, id, prev)
 		//groupable: true,
         filterable:true,
 		sortable: true,
-		filterable: true,
-		autoshowcolumnsmenubutton: false,
-		//autoshowfiltericon: true,
+		editable: true,
+		selectionmode: 'singlecell',
+		editmode: 'click',
 		
 		columns: [
-		    { text: 'Active', hidden: true,  datafield: 'active', width: 20,  filterable:true,filtertype: 'textbox' },
-			{ text: 'Location1',  datafield: 'location', width: 80,  sortable: true },
+		    { text: 'Active', hidden: true,  datafield: 'active', width: 20,  filterable:true,filtertype: 'textbox', editable:false },
+			{ text: 'Location1',  datafield: 'location', width: 80,  sortable: true, editable:false },
 			///{ text: 'Location', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'location', width: 80, renderer:columnsrenderer, sortable: true },
-			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 140, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer },
-			{ text: 'Patient Name', datafield: 'patientnameexport', width: 140, hidden:true},
-			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110},
-			{ text: 'Refill',   datafield: 'refill', filtertype: 'range', width: 200,  renderer:columnsrenderer,  sortable:true, cellsrenderer:dateoverduerenderer, cellsformat: 'd' },
+			{ text: 'Patient Name', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'patientname', width: 140, renderer:columnsrenderer, sortable: true, cellsrenderer:patientrenderer, editable:false },
+			{ text: 'Patient Name', datafield: 'patientnameexport', width: 140, hidden:true,editable:false},
+			{ text: 'firstname', datafield: 'firstname', width: 30, hidden:true,editable:false},
+			{ text: 'lastname', datafield: 'lastname', width: 30, hidden:true,editable:false},
+			{ text: 'MRN', filtertype: 'textbox', filtercondition: 'starts_with', datafield: 'mrn', renderer:columnsrenderer, width: 110, editable:false},
+			{ text: 'Refill',   datafield: 'refill', filtertype: 'range', width: 200,  renderer:columnsrenderer,  sortable:true, cellsrenderer:dateoverduerenderer, cellsformat: 'd', editable:false },
 			{ text: 'Status',   hidden: true, datafield: 'status',  width: 20, filterable:true,filtertype: 'textbox'},
-			{ text: 'Last UTS', filtertype: 'range',  datafield: 'last_uts',  width: 140,   renderer:columnsrenderer, sortable:true, cellsformat: 'd' },
+			{ text: 'Last UTS', filtertype: 'range',  datafield: 'last_uts',  width: 140,   renderer:columnsrenderer, sortable:true, cellsformat: 'd', editable:true },
+			{ text: '<p>PMP Date</p> <p>(editable)</p>', filtertype: 'range',  datafield: 'pmp_date',  width: 140,   renderer:columnsrenderer, sortable:true, cellsformat: 'd', editable:true , 
+			createeditor: function (row, cellvalue, editor, cellText, width, height) { editor.append('01/01/2015');console.log('init');},
+			initeditor: function (row, cellValue, editor, cellText, width, height) { cellText = '01/01/2015';cellValue='01/01/2015';},
+			validation: function (cell, value) 
+				{
+					var myid = $('#jqxgrid').jqxGrid('getcelltext', cell.row, 'patientname'); console.log("myid is " + myid);console.log("date is"+value);
+					var date_string;
+					var res = myid.split("//");
+					try{date_string = (value.getMonth() + 1) + '/' + value.getDate() + '/' +  value.getFullYear();}catch (err){console.log (err.message);return false;}
+					$.ajax({
+									url: 'index.php?entryPoint=updatepatientaudit&update_action=pmp&pmp_date='+date_string+'&pid='+res[1],
+									//data: {my_json_data: "{ text: 'Provider', editable:false, filtertype: 'textbox', hidden: false, filtercondition: 'starts_with', datafield: 'provider', width: 140,  sortable: true, cellsrenderer:cellsrenderer }"},
+									type: 'POST',
+									async: true,
+									dataType: 'text',
+									cache:false,
+									success:function(text){
+										console.log('AJAX SUCCESS' + text);
+									}, 
+									complete : function(text){
+									    
+										console.log('AJAX COMPLETE');
+									
+									}
+							});
+							return true;
+			
+				}
+			},
+			{ text: 'DOB', filtertype: 'date',  datafield: 'dob',  width: 20, cellsformat: 'd',hidden:true,editable:false },
+			{ text: 'ZIP', datafield: 'zip', filtertype: 'textbox', width: 6,  hidden:true, editable:false},
 			//{ text: 'Next PCP', filtertype: 'date',  datafield: 'next_pcp',  width: 140,    renderer:columnsrenderer, sortable:true, cellsformat: 'd' },
-			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 120,  renderer:columnsrenderer },
-			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH', 'NA'], cellsrenderer:riskrenderer,renderer:columnsrenderer, width: 100},
+			{ text: 'PCP', datafield: 'pcp', filtertype: 'textbox', width: 120,  renderer:columnsrenderer , editable:false},
+			{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: ['LOW', 'MODERATE', 'HIGH', 'NA'], cellsrenderer:riskrenderer,renderer:columnsrenderer, width: 100, editable:true},
 			//{ text: 'Risk Level', datafield: 'risk', filtertype: 'list', filteritems: new $.jqx.dataAdapter(riskSource), cellsrenderer:riskrenderer,renderer:columnsrenderer, width: 100},
 			//{ text: 'Risk Level', datafield: 'risk', cellsrenderer:riskrenderer,  filtertype: 'list', filteritems: [{label:'Av',value:'A'} ], width: 100,createfilterwidget: function (column, htmlElement, editor) { editor.jqxDropDownList({source:ddsource,displayMember: "value", valueMember: "value" });  }},
 			 //{ text: 'Risk Level', datafield: 'risk', displayfield:'riskString', filtertype: 'list', filteritems: new $.jqx.dataAdapter(riskSource),  width: 100},
-			{ text: 'Action', datafield: 'action',  width: 120,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false, menu:false },
-			{ text: 'Audit', datafield: 'audit',  width: 60,  cellsrenderer:auditrenderer, filterable:false, renderer:auditfilterrenderer} //,sortable:false, menu:false },
+			{ text: 'Action', datafield: 'action',  width: 120,  cellsrenderer:linkrenderer, filterable:false, renderer:columnsrenderer, sortable:false, menu:false, editable:false },
+			{ text: 'Audit', datafield: 'audit',  width: 60,  cellsrenderer:auditrenderer, filterable:false, renderer:auditfilterrenderer, editable:false} //,sortable:false, menu:false },
 		]//,			groups: ['PCP']
 	});
 	
 	//alert("grid");
+	$("#jqxgrid").bind('cellendedit', function (event) {
+		var args = event.args;
+		 var columnDataField = args.datafield;
+		 var rowIndex = args.rowindex;
+		 var cellValue = args.value;
+		 var oldValue = args.oldvalue;
+		 var arraylen = data.length;
+		 var j = 0;
+		  if ( columnDataField == "last_uts" ) {   
+			console.log("cell end edit checking....");
+		 }
+	});
+
 	var localizationobj = {};
 	localizationobj.filterchoosestring = 'ALL RISK';
 	localizationobj.emptydatastring = "No data to display. Please verify filters and clear unnecessary ones.",
 	$("#jqxgrid").jqxGrid('localizestrings', localizationobj);
-	$("#jqxgrid").jqxGrid('selectionmode', 'singlerow');
+	//$("#jqxgrid").jqxGrid('selectionmode', 'singlerow');
 	
 	var myprevstate = document.getElementById("testjson").value;
     //var setinactive = false;	 //default is false

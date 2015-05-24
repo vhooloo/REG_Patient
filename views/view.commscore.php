@@ -3,9 +3,9 @@
 require_once('include/MVC/View/views/view.edit.php');
 require_once('custom/modules/REG_Patient/RiskEvaluation.php');
 
-class REG_PatientViewRiskEvaluation extends ViewEdit {
+class REG_PatientViewCommScore extends ViewEdit {
  
-	function REG_PatientViewViewRiskEvaluation(){
+	function REG_PatientViewCommScore(){
 		parent::ViewEdit();
 	}
 	
@@ -25,7 +25,7 @@ class REG_PatientViewRiskEvaluation extends ViewEdit {
 		
         //parent::display();
  		$db = DBManagerFactory::getInstance();  
-		$myquery = "SELECT tab4a.id, tab4a.first_name fname, tab4a.last_name lname,  tab5a.mrn_c mrn, tab4a.gender gender FROM reg_patient  tab4a , reg_patient_cstm tab5a WHERE tab4a.id = tab5a.id_c AND tab4a.id = '". $_REQUEST['patid'] . "'";  
+		$myquery = "SELECT tab4a.first_name fname, tab4a.last_name lname,  tab5a.mrn_c mrn, tab4a.gender gender, tab5a.location_c location FROM reg_patient  tab4a , reg_patient_cstm tab5a WHERE tab4a.id = tab5a.id_c AND tab4a.id = '". $_REQUEST['patid'] . "'";  
 		
 	    $result = $db->query($myquery);
 		$patdata = null;
@@ -37,25 +37,23 @@ class REG_PatientViewRiskEvaluation extends ViewEdit {
 		
 		//when week filter need to add week interval
 		//get patient risk if exists
-		$smarty->assign("pid", $_REQUEST['patid']);
+		
 		//if ($_POST['mysort'] == 'week')
 		if (!empty($_REQUEST['patid']) )	
 		{
 			$risk->getRisk($_REQUEST['patid']);
 			$risk->getComm($_REQUEST['patid']);
-			
+			$smarty->assign("pid", $_REQUEST['patid']);
 		}
-		echo "who";
-		var_dump($risk);
-		echo 'request'.$_REQUEST['patid'];
+		//echo 'request'.$_REQUEST['patid'];
 		//else return false; //param not found 
 		//var_dump($risk);
 
 		$smarty->assign("myrisk", $risk);
+		//$smarty->assign("mycomm", $risk);
         global $current_user;
 		$smarty->assign("myuser", $current_user);
-		$smarty->assign("test", "test");
-		//echo "here";
+		
         $smarty->display('custom/modules/REG_Patient/tpls/CommScoreREG_Patient.tpl');
 		
     }

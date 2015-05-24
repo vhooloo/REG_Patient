@@ -1,7 +1,7 @@
 <?PHP
 require_once('custom/modules/REG_Patient/REG_PatientListView.php');
 require_once('include/MVC/View/views/view.list.php');
-require_once('custom/modules/REG_Patient/RiskEvaluation.php');
+//require_once('custom/modules/REG_Patient/RiskEvaluation.php');
 require_once('custom/modules/REG_Patient/TreatmentPlan.php');
 
 class REG_PatientController extends SugarController {
@@ -42,6 +42,11 @@ class REG_PatientController extends SugarController {
 	function action_test7(){		$this->view = 'test7';}
 //=======
 	function action_reportuts(){	$this->view = 'reportsuts';	}	
+	function action_utsentry()	{	$this->view = 'utsentry';	}	
+	function action_riskevaluation()	{	$this->view = 'commscore';	}
+	function action_testmed()	{	$this->view = 'testmed';	}
+	function action_reportmain() { $this->view = 'reportmain';}
+	function action_reportmedd() { $this->view = 'reportmedd';}
 //>>>>>>> 3097a71433de82fec730df252659026274347e46
 }
 ?>

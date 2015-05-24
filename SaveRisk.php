@@ -10,6 +10,14 @@ $focus = new RiskEvaluation();
 // if the id is set, then this is update, else generate new id
 //var_dump($_POST);
 
+foreach ($focus->comm_labels as $label) {
+if(isset($_POST[$label.'_radio']))
+		$focus->comm_terms[$label] = $_POST[$label.'_radio'];
+		
+	echo ">>>> " . $focus->comm_terms[$label];
+}
+//var_dump($focus->comm_terms);
+
 if(isset($_POST['ORT-1A_check'])  ) {
 	
 	if  (!empty($_POST['ORT-1A_check'])) $focus->ort1a = 1; 
@@ -132,8 +140,22 @@ if(isset($_POST['riskid']) && !empty($_POST['riskid'])) {
 }
 else
 {
-	$focus->new_with_id = false;
+	$focus->new_with_id = true;
 }
+
+if(isset($_POST['commid']) && !empty($_POST['commid'])) {
+	
+
+	$focus->comm_id_c = $_POST['commid'];
+}
+else
+{
+	$focus->comm_id_c = NULL;
+}
+
+
+// Comm terms
+$cx = 0;
 
 $focus->save();
 
