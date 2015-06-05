@@ -14,8 +14,9 @@ class REG_PatientViewReportMedd extends ViewEdit {
 	function display(){
 	 
 	     $provid = '0';
+		 $provname = "";
 		 
-		 var_dump($_GET);
+		 //var_dump($_GET);
 		 
 	     if(isset($_GET['provid']) &&  !empty($_GET['provid']) )
 			$provid = $_GET['provid'];
@@ -26,7 +27,8 @@ class REG_PatientViewReportMedd extends ViewEdit {
         //parent::display();
  		$db = DBManagerFactory::getInstance();  
 		
-		$queryprov = "select p1.last_name lname, p1.first_name, p1c.mrn_c, p1.phone_home, r.finalscore,  r.ortsum ortsum, r.short_opioid, prov.name, r.medd FROM reg_provider prov, reg_provider_reg_patient_c provpat, 
+		$queryprov = "select prov.name provname, p1.last_name lname, p1.first_name, p1c.mrn_c, p1.phone_home, r.finalscore,  r.ortsum ortsum, r.short_opioid, prov.name, r.medd, r.short_opioid sop, r.long_opioid lop 
+		FROM reg_provider prov, reg_provider_reg_patient_c provpat, 
 		reg_patient p1, reg_patient_cstm p1c, reg_patient_risk r
 		WHERE prov.id = '{$provid}' AND
 		prov.id = provpat.reg_provider_reg_patientreg_provider_ida AND
@@ -37,13 +39,17 @@ class REG_PatientViewReportMedd extends ViewEdit {
 		
 		$sql = $db->query($queryprov);
 		while ( ($a = $db->fetchByAssoc($sql)) != null) {
-			$datalist[] = Array("lname"=> $a["lname"], "fname"=> $a["first_name"], "mrn"=> $a["mrn_c"],"phone"=> $a["phone_home"], "ncm" => $a["finalscore"] , "medd" => $a["medd"], "ortsum" => $a["ortsum"]);
+		    $provname = $a["provname"];
+			$datalist[] = Array("lname"=> $a["lname"], "fname"=> $a["first_name"], "mrn"=> $a["mrn_c"],"phone"=> $a["phone_home"], 
+								"ncm" => $a["finalscore"] , "medd" => $a["medd"], "ortsum" => $a["ortsum"],
+								"lop" => $a["lop"] , "sop" => $a["sop"]);
 
 		}
 		
-		echo "here with provid " . $provid;
-		echo "<p>".$queryprov."</p>";
+		//echo "here with provid " . $provid;
+		//echo "<p>".$queryprov."</p>";
 		$smarty->assign("datalist", $datalist);
+		$smarty->assign("provname", $provname);
 		
         $smarty->display('custom/modules/REG_Patient/tpls/ReportMedd.tpl');
 		

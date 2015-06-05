@@ -243,10 +243,10 @@
 	
 	/*** MEDS TEST ****/
 	
-	//$snip = new REG_PatientViewTestMed();
+	$snip = new REG_PatientViewTestMed();
 		//echo $snip->snippy();
 		//$GLOBALS['log']->fatal("test refill");
-	//$this->dv3->ss->assign("snippet", $snip->snippet($this->bean->id));
+	$this->dv3->ss->assign("snippet", $snip->snippet($this->bean->id));
 	
 	/**** ALL SMARTY assignments must be done above *****/
 			
@@ -335,7 +335,7 @@
 	$ida = $this->bean->id;
 	
 	echo "<script type='text/javascript'>
-  }
+  
 	\$(function(){
 		
 	\$('.moduleTitle').remove();});		
@@ -345,7 +345,7 @@
 		
 	\$('.action_buttons').append($('#copy_text_div'))});
 	  document.getElementById('reg_patient_reg_encounterreg_patient_ida').value='".$ida."';
-	 }
+	 
 	 
 	</script>";
 	echo "<script type='text/javascript'>\$(function(){\$('#accordion').accordion();  \$('#accordion1').accordion();  }); </script>";

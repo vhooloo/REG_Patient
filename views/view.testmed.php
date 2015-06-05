@@ -22,7 +22,7 @@ class REG_PatientViewTestMed extends ViewList {
 		$sugarSmarty->assign("med",$pm->medlist);
 		$sugarSmarty->assign("patid",$pm->patid);
 		$sugarSmarty->assign("title","Test med");
-        $sugarSmarty->display('custom/modules/REG_Patient/tpls/ReportMain.tpl');
+        $sugarSmarty->display('custom/modules/REG_Patient/tpls/testmed.tpl');
 		
 //        parent::display();
 		
